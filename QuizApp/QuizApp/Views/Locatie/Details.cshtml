@@ -1,0 +1,42 @@
+﻿@model QuizApp.Models.Locatie
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Locatie</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Postcode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Postcode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Huisnummer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Huisnummer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Straat)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Straat)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

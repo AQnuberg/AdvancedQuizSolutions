@@ -1,0 +1,63 @@
+﻿@model IEnumerable<QuizApp.Models.Evenement>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Naam)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BeginTijd)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EindTijd)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Evenement_Type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Locatie.Postcode)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Naam)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BeginTijd)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EindTijd)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Evenement_Type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Locatie.Postcode)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.EvenementID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.EvenementID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.EvenementID })
+        </td>
+    </tr>
+}
+
+</table>
