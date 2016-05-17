@@ -22,13 +22,14 @@ namespace QuizApp.Controllers
         }
 
         // GET: Ronde/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? id, int? evenementID)
         {
-            if (id == null)
+            if (id == null || evenementID == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Ronde ronde = db.Rondes.Find(id);
+
+            Ronde ronde = db.Rondes.Find(evenementID, id);
             if (ronde == null)
             {
                 return HttpNotFound();
@@ -39,7 +40,7 @@ namespace QuizApp.Controllers
         // GET: Ronde/Create
         public ActionResult Create()
         {
-            ViewBag.EvenementID = new SelectList(db.Evenementen, "EvenementID", "Email");
+            ViewBag.EvenementID = new SelectList(db.Evenementen, "EvenementID", "EvenementID");
             ViewBag.ThemaNaam = new SelectList(db.Themas, "Naam", "Naam");
             return View();
         }
@@ -58,7 +59,7 @@ namespace QuizApp.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.EvenementID = new SelectList(db.Evenementen, "EvenementID", "Email", ronde.EvenementID);
+            ViewBag.EvenementID = new SelectList(db.Evenementen, "EvenementID", "EvenementID", ronde.EvenementID);
             ViewBag.ThemaNaam = new SelectList(db.Themas, "Naam", "Naam", ronde.ThemaNaam);
             return View(ronde);
         }
@@ -75,7 +76,7 @@ namespace QuizApp.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.EvenementID = new SelectList(db.Evenementen, "EvenementID", "Email", ronde.EvenementID);
+            ViewBag.EvenementID = new SelectList(db.Evenementen, "EvenementID", "EvenementID", ronde.EvenementID);
             ViewBag.ThemaNaam = new SelectList(db.Themas, "Naam", "Naam", ronde.ThemaNaam);
             return View(ronde);
         }
@@ -93,7 +94,7 @@ namespace QuizApp.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.EvenementID = new SelectList(db.Evenementen, "EvenementID", "Email", ronde.EvenementID);
+            ViewBag.EvenementID = new SelectList(db.Evenementen, "EvenementID", "EvenementID", ronde.EvenementID);
             ViewBag.ThemaNaam = new SelectList(db.Themas, "Naam", "Naam", ronde.ThemaNaam);
             return View(ronde);
         }

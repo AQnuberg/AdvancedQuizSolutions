@@ -21,13 +21,13 @@ namespace QuizApp.Controllers
         }
 
         // GET: Locatie/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details(string naam, string plaatsnaam)
         {
-            if (id == null)
+            if (naam == null || plaatsnaam == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Locatie locatie = db.Locaties.Find(id);
+            Locatie locatie = db.Locaties.Find(naam, plaatsnaam);
             if (locatie == null)
             {
                 return HttpNotFound();
@@ -59,13 +59,13 @@ namespace QuizApp.Controllers
         }
 
         // GET: Locatie/Edit/5
-        public ActionResult Edit(string id)
+        public ActionResult Edit(string naam, string plaatsnaam)
         {
-            if (id == null)
+            if (naam == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Locatie locatie = db.Locaties.Find(id);
+            Locatie locatie = db.Locaties.Find(naam, plaatsnaam);
             if (locatie == null)
             {
                 return HttpNotFound();
@@ -90,13 +90,13 @@ namespace QuizApp.Controllers
         }
 
         // GET: Locatie/Delete/5
-        public ActionResult Delete(string id)
+        public ActionResult Delete(string naam, string plaatsnaam)
         {
-            if (id == null)
+            if (naam == null || plaatsnaam == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Locatie locatie = db.Locaties.Find(id);
+            Locatie locatie = db.Locaties.Find(naam, plaatsnaam);
             if (locatie == null)
             {
                 return HttpNotFound();
@@ -107,9 +107,9 @@ namespace QuizApp.Controllers
         // POST: Locatie/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(string naam, string plaatsnaam)
         {
-            Locatie locatie = db.Locaties.Find(id);
+            Locatie locatie = db.Locaties.Find(naam, plaatsnaam);
             db.Locaties.Remove(locatie);
             db.SaveChanges();
             return RedirectToAction("Index");
