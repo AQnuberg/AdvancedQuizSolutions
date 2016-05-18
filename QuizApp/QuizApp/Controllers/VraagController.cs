@@ -10,116 +10,112 @@ using QuizApp.Models;
 
 namespace QuizApp.Controllers
 {
-    public class EvenementsController : Controller
+    public class VraagController : Controller
     {
         private AQSDatabaseEntities db = new AQSDatabaseEntities();
 
-        // GET: Evenements
+        // GET: Vraag
         public ActionResult Index()
         {
-            var evenement = db.Evenement.Include(e => e.Account).Include(e => e.Locatie);
-            return View(evenement.ToList());
+            var vraag = db.Vraag.Include(v => v.Thema);
+            return View(vraag.ToList());
         }
 
-        // GET: Evenements/Details/5
+        // GET: Vraag/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Evenement evenement = db.Evenement.Find(id);
-            if (evenement == null)
+            Vraag vraag = db.Vraag.Find(id);
+            if (vraag == null)
             {
                 return HttpNotFound();
             }
-            return View(evenement);
+            return View(vraag);
         }
 
-        // GET: Evenements/Create
+        // GET: Vraag/Create
         public ActionResult Create()
         {
-            ViewBag.Email_Quizmaster = new SelectList(db.Account, "Email", "Rol");
-            ViewBag.LocatieID = new SelectList(db.Locatie, "LocatieID", "Locatienaam");
+            ViewBag.ThemaNaam = new SelectList(db.Thema, "Naam", "Naam");
             return View();
         }
 
-        // POST: Evenements/Create
+        // POST: Vraag/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "EvenementID,LocatieID,Email_Quizmaster,Evenemenmtnaam,BeginTijd,EindTijd,Evenementtype")] Evenement evenement)
+        public ActionResult Create([Bind(Include = "VraagID,ThemaNaam,Vraag1,Vraagtype,AntwoordOpenVraag")] Vraag vraag)
         {
             if (ModelState.IsValid)
             {
-                db.Evenement.Add(evenement);
+                db.Vraag.Add(vraag);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.Email_Quizmaster = new SelectList(db.Account, "Email", "Rol", evenement.Email_Quizmaster);
-            ViewBag.LocatieID = new SelectList(db.Locatie, "LocatieID", "Locatienaam", evenement.LocatieID);
-            return View(evenement);
+            ViewBag.ThemaNaam = new SelectList(db.Thema, "Naam", "Naam", vraag.ThemaNaam);
+            return View(vraag);
         }
 
-        // GET: Evenements/Edit/5
+        // GET: Vraag/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Evenement evenement = db.Evenement.Find(id);
-            if (evenement == null)
+            Vraag vraag = db.Vraag.Find(id);
+            if (vraag == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.Email_Quizmaster = new SelectList(db.Account, "Email", "Rol", evenement.Email_Quizmaster);
-            ViewBag.LocatieID = new SelectList(db.Locatie, "LocatieID", "Locatienaam", evenement.LocatieID);
-            return View(evenement);
+            ViewBag.ThemaNaam = new SelectList(db.Thema, "Naam", "Naam", vraag.ThemaNaam);
+            return View(vraag);
         }
 
-        // POST: Evenements/Edit/5
+        // POST: Vraag/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EvenementID,LocatieID,Email_Quizmaster,Evenemenmtnaam,BeginTijd,EindTijd,Evenementtype")] Evenement evenement)
+        public ActionResult Edit([Bind(Include = "VraagID,ThemaNaam,Vraag1,Vraagtype,AntwoordOpenVraag")] Vraag vraag)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(evenement).State = EntityState.Modified;
+                db.Entry(vraag).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Email_Quizmaster = new SelectList(db.Account, "Email", "Rol", evenement.Email_Quizmaster);
-            ViewBag.LocatieID = new SelectList(db.Locatie, "LocatieID", "Locatienaam", evenement.LocatieID);
-            return View(evenement);
+            ViewBag.ThemaNaam = new SelectList(db.Thema, "Naam", "Naam", vraag.ThemaNaam);
+            return View(vraag);
         }
 
-        // GET: Evenements/Delete/5
+        // GET: Vraag/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Evenement evenement = db.Evenement.Find(id);
-            if (evenement == null)
+            Vraag vraag = db.Vraag.Find(id);
+            if (vraag == null)
             {
                 return HttpNotFound();
             }
-            return View(evenement);
+            return View(vraag);
         }
 
-        // POST: Evenements/Delete/5
+        // POST: Vraag/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Evenement evenement = db.Evenement.Find(id);
-            db.Evenement.Remove(evenement);
+            Vraag vraag = db.Vraag.Find(id);
+            db.Vraag.Remove(vraag);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

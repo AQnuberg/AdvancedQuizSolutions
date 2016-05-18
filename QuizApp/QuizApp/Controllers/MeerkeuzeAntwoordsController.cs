@@ -10,112 +10,112 @@ using QuizApp.Models;
 
 namespace QuizApp.Controllers
 {
-    public class VragenController : Controller
+    public class MeerkeuzeAntwoordsController : Controller
     {
         private AQSDatabaseEntities db = new AQSDatabaseEntities();
 
-        // GET: Vragen
+        // GET: MeerkeuzeAntwoords
         public ActionResult Index()
         {
-            var vraag = db.Vraag.Include(v => v.Thema);
-            return View(vraag.ToList());
+            var meerkeuzeAntwoord = db.MeerkeuzeAntwoord.Include(m => m.Vraag);
+            return View(meerkeuzeAntwoord.ToList());
         }
 
-        // GET: Vragen/Details/5
-        public ActionResult Details(int? id)
+        // GET: MeerkeuzeAntwoords/Details/5
+        public ActionResult Details(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Vraag vraag = db.Vraag.Find(id);
-            if (vraag == null)
+            MeerkeuzeAntwoord meerkeuzeAntwoord = db.MeerkeuzeAntwoord.Find(id);
+            if (meerkeuzeAntwoord == null)
             {
                 return HttpNotFound();
             }
-            return View(vraag);
+            return View(meerkeuzeAntwoord);
         }
 
-        // GET: Vragen/Create
+        // GET: MeerkeuzeAntwoords/Create
         public ActionResult Create()
         {
-            ViewBag.ThemaNaam = new SelectList(db.Thema, "Naam", "Naam");
+            ViewBag.VraagID = new SelectList(db.Vraag, "VraagID", "ThemaNaam");
             return View();
         }
 
-        // POST: Vragen/Create
+        // POST: MeerkeuzeAntwoords/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "VraagID,ThemaNaam,Vraag1,Vraagtype,AntwoordOpenVraag")] Vraag vraag)
+        public ActionResult Create([Bind(Include = "MeerkeuzeAntwoord1,VraagID,isJuist")] MeerkeuzeAntwoord meerkeuzeAntwoord)
         {
             if (ModelState.IsValid)
             {
-                db.Vraag.Add(vraag);
+                db.MeerkeuzeAntwoord.Add(meerkeuzeAntwoord);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ThemaNaam = new SelectList(db.Thema, "Naam", "Naam", vraag.ThemaNaam);
-            return View(vraag);
+            ViewBag.VraagID = new SelectList(db.Vraag, "VraagID", "ThemaNaam", meerkeuzeAntwoord.VraagID);
+            return View(meerkeuzeAntwoord);
         }
 
-        // GET: Vragen/Edit/5
-        public ActionResult Edit(int? id)
+        // GET: MeerkeuzeAntwoords/Edit/5
+        public ActionResult Edit(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Vraag vraag = db.Vraag.Find(id);
-            if (vraag == null)
+            MeerkeuzeAntwoord meerkeuzeAntwoord = db.MeerkeuzeAntwoord.Find(id);
+            if (meerkeuzeAntwoord == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.ThemaNaam = new SelectList(db.Thema, "Naam", "Naam", vraag.ThemaNaam);
-            return View(vraag);
+            ViewBag.VraagID = new SelectList(db.Vraag, "VraagID", "ThemaNaam", meerkeuzeAntwoord.VraagID);
+            return View(meerkeuzeAntwoord);
         }
 
-        // POST: Vragen/Edit/5
+        // POST: MeerkeuzeAntwoords/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "VraagID,ThemaNaam,Vraag1,Vraagtype,AntwoordOpenVraag")] Vraag vraag)
+        public ActionResult Edit([Bind(Include = "MeerkeuzeAntwoord1,VraagID,isJuist")] MeerkeuzeAntwoord meerkeuzeAntwoord)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(vraag).State = EntityState.Modified;
+                db.Entry(meerkeuzeAntwoord).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ThemaNaam = new SelectList(db.Thema, "Naam", "Naam", vraag.ThemaNaam);
-            return View(vraag);
+            ViewBag.VraagID = new SelectList(db.Vraag, "VraagID", "ThemaNaam", meerkeuzeAntwoord.VraagID);
+            return View(meerkeuzeAntwoord);
         }
 
-        // GET: Vragen/Delete/5
-        public ActionResult Delete(int? id)
+        // GET: MeerkeuzeAntwoords/Delete/5
+        public ActionResult Delete(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Vraag vraag = db.Vraag.Find(id);
-            if (vraag == null)
+            MeerkeuzeAntwoord meerkeuzeAntwoord = db.MeerkeuzeAntwoord.Find(id);
+            if (meerkeuzeAntwoord == null)
             {
                 return HttpNotFound();
             }
-            return View(vraag);
+            return View(meerkeuzeAntwoord);
         }
 
-        // POST: Vragen/Delete/5
+        // POST: MeerkeuzeAntwoords/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(string id)
         {
-            Vraag vraag = db.Vraag.Find(id);
-            db.Vraag.Remove(vraag);
+            MeerkeuzeAntwoord meerkeuzeAntwoord = db.MeerkeuzeAntwoord.Find(id);
+            db.MeerkeuzeAntwoord.Remove(meerkeuzeAntwoord);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

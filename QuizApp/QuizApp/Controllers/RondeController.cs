@@ -10,112 +10,116 @@ using QuizApp.Models;
 
 namespace QuizApp.Controllers
 {
-    public class MeerkeuzeAntwoordenController : Controller
+    public class RondeController : Controller
     {
         private AQSDatabaseEntities db = new AQSDatabaseEntities();
 
-        // GET: MeerkeuzeAntwoorden
+        // GET: Ronde
         public ActionResult Index()
         {
-            var meerkeuzeAntwoord = db.MeerkeuzeAntwoord.Include(m => m.Vraag);
-            return View(meerkeuzeAntwoord.ToList());
+            var ronde = db.Ronde.Include(r => r.Evenement).Include(r => r.Thema);
+            return View(ronde.ToList());
         }
 
-        // GET: MeerkeuzeAntwoorden/Details/5
-        public ActionResult Details(string id)
+        // GET: Ronde/Details/5
+        public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            MeerkeuzeAntwoord meerkeuzeAntwoord = db.MeerkeuzeAntwoord.Find(id);
-            if (meerkeuzeAntwoord == null)
+            Ronde ronde = db.Ronde.Find(id);
+            if (ronde == null)
             {
                 return HttpNotFound();
             }
-            return View(meerkeuzeAntwoord);
+            return View(ronde);
         }
 
-        // GET: MeerkeuzeAntwoorden/Create
+        // GET: Ronde/Create
         public ActionResult Create()
         {
-            ViewBag.VraagID = new SelectList(db.Vraag, "VraagID", "ThemaNaam");
+            ViewBag.EvenementID = new SelectList(db.Evenement, "EvenementID", "Email_Quizmaster");
+            ViewBag.ThemaNaam = new SelectList(db.Thema, "Naam", "Naam");
             return View();
         }
 
-        // POST: MeerkeuzeAntwoorden/Create
+        // POST: Ronde/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MeerkeuzeAntwoord1,VraagID,isJuist")] MeerkeuzeAntwoord meerkeuzeAntwoord)
+        public ActionResult Create([Bind(Include = "EvenementID,Ronde1,ThemaNaam")] Ronde ronde)
         {
             if (ModelState.IsValid)
             {
-                db.MeerkeuzeAntwoord.Add(meerkeuzeAntwoord);
+                db.Ronde.Add(ronde);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.VraagID = new SelectList(db.Vraag, "VraagID", "ThemaNaam", meerkeuzeAntwoord.VraagID);
-            return View(meerkeuzeAntwoord);
+            ViewBag.EvenementID = new SelectList(db.Evenement, "EvenementID", "Email_Quizmaster", ronde.EvenementID);
+            ViewBag.ThemaNaam = new SelectList(db.Thema, "Naam", "Naam", ronde.ThemaNaam);
+            return View(ronde);
         }
 
-        // GET: MeerkeuzeAntwoorden/Edit/5
-        public ActionResult Edit(string id)
+        // GET: Ronde/Edit/5
+        public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            MeerkeuzeAntwoord meerkeuzeAntwoord = db.MeerkeuzeAntwoord.Find(id);
-            if (meerkeuzeAntwoord == null)
+            Ronde ronde = db.Ronde.Find(id);
+            if (ronde == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.VraagID = new SelectList(db.Vraag, "VraagID", "ThemaNaam", meerkeuzeAntwoord.VraagID);
-            return View(meerkeuzeAntwoord);
+            ViewBag.EvenementID = new SelectList(db.Evenement, "EvenementID", "Email_Quizmaster", ronde.EvenementID);
+            ViewBag.ThemaNaam = new SelectList(db.Thema, "Naam", "Naam", ronde.ThemaNaam);
+            return View(ronde);
         }
 
-        // POST: MeerkeuzeAntwoorden/Edit/5
+        // POST: Ronde/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MeerkeuzeAntwoord1,VraagID,isJuist")] MeerkeuzeAntwoord meerkeuzeAntwoord)
+        public ActionResult Edit([Bind(Include = "EvenementID,Ronde1,ThemaNaam")] Ronde ronde)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(meerkeuzeAntwoord).State = EntityState.Modified;
+                db.Entry(ronde).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.VraagID = new SelectList(db.Vraag, "VraagID", "ThemaNaam", meerkeuzeAntwoord.VraagID);
-            return View(meerkeuzeAntwoord);
+            ViewBag.EvenementID = new SelectList(db.Evenement, "EvenementID", "Email_Quizmaster", ronde.EvenementID);
+            ViewBag.ThemaNaam = new SelectList(db.Thema, "Naam", "Naam", ronde.ThemaNaam);
+            return View(ronde);
         }
 
-        // GET: MeerkeuzeAntwoorden/Delete/5
-        public ActionResult Delete(string id)
+        // GET: Ronde/Delete/5
+        public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            MeerkeuzeAntwoord meerkeuzeAntwoord = db.MeerkeuzeAntwoord.Find(id);
-            if (meerkeuzeAntwoord == null)
+            Ronde ronde = db.Ronde.Find(id);
+            if (ronde == null)
             {
                 return HttpNotFound();
             }
-            return View(meerkeuzeAntwoord);
+            return View(ronde);
         }
 
-        // POST: MeerkeuzeAntwoorden/Delete/5
+        // POST: Ronde/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(int id)
         {
-            MeerkeuzeAntwoord meerkeuzeAntwoord = db.MeerkeuzeAntwoord.Find(id);
-            db.MeerkeuzeAntwoord.Remove(meerkeuzeAntwoord);
+            Ronde ronde = db.Ronde.Find(id);
+            db.Ronde.Remove(ronde);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

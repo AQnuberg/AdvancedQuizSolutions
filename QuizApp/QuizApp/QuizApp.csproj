@@ -9,7 +9,7 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{FA81A80B-C2FF-41FD-9FAE-75680BC372EE}</ProjectGuid>
+    <ProjectGuid>{698022EA-C44C-4A15-9CDF-26C709906764}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -198,14 +198,16 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\EvenementsController.cs" />
+    <Compile Include="Controllers\AQSAccountController.cs" />
+    <Compile Include="Controllers\EvenementController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\LocatiesController.cs" />
+    <Compile Include="Controllers\LocatieController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\MeerkeuzeAntwoordenController.cs" />
-    <Compile Include="Controllers\RondesController.cs" />
-    <Compile Include="Controllers\ThemasController.cs" />
-    <Compile Include="Controllers\VragenController.cs" />
+    <Compile Include="Controllers\MeerkeuzeAntwoordsController.cs" />
+    <Compile Include="Controllers\RolController.cs" />
+    <Compile Include="Controllers\RondeController.cs" />
+    <Compile Include="Controllers\ThemaController.cs" />
+    <Compile Include="Controllers\VraagController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -331,6 +333,16 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\AQSAccount\Create.cshtml" />
+    <Content Include="Views\AQSAccount\Delete.cshtml" />
+    <Content Include="Views\AQSAccount\Details.cshtml" />
+    <Content Include="Views\AQSAccount\Edit.cshtml" />
+    <Content Include="Views\AQSAccount\Index.cshtml" />
+    <Content Include="Views\Rol\Create.cshtml" />
+    <Content Include="Views\Rol\Delete.cshtml" />
+    <Content Include="Views\Rol\Details.cshtml" />
+    <Content Include="Views\Rol\Edit.cshtml" />
+    <Content Include="Views\Rol\Index.cshtml" />
     <Content Include="Views\Evenement\Create.cshtml" />
     <Content Include="Views\Evenement\Delete.cshtml" />
     <Content Include="Views\Evenement\Details.cshtml" />
@@ -346,21 +358,21 @@
     <Content Include="Views\Ronde\Details.cshtml" />
     <Content Include="Views\Ronde\Edit.cshtml" />
     <Content Include="Views\Ronde\Index.cshtml" />
-    <Content Include="Views\Vraag\Create.cshtml" />
-    <Content Include="Views\Vraag\Delete.cshtml" />
-    <Content Include="Views\Vraag\Details.cshtml" />
-    <Content Include="Views\Vraag\Edit.cshtml" />
-    <Content Include="Views\Vraag\Index.cshtml" />
-    <Content Include="Views\MeerkeuzeAntwoord\Create.cshtml" />
-    <Content Include="Views\MeerkeuzeAntwoord\Delete.cshtml" />
-    <Content Include="Views\MeerkeuzeAntwoord\Details.cshtml" />
-    <Content Include="Views\MeerkeuzeAntwoord\Edit.cshtml" />
-    <Content Include="Views\MeerkeuzeAntwoord\Index.cshtml" />
     <Content Include="Views\Thema\Create.cshtml" />
     <Content Include="Views\Thema\Delete.cshtml" />
     <Content Include="Views\Thema\Details.cshtml" />
     <Content Include="Views\Thema\Edit.cshtml" />
     <Content Include="Views\Thema\Index.cshtml" />
+    <Content Include="Views\Vraag\Create.cshtml" />
+    <Content Include="Views\Vraag\Delete.cshtml" />
+    <Content Include="Views\Vraag\Details.cshtml" />
+    <Content Include="Views\Vraag\Edit.cshtml" />
+    <Content Include="Views\Vraag\Index.cshtml" />
+    <Content Include="Views\MeerkeuzeAntwoords\Create.cshtml" />
+    <Content Include="Views\MeerkeuzeAntwoords\Delete.cshtml" />
+    <Content Include="Views\MeerkeuzeAntwoords\Details.cshtml" />
+    <Content Include="Views\MeerkeuzeAntwoords\Edit.cshtml" />
+    <Content Include="Views\MeerkeuzeAntwoords\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -392,9 +404,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>56628</DevelopmentServerPort>
+          <DevelopmentServerPort>56111</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:56628/</IISUrl>
+          <IISUrl>http://localhost:56111/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

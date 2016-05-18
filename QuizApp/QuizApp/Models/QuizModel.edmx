@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="AQSDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="AQSDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Account">
           <Key>
             <PropertyRef Name="Email" />
@@ -28,7 +28,7 @@
           <Property Name="EvenementID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="LocatieID" Type="int" Nullable="false" />
           <Property Name="Email_Quizmaster" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Evenemenmtnaam" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Evenementnaam" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="BeginTijd" Type="datetime" Nullable="false" />
           <Property Name="EindTijd" Type="datetime" Nullable="false" />
           <Property Name="Evenementtype" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -78,7 +78,7 @@
           <Key>
             <PropertyRef Name="VraagID" />
           </Key>
-          <Property Name="VraagID" Type="int" Nullable="false" />
+          <Property Name="VraagID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ThemaNaam" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Vraag" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Vraagtype" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -251,7 +251,8 @@
             <End Role="VraagInQuiz" EntitySet="VraagInQuiz" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="AQSDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -280,7 +281,7 @@
           <Property Name="EvenementID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="LocatieID" Type="Int32" Nullable="false" />
           <Property Name="Email_Quizmaster" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Evenemenmtnaam" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Evenementnaam" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="BeginTijd" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="EindTijd" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Evenementtype" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
@@ -341,7 +342,7 @@
           <Key>
             <PropertyRef Name="VraagID" />
           </Key>
-          <Property Name="VraagID" Type="Int32" Nullable="false" />
+          <Property Name="VraagID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ThemaNaam" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Vraag1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Vraagtype" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
@@ -509,7 +510,7 @@
                 <ScalarProperty Name="EvenementID" ColumnName="EvenementID" />
                 <ScalarProperty Name="LocatieID" ColumnName="LocatieID" />
                 <ScalarProperty Name="Email_Quizmaster" ColumnName="Email_Quizmaster" />
-                <ScalarProperty Name="Evenemenmtnaam" ColumnName="Evenemenmtnaam" />
+                <ScalarProperty Name="Evenementnaam" ColumnName="Evenementnaam" />
                 <ScalarProperty Name="BeginTijd" ColumnName="BeginTijd" />
                 <ScalarProperty Name="EindTijd" ColumnName="EindTijd" />
                 <ScalarProperty Name="Evenementtype" ColumnName="Evenementtype" />
