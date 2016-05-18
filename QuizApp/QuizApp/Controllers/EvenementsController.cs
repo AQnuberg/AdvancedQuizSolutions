@@ -10,112 +10,116 @@ using QuizApp.Models;
 
 namespace QuizApp.Controllers
 {
-    public class VraagController : Controller
+    public class EvenementsController : Controller
     {
-        private Entities db = new Entities();
+        private AQSDatabaseEntities db = new AQSDatabaseEntities();
 
-        // GET: Vraag
+        // GET: Evenements
         public ActionResult Index()
         {
-            var vragen = db.Vragen.Include(v => v.Thema);
-            return View(vragen.ToList());
+            var evenement = db.Evenement.Include(e => e.Account).Include(e => e.Locatie);
+            return View(evenement.ToList());
         }
 
-        // GET: Vraag/Details/5
+        // GET: Evenements/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Vraag vraag = db.Vragen.Find(id);
-            if (vraag == null)
+            Evenement evenement = db.Evenement.Find(id);
+            if (evenement == null)
             {
                 return HttpNotFound();
             }
-            return View(vraag);
+            return View(evenement);
         }
 
-        // GET: Vraag/Create
+        // GET: Evenements/Create
         public ActionResult Create()
         {
-            ViewBag.ThemaNaam = new SelectList(db.Themas, "Naam", "Naam");
+            ViewBag.Email_Quizmaster = new SelectList(db.Account, "Email", "Rol");
+            ViewBag.LocatieID = new SelectList(db.Locatie, "LocatieID", "Locatienaam");
             return View();
         }
 
-        // POST: Vraag/Create
+        // POST: Evenements/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "VraagID,ThemaNaam,Vraag1,Vraagtype,AntwoordOpenVraag")] Vraag vraag)
+        public ActionResult Create([Bind(Include = "EvenementID,LocatieID,Email_Quizmaster,Evenemenmtnaam,BeginTijd,EindTijd,Evenementtype")] Evenement evenement)
         {
             if (ModelState.IsValid)
             {
-                db.Vragen.Add(vraag);
+                db.Evenement.Add(evenement);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ThemaNaam = new SelectList(db.Themas, "Naam", "Naam", vraag.ThemaNaam);
-            return View(vraag);
+            ViewBag.Email_Quizmaster = new SelectList(db.Account, "Email", "Rol", evenement.Email_Quizmaster);
+            ViewBag.LocatieID = new SelectList(db.Locatie, "LocatieID", "Locatienaam", evenement.LocatieID);
+            return View(evenement);
         }
 
-        // GET: Vraag/Edit/5
+        // GET: Evenements/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Vraag vraag = db.Vragen.Find(id);
-            if (vraag == null)
+            Evenement evenement = db.Evenement.Find(id);
+            if (evenement == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.ThemaNaam = new SelectList(db.Themas, "Naam", "Naam", vraag.ThemaNaam);
-            return View(vraag);
+            ViewBag.Email_Quizmaster = new SelectList(db.Account, "Email", "Rol", evenement.Email_Quizmaster);
+            ViewBag.LocatieID = new SelectList(db.Locatie, "LocatieID", "Locatienaam", evenement.LocatieID);
+            return View(evenement);
         }
 
-        // POST: Vraag/Edit/5
+        // POST: Evenements/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "VraagID,ThemaNaam,Vraag1,Vraagtype,AntwoordOpenVraag")] Vraag vraag)
+        public ActionResult Edit([Bind(Include = "EvenementID,LocatieID,Email_Quizmaster,Evenemenmtnaam,BeginTijd,EindTijd,Evenementtype")] Evenement evenement)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(vraag).State = EntityState.Modified;
+                db.Entry(evenement).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ThemaNaam = new SelectList(db.Themas, "Naam", "Naam", vraag.ThemaNaam);
-            return View(vraag);
+            ViewBag.Email_Quizmaster = new SelectList(db.Account, "Email", "Rol", evenement.Email_Quizmaster);
+            ViewBag.LocatieID = new SelectList(db.Locatie, "LocatieID", "Locatienaam", evenement.LocatieID);
+            return View(evenement);
         }
 
-        // GET: Vraag/Delete/5
+        // GET: Evenements/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Vraag vraag = db.Vragen.Find(id);
-            if (vraag == null)
+            Evenement evenement = db.Evenement.Find(id);
+            if (evenement == null)
             {
                 return HttpNotFound();
             }
-            return View(vraag);
+            return View(evenement);
         }
 
-        // POST: Vraag/Delete/5
+        // POST: Evenements/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Vraag vraag = db.Vragen.Find(id);
-            db.Vragen.Remove(vraag);
+            Evenement evenement = db.Evenement.Find(id);
+            db.Evenement.Remove(evenement);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

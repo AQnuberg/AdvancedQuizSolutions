@@ -6,7 +6,7 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{B21E4DEA-A538-4C89-803A-4D854D70EC04}</ProjectGuid>
+    <ProjectGuid>{94D620B9-4DD6-4D46-8B70-423FDAFBD919}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>QuizApp.Tests</RootNamespace>
@@ -93,7 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\QuizApp\QuizApp.csproj">
-      <Project>{7469F551-C166-4253-91B9-208859BC6E29}</Project>
+      <Project>{FA81A80B-C2FF-41FD-9FAE-75680BC372EE}</Project>
       <Name>QuizApp</Name>
     </ProjectReference>
   </ItemGroup>

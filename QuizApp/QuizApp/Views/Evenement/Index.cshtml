@@ -12,10 +12,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Naam)
+            @Html.DisplayNameFor(model => model.Evenemenmtnaam)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.BeginTijd)
@@ -24,10 +21,13 @@
             @Html.DisplayNameFor(model => model.EindTijd)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Evenement_Type)
+            @Html.DisplayNameFor(model => model.Evenementtype)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Locatie.Postcode)
+            @Html.DisplayNameFor(model => model.Account.Rol)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Locatie.Locatienaam)
         </th>
         <th></th>
     </tr>
@@ -35,10 +35,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Naam)
+            @Html.DisplayFor(modelItem => item.Evenemenmtnaam)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.BeginTijd)
@@ -47,10 +44,13 @@
             @Html.DisplayFor(modelItem => item.EindTijd)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Evenement_Type)
+            @Html.DisplayFor(modelItem => item.Evenementtype)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Locatie.Postcode)
+            @Html.DisplayFor(modelItem => item.Account.Rol)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Locatie.Locatienaam)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.EvenementID }) |

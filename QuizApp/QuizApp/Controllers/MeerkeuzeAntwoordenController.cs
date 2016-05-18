@@ -10,25 +10,25 @@ using QuizApp.Models;
 
 namespace QuizApp.Controllers
 {
-    public class MeerkeuzeAntwoordController : Controller
+    public class MeerkeuzeAntwoordenController : Controller
     {
-        private Entities db = new Entities();
+        private AQSDatabaseEntities db = new AQSDatabaseEntities();
 
-        // GET: MeerkeuzeAntwoords
+        // GET: MeerkeuzeAntwoorden
         public ActionResult Index()
         {
-            var meerkeuzeAntwoorden = db.MeerkeuzeAntwoorden.Include(m => m.Vraag);
-            return View(meerkeuzeAntwoorden.ToList());
+            var meerkeuzeAntwoord = db.MeerkeuzeAntwoord.Include(m => m.Vraag);
+            return View(meerkeuzeAntwoord.ToList());
         }
 
-        // GET: MeerkeuzeAntwoords/Details/5
+        // GET: MeerkeuzeAntwoorden/Details/5
         public ActionResult Details(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            MeerkeuzeAntwoord meerkeuzeAntwoord = db.MeerkeuzeAntwoorden.Find(id);
+            MeerkeuzeAntwoord meerkeuzeAntwoord = db.MeerkeuzeAntwoord.Find(id);
             if (meerkeuzeAntwoord == null)
             {
                 return HttpNotFound();
@@ -36,14 +36,14 @@ namespace QuizApp.Controllers
             return View(meerkeuzeAntwoord);
         }
 
-        // GET: MeerkeuzeAntwoords/Create
+        // GET: MeerkeuzeAntwoorden/Create
         public ActionResult Create()
         {
-            ViewBag.VraagID = new SelectList(db.Vragen, "VraagID", "ThemaNaam");
+            ViewBag.VraagID = new SelectList(db.Vraag, "VraagID", "ThemaNaam");
             return View();
         }
 
-        // POST: MeerkeuzeAntwoords/Create
+        // POST: MeerkeuzeAntwoorden/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -52,32 +52,32 @@ namespace QuizApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.MeerkeuzeAntwoorden.Add(meerkeuzeAntwoord);
+                db.MeerkeuzeAntwoord.Add(meerkeuzeAntwoord);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.VraagID = new SelectList(db.Vragen, "VraagID", "ThemaNaam", meerkeuzeAntwoord.VraagID);
+            ViewBag.VraagID = new SelectList(db.Vraag, "VraagID", "ThemaNaam", meerkeuzeAntwoord.VraagID);
             return View(meerkeuzeAntwoord);
         }
 
-        // GET: MeerkeuzeAntwoords/Edit/5
+        // GET: MeerkeuzeAntwoorden/Edit/5
         public ActionResult Edit(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            MeerkeuzeAntwoord meerkeuzeAntwoord = db.MeerkeuzeAntwoorden.Find(id);
+            MeerkeuzeAntwoord meerkeuzeAntwoord = db.MeerkeuzeAntwoord.Find(id);
             if (meerkeuzeAntwoord == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.VraagID = new SelectList(db.Vragen, "VraagID", "ThemaNaam", meerkeuzeAntwoord.VraagID);
+            ViewBag.VraagID = new SelectList(db.Vraag, "VraagID", "ThemaNaam", meerkeuzeAntwoord.VraagID);
             return View(meerkeuzeAntwoord);
         }
 
-        // POST: MeerkeuzeAntwoords/Edit/5
+        // POST: MeerkeuzeAntwoorden/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -90,18 +90,18 @@ namespace QuizApp.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.VraagID = new SelectList(db.Vragen, "VraagID", "ThemaNaam", meerkeuzeAntwoord.VraagID);
+            ViewBag.VraagID = new SelectList(db.Vraag, "VraagID", "ThemaNaam", meerkeuzeAntwoord.VraagID);
             return View(meerkeuzeAntwoord);
         }
 
-        // GET: MeerkeuzeAntwoords/Delete/5
+        // GET: MeerkeuzeAntwoorden/Delete/5
         public ActionResult Delete(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            MeerkeuzeAntwoord meerkeuzeAntwoord = db.MeerkeuzeAntwoorden.Find(id);
+            MeerkeuzeAntwoord meerkeuzeAntwoord = db.MeerkeuzeAntwoord.Find(id);
             if (meerkeuzeAntwoord == null)
             {
                 return HttpNotFound();
@@ -109,13 +109,13 @@ namespace QuizApp.Controllers
             return View(meerkeuzeAntwoord);
         }
 
-        // POST: MeerkeuzeAntwoords/Delete/5
+        // POST: MeerkeuzeAntwoorden/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            MeerkeuzeAntwoord meerkeuzeAntwoord = db.MeerkeuzeAntwoorden.Find(id);
-            db.MeerkeuzeAntwoorden.Remove(meerkeuzeAntwoord);
+            MeerkeuzeAntwoord meerkeuzeAntwoord = db.MeerkeuzeAntwoord.Find(id);
+            db.MeerkeuzeAntwoord.Remove(meerkeuzeAntwoord);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

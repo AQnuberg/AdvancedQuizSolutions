@@ -17,20 +17,20 @@ namespace QuizApp.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Evenement()
         {
-            this.Rondes = new HashSet<Ronde>();
+            this.Ronde = new HashSet<Ronde>();
         }
     
         public int EvenementID { get; set; }
-        public string Email { get; set; }
-        public string Naam { get; set; }
-        public string Plaatsnaam { get; set; }
-        public string Locatie_Naam { get; set; }
+        public int LocatieID { get; set; }
+        public string Email_Quizmaster { get; set; }
+        public string Evenemenmtnaam { get; set; }
         public System.DateTime BeginTijd { get; set; }
         public System.DateTime EindTijd { get; set; }
-        public string Evenement_Type { get; set; }
+        public string Evenementtype { get; set; }
     
+        public virtual Account Account { get; set; }
         public virtual Locatie Locatie { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Ronde> Rondes { get; set; }
+        public virtual ICollection<Ronde> Ronde { get; set; }
     }
 }

@@ -10,107 +10,112 @@ using QuizApp.Models;
 
 namespace QuizApp.Controllers
 {
-    public class ThemaController : Controller
+    public class VragenController : Controller
     {
-        private Entities db = new Entities();
+        private AQSDatabaseEntities db = new AQSDatabaseEntities();
 
-        // GET: Thema
+        // GET: Vragen
         public ActionResult Index()
         {
-            return View(db.Themas.ToList());
+            var vraag = db.Vraag.Include(v => v.Thema);
+            return View(vraag.ToList());
         }
 
-        // GET: Thema/Details/5
-        public ActionResult Details(string id)
+        // GET: Vragen/Details/5
+        public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Thema thema = db.Themas.Find(id);
-            if (thema == null)
+            Vraag vraag = db.Vraag.Find(id);
+            if (vraag == null)
             {
                 return HttpNotFound();
             }
-            return View(thema);
+            return View(vraag);
         }
 
-        // GET: Thema/Create
+        // GET: Vragen/Create
         public ActionResult Create()
         {
+            ViewBag.ThemaNaam = new SelectList(db.Thema, "Naam", "Naam");
             return View();
         }
 
-        // POST: Thema/Create
+        // POST: Vragen/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Naam")] Thema thema)
+        public ActionResult Create([Bind(Include = "VraagID,ThemaNaam,Vraag1,Vraagtype,AntwoordOpenVraag")] Vraag vraag)
         {
             if (ModelState.IsValid)
             {
-                db.Themas.Add(thema);
+                db.Vraag.Add(vraag);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(thema);
+            ViewBag.ThemaNaam = new SelectList(db.Thema, "Naam", "Naam", vraag.ThemaNaam);
+            return View(vraag);
         }
 
-        // GET: Thema/Edit/5
-        public ActionResult Edit(string id)
+        // GET: Vragen/Edit/5
+        public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Thema thema = db.Themas.Find(id);
-            if (thema == null)
+            Vraag vraag = db.Vraag.Find(id);
+            if (vraag == null)
             {
                 return HttpNotFound();
             }
-            return View(thema);
+            ViewBag.ThemaNaam = new SelectList(db.Thema, "Naam", "Naam", vraag.ThemaNaam);
+            return View(vraag);
         }
 
-        // POST: Thema/Edit/5
+        // POST: Vragen/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Naam")] Thema thema)
+        public ActionResult Edit([Bind(Include = "VraagID,ThemaNaam,Vraag1,Vraagtype,AntwoordOpenVraag")] Vraag vraag)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(thema).State = EntityState.Modified;
+                db.Entry(vraag).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(thema);
+            ViewBag.ThemaNaam = new SelectList(db.Thema, "Naam", "Naam", vraag.ThemaNaam);
+            return View(vraag);
         }
 
-        // GET: Thema/Delete/5
-        public ActionResult Delete(string id)
+        // GET: Vragen/Delete/5
+        public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Thema thema = db.Themas.Find(id);
-            if (thema == null)
+            Vraag vraag = db.Vraag.Find(id);
+            if (vraag == null)
             {
                 return HttpNotFound();
             }
-            return View(thema);
+            return View(vraag);
         }
 
-        // POST: Thema/Delete/5
+        // POST: Vragen/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(int id)
         {
-            Thema thema = db.Themas.Find(id);
-            db.Themas.Remove(thema);
+            Vraag vraag = db.Vraag.Find(id);
+            db.Vraag.Remove(vraag);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -17,16 +17,17 @@ namespace QuizApp.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Locatie()
         {
-            this.Evenements = new HashSet<Evenement>();
+            this.Evenement = new HashSet<Evenement>();
         }
     
-        public string Naam { get; set; }
+        public int LocatieID { get; set; }
+        public string Locatienaam { get; set; }
         public string Plaatsnaam { get; set; }
         public string Postcode { get; set; }
         public string Huisnummer { get; set; }
         public string Straat { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Evenement> Evenements { get; set; }
+        public virtual ICollection<Evenement> Evenement { get; set; }
     }
 }

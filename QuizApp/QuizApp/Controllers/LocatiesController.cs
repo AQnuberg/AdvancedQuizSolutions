@@ -10,117 +10,107 @@ using QuizApp.Models;
 
 namespace QuizApp.Controllers
 {
-    public class RondeController : Controller
+    public class LocatiesController : Controller
     {
-        private Entities db = new Entities();
+        private AQSDatabaseEntities db = new AQSDatabaseEntities();
 
-        // GET: Ronde
+        // GET: Locaties
         public ActionResult Index()
         {
-            var rondes = db.Rondes.Include(r => r.Evenement).Include(r => r.Thema);
-            return View(rondes.ToList());
+            return View(db.Locatie.ToList());
         }
 
-        // GET: Ronde/Details/5
-        public ActionResult Details(int? id, int? evenementID)
+        // GET: Locaties/Details/5
+        public ActionResult Details(int? id)
         {
-            if (id == null || evenementID == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
-            Ronde ronde = db.Rondes.Find(evenementID, id);
-            if (ronde == null)
+            Locatie locatie = db.Locatie.Find(id);
+            if (locatie == null)
             {
                 return HttpNotFound();
             }
-            return View(ronde);
+            return View(locatie);
         }
 
-        // GET: Ronde/Create
+        // GET: Locaties/Create
         public ActionResult Create()
         {
-            ViewBag.EvenementID = new SelectList(db.Evenementen, "EvenementID", "EvenementID");
-            ViewBag.ThemaNaam = new SelectList(db.Themas, "Naam", "Naam");
             return View();
         }
 
-        // POST: Ronde/Create
+        // POST: Locaties/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "EvenementID,Ronde1,ThemaNaam")] Ronde ronde)
+        public ActionResult Create([Bind(Include = "LocatieID,Locatienaam,Plaatsnaam,Postcode,Huisnummer,Straat")] Locatie locatie)
         {
             if (ModelState.IsValid)
             {
-                db.Rondes.Add(ronde);
+                db.Locatie.Add(locatie);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.EvenementID = new SelectList(db.Evenementen, "EvenementID", "EvenementID", ronde.EvenementID);
-            ViewBag.ThemaNaam = new SelectList(db.Themas, "Naam", "Naam", ronde.ThemaNaam);
-            return View(ronde);
+            return View(locatie);
         }
 
-        // GET: Ronde/Edit/5
+        // GET: Locaties/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Ronde ronde = db.Rondes.Find(id);
-            if (ronde == null)
+            Locatie locatie = db.Locatie.Find(id);
+            if (locatie == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.EvenementID = new SelectList(db.Evenementen, "EvenementID", "EvenementID", ronde.EvenementID);
-            ViewBag.ThemaNaam = new SelectList(db.Themas, "Naam", "Naam", ronde.ThemaNaam);
-            return View(ronde);
+            return View(locatie);
         }
 
-        // POST: Ronde/Edit/5
+        // POST: Locaties/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EvenementID,Ronde1,ThemaNaam")] Ronde ronde)
+        public ActionResult Edit([Bind(Include = "LocatieID,Locatienaam,Plaatsnaam,Postcode,Huisnummer,Straat")] Locatie locatie)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(ronde).State = EntityState.Modified;
+                db.Entry(locatie).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.EvenementID = new SelectList(db.Evenementen, "EvenementID", "EvenementID", ronde.EvenementID);
-            ViewBag.ThemaNaam = new SelectList(db.Themas, "Naam", "Naam", ronde.ThemaNaam);
-            return View(ronde);
+            return View(locatie);
         }
 
-        // GET: Ronde/Delete/5
+        // GET: Locaties/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Ronde ronde = db.Rondes.Find(id);
-            if (ronde == null)
+            Locatie locatie = db.Locatie.Find(id);
+            if (locatie == null)
             {
                 return HttpNotFound();
             }
-            return View(ronde);
+            return View(locatie);
         }
 
-        // POST: Ronde/Delete/5
+        // POST: Locaties/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Ronde ronde = db.Rondes.Find(id);
-            db.Rondes.Remove(ronde);
+            Locatie locatie = db.Locatie.Find(id);
+            db.Locatie.Remove(locatie);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

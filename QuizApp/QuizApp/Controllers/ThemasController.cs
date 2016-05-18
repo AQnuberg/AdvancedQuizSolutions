@@ -10,107 +10,107 @@ using QuizApp.Models;
 
 namespace QuizApp.Controllers
 {
-    public class LocatieController : Controller
+    public class ThemasController : Controller
     {
-        private Entities db = new Entities();
+        private AQSDatabaseEntities db = new AQSDatabaseEntities();
 
-        // GET: Locatie
+        // GET: Themas
         public ActionResult Index()
         {
-            return View(db.Locaties.ToList());
+            return View(db.Thema.ToList());
         }
 
-        // GET: Locatie/Details/5
-        public ActionResult Details(string naam, string plaatsnaam)
+        // GET: Themas/Details/5
+        public ActionResult Details(string id)
         {
-            if (naam == null || plaatsnaam == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Locatie locatie = db.Locaties.Find(naam, plaatsnaam);
-            if (locatie == null)
+            Thema thema = db.Thema.Find(id);
+            if (thema == null)
             {
                 return HttpNotFound();
             }
-            return View(locatie);
+            return View(thema);
         }
 
-        // GET: Locatie/Create
+        // GET: Themas/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Locatie/Create
+        // POST: Themas/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Naam,Plaatsnaam,Postcode,Huisnummer,Straat")] Locatie locatie)
+        public ActionResult Create([Bind(Include = "Naam")] Thema thema)
         {
             if (ModelState.IsValid)
             {
-                db.Locaties.Add(locatie);
+                db.Thema.Add(thema);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(locatie);
+            return View(thema);
         }
 
-        // GET: Locatie/Edit/5
-        public ActionResult Edit(string naam, string plaatsnaam)
+        // GET: Themas/Edit/5
+        public ActionResult Edit(string id)
         {
-            if (naam == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Locatie locatie = db.Locaties.Find(naam, plaatsnaam);
-            if (locatie == null)
+            Thema thema = db.Thema.Find(id);
+            if (thema == null)
             {
                 return HttpNotFound();
             }
-            return View(locatie);
+            return View(thema);
         }
 
-        // POST: Locatie/Edit/5
+        // POST: Themas/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Naam,Plaatsnaam,Postcode,Huisnummer,Straat")] Locatie locatie)
+        public ActionResult Edit([Bind(Include = "Naam")] Thema thema)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(locatie).State = EntityState.Modified;
+                db.Entry(thema).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(locatie);
+            return View(thema);
         }
 
-        // GET: Locatie/Delete/5
-        public ActionResult Delete(string naam, string plaatsnaam)
+        // GET: Themas/Delete/5
+        public ActionResult Delete(string id)
         {
-            if (naam == null || plaatsnaam == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Locatie locatie = db.Locaties.Find(naam, plaatsnaam);
-            if (locatie == null)
+            Thema thema = db.Thema.Find(id);
+            if (thema == null)
             {
                 return HttpNotFound();
             }
-            return View(locatie);
+            return View(thema);
         }
 
-        // POST: Locatie/Delete/5
+        // POST: Themas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string naam, string plaatsnaam)
+        public ActionResult DeleteConfirmed(string id)
         {
-            Locatie locatie = db.Locaties.Find(naam, plaatsnaam);
-            db.Locaties.Remove(locatie);
+            Thema thema = db.Thema.Find(id);
+            db.Thema.Remove(thema);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

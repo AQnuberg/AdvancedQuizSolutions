@@ -14,18 +14,26 @@ namespace QuizApp.Models
     
     public partial class Account
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Account()
+        {
+            this.Evenement = new HashSet<Evenement>();
+        }
+    
         public string Email { get; set; }
-        public string ROL { get; set; }
-        public string WACHTWOORD { get; set; }
-        public string VOORNAAM { get; set; }
-        public string INTITIALEN { get; set; }
-        public string ACHTERNAAM { get; set; }
-        public string WOONPLAATS { get; set; }
-        public string STRAAT { get; set; }
-        public string HUISNUMMER { get; set; }
-        public string POSTCODE { get; set; }
-        public string TELEFOONNUMMER { get; set; }
+        public string Rol { get; set; }
+        public string Wachtwoord { get; set; }
+        public string Voornaam { get; set; }
+        public string Intitialen { get; set; }
+        public string Achternaam { get; set; }
+        public string Woonplaats { get; set; }
+        public string Straat { get; set; }
+        public string Huisnummer { get; set; }
+        public string Postcode { get; set; }
+        public string Telefoonnummer { get; set; }
     
         public virtual Rol Rol1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Evenement> Evenement { get; set; }
     }
 }

@@ -12,7 +12,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Naam)
+            @Html.DisplayNameFor(model => model.Locatienaam)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Plaatsnaam)
@@ -32,7 +32,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Naam)
+            @Html.DisplayFor(modelItem => item.Locatienaam)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Plaatsnaam)
@@ -47,9 +47,9 @@
             @Html.DisplayFor(modelItem => item.Straat)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { naam = item.Naam, plaatsnaam = item.Plaatsnaam /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { naam = item.Naam, plaatsnaam = item.Plaatsnaam /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { naam = item.Naam, plaatsnaam = item.Plaatsnaam /* id=item.PrimaryKey */ })
+            @Html.ActionLink("Edit", "Edit", new { id=item.LocatieID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.LocatieID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.LocatieID })
         </td>
     </tr>
 }

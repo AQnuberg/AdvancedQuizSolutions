@@ -13,10 +13,10 @@ namespace QuizApp.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class Entities : DbContext
+    public partial class AQSDatabaseEntities : DbContext
     {
-        public Entities()
-            : base("name=Entities")
+        public AQSDatabaseEntities()
+            : base("name=AQSDatabaseEntities")
         {
         }
     
@@ -25,16 +25,13 @@ namespace QuizApp.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Account> Accounts { get; set; }
-        public virtual DbSet<Evenement> Evenementen { get; set; }
-        public virtual DbSet<Locatie> Locaties { get; set; }
-        public virtual DbSet<MeerkeuzeAntwoord> MeerkeuzeAntwoorden { get; set; }
-        public virtual DbSet<Rol> Rollen { get; set; }
-        public virtual DbSet<Ronde> Rondes { get; set; }
-        public virtual DbSet<Thema> Themas { get; set; }
-        public virtual DbSet<Vraag> Vragen { get; set; }
-        public virtual DbSet<Stemman> Stemmen { get; set; }
-        public virtual DbSet<Team> Teams { get; set; }
-        public virtual DbSet<TeamAntwoord> TeamAntwoords { get; set; }
+        public virtual DbSet<Account> Account { get; set; }
+        public virtual DbSet<Evenement> Evenement { get; set; }
+        public virtual DbSet<Locatie> Locatie { get; set; }
+        public virtual DbSet<MeerkeuzeAntwoord> MeerkeuzeAntwoord { get; set; }
+        public virtual DbSet<Rol> Rol { get; set; }
+        public virtual DbSet<Ronde> Ronde { get; set; }
+        public virtual DbSet<Thema> Thema { get; set; }
+        public virtual DbSet<Vraag> Vraag { get; set; }
     }
 }

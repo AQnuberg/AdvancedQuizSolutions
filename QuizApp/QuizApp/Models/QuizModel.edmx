@@ -10,36 +10,35 @@
             <PropertyRef Name="Email" />
           </Key>
           <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="ROL" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="WACHTWOORD" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="VOORNAAM" Type="nvarchar" MaxLength="50" />
-          <Property Name="INTITIALEN" Type="nvarchar" MaxLength="50" />
-          <Property Name="ACHTERNAAM" Type="nvarchar" MaxLength="50" />
-          <Property Name="WOONPLAATS" Type="nvarchar" MaxLength="50" />
-          <Property Name="STRAAT" Type="nvarchar" MaxLength="50" />
-          <Property Name="HUISNUMMER" Type="nvarchar" MaxLength="50" />
-          <Property Name="POSTCODE" Type="varchar" MaxLength="7" />
-          <Property Name="TELEFOONNUMMER" Type="varchar" MaxLength="12" />
+          <Property Name="Rol" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Wachtwoord" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Voornaam" Type="nvarchar" MaxLength="50" />
+          <Property Name="Intitialen" Type="nvarchar" MaxLength="50" />
+          <Property Name="Achternaam" Type="nvarchar" MaxLength="50" />
+          <Property Name="Woonplaats" Type="nvarchar" MaxLength="50" />
+          <Property Name="Straat" Type="nvarchar" MaxLength="50" />
+          <Property Name="Huisnummer" Type="nvarchar" MaxLength="50" />
+          <Property Name="Postcode" Type="varchar" MaxLength="7" />
+          <Property Name="Telefoonnummer" Type="varchar" MaxLength="12" />
         </EntityType>
         <EntityType Name="Evenement">
           <Key>
             <PropertyRef Name="EvenementID" />
           </Key>
           <Property Name="EvenementID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Naam" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Plaatsnaam" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Locatie_Naam" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LocatieID" Type="int" Nullable="false" />
+          <Property Name="Email_Quizmaster" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Evenemenmtnaam" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="BeginTijd" Type="datetime" Nullable="false" />
           <Property Name="EindTijd" Type="datetime" Nullable="false" />
-          <Property Name="Evenement_Type" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Evenementtype" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Locatie">
           <Key>
-            <PropertyRef Name="Naam" />
-            <PropertyRef Name="Plaatsnaam" />
+            <PropertyRef Name="LocatieID" />
           </Key>
-          <Property Name="Naam" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LocatieID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Locatienaam" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Plaatsnaam" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Postcode" Type="varchar" MaxLength="7" Nullable="false" />
           <Property Name="Huisnummer" Type="varchar" MaxLength="10" Nullable="false" />
@@ -68,37 +67,6 @@
           <Property Name="EvenementID" Type="int" Nullable="false" />
           <Property Name="Ronde" Type="int" Nullable="false" />
           <Property Name="ThemaNaam" Type="nvarchar" MaxLength="50" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Stemmen">
-          <Key>
-            <PropertyRef Name="EMAIL" />
-            <PropertyRef Name="EVENTID" />
-          </Key>
-          <Property Name="EMAIL" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="EVENTID" Type="int" Nullable="false" />
-          <Property Name="ARTIEST" Type="nvarchar" MaxLength="50" />
-          <Property Name="TITEL" Type="nvarchar" MaxLength="50" />
-        </EntityType>
-        <EntityType Name="Team">
-          <Key>
-            <PropertyRef Name="EVENTID" />
-            <PropertyRef Name="TEAM_NAAM" />
-          </Key>
-          <Property Name="EVENTID" Type="int" Nullable="false" />
-          <Property Name="TEAM_NAAM" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="EMAIL" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="TOTALE_PUNTEN" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="TeamAntwoord">
-          <Key>
-            <PropertyRef Name="EVENTID" />
-            <PropertyRef Name="TEAM_NAAM" />
-            <PropertyRef Name="VRAAGID" />
-          </Key>
-          <Property Name="EVENTID" Type="int" Nullable="false" />
-          <Property Name="TEAM_NAAM" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="VRAAGID" Type="int" Nullable="false" />
-          <Property Name="TEAM_ANTWOORD" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Thema">
           <Key>
@@ -134,7 +102,19 @@
               <PropertyRef Name="Rol" />
             </Principal>
             <Dependent Role="Account">
-              <PropertyRef Name="ROL" />
+              <PropertyRef Name="Rol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Evenement_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="Evenement" Type="Self.Evenement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="Evenement">
+              <PropertyRef Name="Email_Quizmaster" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -143,12 +123,10 @@
           <End Role="Evenement" Type="Self.Evenement" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Locatie">
-              <PropertyRef Name="Naam" />
-              <PropertyRef Name="Plaatsnaam" />
+              <PropertyRef Name="LocatieID" />
             </Principal>
             <Dependent Role="Evenement">
-              <PropertyRef Name="Locatie_Naam" />
-              <PropertyRef Name="Plaatsnaam" />
+              <PropertyRef Name="LocatieID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -233,15 +211,16 @@
           <EntitySet Name="MeerkeuzeAntwoord" EntityType="Self.MeerkeuzeAntwoord" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ronde" EntityType="Self.Ronde" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Stemmen" EntityType="Self.Stemmen" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Team" EntityType="Self.Team" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TeamAntwoord" EntityType="Self.TeamAntwoord" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Thema" EntityType="Self.Thema" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Vraag" EntityType="Self.Vraag" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VraagInQuiz" EntityType="Self.VraagInQuiz" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Account_Rol" Association="Self.FK_Account_Rol">
             <End Role="Rol" EntitySet="Rol" />
             <End Role="Account" EntitySet="Account" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Evenement_Account" Association="Self.FK_Evenement_Account">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Evenement" EntitySet="Evenement" />
           </AssociationSet>
           <AssociationSet Name="FK_Evenement_Locatie" Association="Self.FK_Evenement_Locatie">
             <End Role="Locatie" EntitySet="Locatie" />
@@ -281,44 +260,45 @@
             <PropertyRef Name="Email" />
           </Key>
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ROL" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="WACHTWOORD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="VOORNAAM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="INTITIALEN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ACHTERNAAM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="WOONPLAATS" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="STRAAT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="HUISNUMMER" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="POSTCODE" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
-          <Property Name="TELEFOONNUMMER" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="Rol" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Wachtwoord" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Voornaam" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Intitialen" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Achternaam" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Woonplaats" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Straat" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Huisnummer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Postcode" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="Telefoonnummer" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Rol1" Relationship="Self.FK_Account_Rol" FromRole="Account" ToRole="Rol" />
+          <NavigationProperty Name="Evenement" Relationship="Self.FK_Evenement_Account" FromRole="Account" ToRole="Evenement" />
         </EntityType>
         <EntityType Name="Evenement">
           <Key>
             <PropertyRef Name="EvenementID" />
           </Key>
           <Property Name="EvenementID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Naam" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Plaatsnaam" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Locatie_Naam" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LocatieID" Type="Int32" Nullable="false" />
+          <Property Name="Email_Quizmaster" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Evenemenmtnaam" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="BeginTijd" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="EindTijd" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Evenement_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Evenementtype" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Account" Relationship="Self.FK_Evenement_Account" FromRole="Evenement" ToRole="Account" />
           <NavigationProperty Name="Locatie" Relationship="Self.FK_Evenement_Locatie" FromRole="Evenement" ToRole="Locatie" />
-          <NavigationProperty Name="Rondes" Relationship="Self.FK_Ronde_Evenement" FromRole="Evenement" ToRole="Ronde" />
+          <NavigationProperty Name="Ronde" Relationship="Self.FK_Ronde_Evenement" FromRole="Evenement" ToRole="Ronde" />
         </EntityType>
         <EntityType Name="Locatie">
           <Key>
-            <PropertyRef Name="Naam" />
-            <PropertyRef Name="Plaatsnaam" />
+            <PropertyRef Name="LocatieID" />
           </Key>
-          <Property Name="Naam" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LocatieID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Locatienaam" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Plaatsnaam" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Postcode" Type="String" MaxLength="7" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Huisnummer" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Straat" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Evenements" Relationship="Self.FK_Evenement_Locatie" FromRole="Locatie" ToRole="Evenement" />
+          <NavigationProperty Name="Evenement" Relationship="Self.FK_Evenement_Locatie" FromRole="Locatie" ToRole="Evenement" />
         </EntityType>
         <EntityType Name="MeerkeuzeAntwoord">
           <Key>
@@ -335,7 +315,7 @@
             <PropertyRef Name="Rol1" />
           </Key>
           <Property Name="Rol1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Accounts" Relationship="Self.FK_Account_Rol" FromRole="Rol" ToRole="Account" />
+          <NavigationProperty Name="Account" Relationship="Self.FK_Account_Rol" FromRole="Rol" ToRole="Account" />
         </EntityType>
         <EntityType Name="Ronde">
           <Key>
@@ -347,15 +327,15 @@
           <Property Name="ThemaNaam" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Evenement" Relationship="Self.FK_Ronde_Evenement" FromRole="Ronde" ToRole="Evenement" />
           <NavigationProperty Name="Thema" Relationship="Self.FK_Ronde_Thema" FromRole="Ronde" ToRole="Thema" />
-          <NavigationProperty Name="Vraags" Relationship="Self.VraagInQuiz" FromRole="Ronde" ToRole="Vraag" />
+          <NavigationProperty Name="Vraag" Relationship="Self.VraagInQuiz" FromRole="Ronde" ToRole="Vraag" />
         </EntityType>
         <EntityType Name="Thema">
           <Key>
             <PropertyRef Name="Naam" />
           </Key>
           <Property Name="Naam" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Rondes" Relationship="Self.FK_Ronde_Thema" FromRole="Thema" ToRole="Ronde" />
-          <NavigationProperty Name="Vraags" Relationship="Self.FK_Vraag_Thema" FromRole="Thema" ToRole="Vraag" />
+          <NavigationProperty Name="Ronde" Relationship="Self.FK_Ronde_Thema" FromRole="Thema" ToRole="Ronde" />
+          <NavigationProperty Name="Vraag" Relationship="Self.FK_Vraag_Thema" FromRole="Thema" ToRole="Vraag" />
         </EntityType>
         <EntityType Name="Vraag">
           <Key>
@@ -366,9 +346,9 @@
           <Property Name="Vraag1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Vraagtype" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="AntwoordOpenVraag" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="MeerkeuzeAntwoords" Relationship="Self.FK_Meerkeuzeantwoord_Vraag" FromRole="Vraag" ToRole="MeerkeuzeAntwoord" />
+          <NavigationProperty Name="MeerkeuzeAntwoord" Relationship="Self.FK_Meerkeuzeantwoord_Vraag" FromRole="Vraag" ToRole="MeerkeuzeAntwoord" />
           <NavigationProperty Name="Thema" Relationship="Self.FK_Vraag_Thema" FromRole="Vraag" ToRole="Thema" />
-          <NavigationProperty Name="Rondes" Relationship="Self.VraagInQuiz" FromRole="Vraag" ToRole="Ronde" />
+          <NavigationProperty Name="Ronde" Relationship="Self.VraagInQuiz" FromRole="Vraag" ToRole="Ronde" />
         </EntityType>
         <Association Name="FK_Account_Rol">
           <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
@@ -378,7 +358,19 @@
               <PropertyRef Name="Rol1" />
             </Principal>
             <Dependent Role="Account">
-              <PropertyRef Name="ROL" />
+              <PropertyRef Name="Rol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Evenement_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="Evenement" Type="Self.Evenement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="Evenement">
+              <PropertyRef Name="Email_Quizmaster" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -387,12 +379,10 @@
           <End Role="Evenement" Type="Self.Evenement" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Locatie">
-              <PropertyRef Name="Naam" />
-              <PropertyRef Name="Plaatsnaam" />
+              <PropertyRef Name="LocatieID" />
             </Principal>
             <Dependent Role="Evenement">
-              <PropertyRef Name="Locatie_Naam" />
-              <PropertyRef Name="Plaatsnaam" />
+              <PropertyRef Name="LocatieID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -448,119 +438,89 @@
           <End Role="Ronde" Type="Self.Ronde" Multiplicity="*" />
           <End Role="Vraag" Type="Self.Vraag" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Accounts" EntityType="Self.Account" />
-          <EntitySet Name="Evenementen" EntityType="Self.Evenement" />
-          <EntitySet Name="Locaties" EntityType="Self.Locatie" />
-          <EntitySet Name="MeerkeuzeAntwoorden" EntityType="Self.MeerkeuzeAntwoord" />
-          <EntitySet Name="Rollen" EntityType="Self.Rol" />
-          <EntitySet Name="Rondes" EntityType="Self.Ronde" />
-          <EntitySet Name="Themas" EntityType="Self.Thema" />
-          <EntitySet Name="Vragen" EntityType="Self.Vraag" />
+        <EntityContainer Name="AQSDatabaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Account" EntityType="Self.Account" />
+          <EntitySet Name="Evenement" EntityType="Self.Evenement" />
+          <EntitySet Name="Locatie" EntityType="Self.Locatie" />
+          <EntitySet Name="MeerkeuzeAntwoord" EntityType="Self.MeerkeuzeAntwoord" />
+          <EntitySet Name="Rol" EntityType="Self.Rol" />
+          <EntitySet Name="Ronde" EntityType="Self.Ronde" />
+          <EntitySet Name="Thema" EntityType="Self.Thema" />
+          <EntitySet Name="Vraag" EntityType="Self.Vraag" />
           <AssociationSet Name="FK_Account_Rol" Association="Self.FK_Account_Rol">
-            <End Role="Rol" EntitySet="Rollen" />
-            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="Account" EntitySet="Account" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Evenement_Account" Association="Self.FK_Evenement_Account">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Evenement" EntitySet="Evenement" />
           </AssociationSet>
           <AssociationSet Name="FK_Evenement_Locatie" Association="Self.FK_Evenement_Locatie">
-            <End Role="Locatie" EntitySet="Locaties" />
-            <End Role="Evenement" EntitySet="Evenementen" />
+            <End Role="Locatie" EntitySet="Locatie" />
+            <End Role="Evenement" EntitySet="Evenement" />
           </AssociationSet>
           <AssociationSet Name="FK_Ronde_Evenement" Association="Self.FK_Ronde_Evenement">
-            <End Role="Evenement" EntitySet="Evenementen" />
-            <End Role="Ronde" EntitySet="Rondes" />
+            <End Role="Evenement" EntitySet="Evenement" />
+            <End Role="Ronde" EntitySet="Ronde" />
           </AssociationSet>
           <AssociationSet Name="FK_Meerkeuzeantwoord_Vraag" Association="Self.FK_Meerkeuzeantwoord_Vraag">
-            <End Role="Vraag" EntitySet="Vragen" />
-            <End Role="MeerkeuzeAntwoord" EntitySet="MeerkeuzeAntwoorden" />
+            <End Role="Vraag" EntitySet="Vraag" />
+            <End Role="MeerkeuzeAntwoord" EntitySet="MeerkeuzeAntwoord" />
           </AssociationSet>
           <AssociationSet Name="FK_Ronde_Thema" Association="Self.FK_Ronde_Thema">
-            <End Role="Thema" EntitySet="Themas" />
-            <End Role="Ronde" EntitySet="Rondes" />
+            <End Role="Thema" EntitySet="Thema" />
+            <End Role="Ronde" EntitySet="Ronde" />
           </AssociationSet>
           <AssociationSet Name="FK_Vraag_Thema" Association="Self.FK_Vraag_Thema">
-            <End Role="Thema" EntitySet="Themas" />
-            <End Role="Vraag" EntitySet="Vragen" />
+            <End Role="Thema" EntitySet="Thema" />
+            <End Role="Vraag" EntitySet="Vraag" />
           </AssociationSet>
           <AssociationSet Name="VraagInQuiz" Association="Self.VraagInQuiz">
-            <End Role="Ronde" EntitySet="Rondes" />
-            <End Role="Vraag" EntitySet="Vragen" />
+            <End Role="Ronde" EntitySet="Ronde" />
+            <End Role="Vraag" EntitySet="Vraag" />
           </AssociationSet>
-          <EntitySet Name="Stemmen" EntityType="AQSDatabaseModel.Stemman" />
-          <EntitySet Name="Teams" EntityType="AQSDatabaseModel.Team" />
-          <EntitySet Name="TeamAntwoords" EntityType="AQSDatabaseModel.TeamAntwoord" />
         </EntityContainer>
-        <EntityType Name="Stemman">
-          <Key>
-            <PropertyRef Name="EMAIL" />
-            <PropertyRef Name="EVENTID" />
-          </Key>
-          <Property Name="EMAIL" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="EVENTID" Type="Int32" Nullable="false" />
-          <Property Name="ARTIEST" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="TITEL" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="Team">
-          <Key>
-            <PropertyRef Name="EVENTID" />
-            <PropertyRef Name="TEAM_NAAM" />
-          </Key>
-          <Property Name="EVENTID" Type="Int32" Nullable="false" />
-          <Property Name="TEAM_NAAM" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="EMAIL" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="TOTALE_PUNTEN" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="TeamAntwoord">
-          <Key>
-            <PropertyRef Name="EVENTID" />
-            <PropertyRef Name="TEAM_NAAM" />
-            <PropertyRef Name="VRAAGID" />
-          </Key>
-          <Property Name="EVENTID" Type="Int32" Nullable="false" />
-          <Property Name="TEAM_NAAM" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="VRAAGID" Type="Int32" Nullable="false" />
-          <Property Name="TEAM_ANTWOORD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="AQSDatabaseModelStoreContainer" CdmEntityContainer="Entities">
-          <EntitySetMapping Name="Accounts">
+        <EntityContainerMapping StorageEntityContainer="AQSDatabaseModelStoreContainer" CdmEntityContainer="AQSDatabaseEntities">
+          <EntitySetMapping Name="Account">
             <EntityTypeMapping TypeName="AQSDatabaseModel.Account">
               <MappingFragment StoreEntitySet="Account">
                 <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="ROL" ColumnName="ROL" />
-                <ScalarProperty Name="WACHTWOORD" ColumnName="WACHTWOORD" />
-                <ScalarProperty Name="VOORNAAM" ColumnName="VOORNAAM" />
-                <ScalarProperty Name="INTITIALEN" ColumnName="INTITIALEN" />
-                <ScalarProperty Name="ACHTERNAAM" ColumnName="ACHTERNAAM" />
-                <ScalarProperty Name="WOONPLAATS" ColumnName="WOONPLAATS" />
-                <ScalarProperty Name="STRAAT" ColumnName="STRAAT" />
-                <ScalarProperty Name="HUISNUMMER" ColumnName="HUISNUMMER" />
-                <ScalarProperty Name="POSTCODE" ColumnName="POSTCODE" />
-                <ScalarProperty Name="TELEFOONNUMMER" ColumnName="TELEFOONNUMMER" />
+                <ScalarProperty Name="Rol" ColumnName="Rol" />
+                <ScalarProperty Name="Wachtwoord" ColumnName="Wachtwoord" />
+                <ScalarProperty Name="Voornaam" ColumnName="Voornaam" />
+                <ScalarProperty Name="Intitialen" ColumnName="Intitialen" />
+                <ScalarProperty Name="Achternaam" ColumnName="Achternaam" />
+                <ScalarProperty Name="Woonplaats" ColumnName="Woonplaats" />
+                <ScalarProperty Name="Straat" ColumnName="Straat" />
+                <ScalarProperty Name="Huisnummer" ColumnName="Huisnummer" />
+                <ScalarProperty Name="Postcode" ColumnName="Postcode" />
+                <ScalarProperty Name="Telefoonnummer" ColumnName="Telefoonnummer" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Evenementen">
+          <EntitySetMapping Name="Evenement">
             <EntityTypeMapping TypeName="AQSDatabaseModel.Evenement">
               <MappingFragment StoreEntitySet="Evenement">
                 <ScalarProperty Name="EvenementID" ColumnName="EvenementID" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Naam" ColumnName="Naam" />
-                <ScalarProperty Name="Plaatsnaam" ColumnName="Plaatsnaam" />
-                <ScalarProperty Name="Locatie_Naam" ColumnName="Locatie_Naam" />
+                <ScalarProperty Name="LocatieID" ColumnName="LocatieID" />
+                <ScalarProperty Name="Email_Quizmaster" ColumnName="Email_Quizmaster" />
+                <ScalarProperty Name="Evenemenmtnaam" ColumnName="Evenemenmtnaam" />
                 <ScalarProperty Name="BeginTijd" ColumnName="BeginTijd" />
                 <ScalarProperty Name="EindTijd" ColumnName="EindTijd" />
-                <ScalarProperty Name="Evenement_Type" ColumnName="Evenement_Type" />
+                <ScalarProperty Name="Evenementtype" ColumnName="Evenementtype" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Locaties">
+          <EntitySetMapping Name="Locatie">
             <EntityTypeMapping TypeName="AQSDatabaseModel.Locatie">
               <MappingFragment StoreEntitySet="Locatie">
-                <ScalarProperty Name="Naam" ColumnName="Naam" />
+                <ScalarProperty Name="LocatieID" ColumnName="LocatieID" />
+                <ScalarProperty Name="Locatienaam" ColumnName="Locatienaam" />
                 <ScalarProperty Name="Plaatsnaam" ColumnName="Plaatsnaam" />
                 <ScalarProperty Name="Postcode" ColumnName="Postcode" />
                 <ScalarProperty Name="Huisnummer" ColumnName="Huisnummer" />
@@ -568,7 +528,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="MeerkeuzeAntwoorden">
+          <EntitySetMapping Name="MeerkeuzeAntwoord">
             <EntityTypeMapping TypeName="AQSDatabaseModel.MeerkeuzeAntwoord">
               <MappingFragment StoreEntitySet="MeerkeuzeAntwoord">
                 <ScalarProperty Name="MeerkeuzeAntwoord1" ColumnName="MeerkeuzeAntwoord" />
@@ -577,14 +537,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Rollen">
+          <EntitySetMapping Name="Rol">
             <EntityTypeMapping TypeName="AQSDatabaseModel.Rol">
               <MappingFragment StoreEntitySet="Rol">
                 <ScalarProperty Name="Rol1" ColumnName="Rol" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Rondes">
+          <EntitySetMapping Name="Ronde">
             <EntityTypeMapping TypeName="AQSDatabaseModel.Ronde">
               <MappingFragment StoreEntitySet="Ronde">
                 <ScalarProperty Name="EvenementID" ColumnName="EvenementID" />
@@ -593,14 +553,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Themas">
+          <EntitySetMapping Name="Thema">
             <EntityTypeMapping TypeName="AQSDatabaseModel.Thema">
               <MappingFragment StoreEntitySet="Thema">
                 <ScalarProperty Name="Naam" ColumnName="Naam" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Vragen">
+          <EntitySetMapping Name="Vraag">
             <EntityTypeMapping TypeName="AQSDatabaseModel.Vraag">
               <MappingFragment StoreEntitySet="Vraag">
                 <ScalarProperty Name="VraagID" ColumnName="VraagID" />
@@ -620,37 +580,7 @@
               <ScalarProperty Name="VraagID" ColumnName="VraagID" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="Stemmen">
-            <EntityTypeMapping TypeName="AQSDatabaseModel.Stemman">
-              <MappingFragment StoreEntitySet="Stemmen">
-                <ScalarProperty Name="TITEL" ColumnName="TITEL" />
-                <ScalarProperty Name="ARTIEST" ColumnName="ARTIEST" />
-                <ScalarProperty Name="EVENTID" ColumnName="EVENTID" />
-                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Teams">
-            <EntityTypeMapping TypeName="AQSDatabaseModel.Team">
-              <MappingFragment StoreEntitySet="Team">
-                <ScalarProperty Name="TOTALE_PUNTEN" ColumnName="TOTALE_PUNTEN" />
-                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
-                <ScalarProperty Name="TEAM_NAAM" ColumnName="TEAM_NAAM" />
-                <ScalarProperty Name="EVENTID" ColumnName="EVENTID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TeamAntwoords">
-            <EntityTypeMapping TypeName="AQSDatabaseModel.TeamAntwoord">
-              <MappingFragment StoreEntitySet="TeamAntwoord">
-                <ScalarProperty Name="TEAM_ANTWOORD" ColumnName="TEAM_ANTWOORD" />
-                <ScalarProperty Name="VRAAGID" ColumnName="VRAAGID" />
-                <ScalarProperty Name="TEAM_NAAM" ColumnName="TEAM_NAAM" />
-                <ScalarProperty Name="EVENTID" ColumnName="EVENTID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          </EntityContainerMapping>
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>
@@ -664,7 +594,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />

@@ -17,15 +17,15 @@ namespace QuizApp.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Thema()
         {
-            this.Rondes = new HashSet<Ronde>();
-            this.Vraags = new HashSet<Vraag>();
+            this.Ronde = new HashSet<Ronde>();
+            this.Vraag = new HashSet<Vraag>();
         }
     
         public string Naam { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Ronde> Rondes { get; set; }
+        public virtual ICollection<Ronde> Ronde { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Vraag> Vraags { get; set; }
+        public virtual ICollection<Vraag> Vraag { get; set; }
     }
 }

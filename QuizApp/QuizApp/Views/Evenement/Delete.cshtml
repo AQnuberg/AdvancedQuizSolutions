@@ -12,19 +12,11 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Email)
+            @Html.DisplayNameFor(model => model.Evenemenmtnaam)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Naam)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Naam)
+            @Html.DisplayFor(model => model.Evenemenmtnaam)
         </dd>
 
         <dt>
@@ -44,19 +36,27 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Evenement_Type)
+            @Html.DisplayNameFor(model => model.Evenementtype)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Evenement_Type)
+            @Html.DisplayFor(model => model.Evenementtype)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Locatie.Postcode)
+            @Html.DisplayNameFor(model => model.Account.Rol)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Locatie.Postcode)
+            @Html.DisplayFor(model => model.Account.Rol)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Locatie.Locatienaam)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Locatie.Locatienaam)
         </dd>
 
     </dl>

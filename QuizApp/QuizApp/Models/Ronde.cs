@@ -17,7 +17,7 @@ namespace QuizApp.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Ronde()
         {
-            this.Vraags = new HashSet<Vraag>();
+            this.Vraag = new HashSet<Vraag>();
         }
     
         public int EvenementID { get; set; }
@@ -27,6 +27,6 @@ namespace QuizApp.Models
         public virtual Evenement Evenement { get; set; }
         public virtual Thema Thema { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Vraag> Vraags { get; set; }
+        public virtual ICollection<Vraag> Vraag { get; set; }
     }
 }

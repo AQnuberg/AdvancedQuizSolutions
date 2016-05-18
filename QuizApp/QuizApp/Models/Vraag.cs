@@ -17,8 +17,8 @@ namespace QuizApp.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Vraag()
         {
-            this.MeerkeuzeAntwoords = new HashSet<MeerkeuzeAntwoord>();
-            this.Rondes = new HashSet<Ronde>();
+            this.MeerkeuzeAntwoord = new HashSet<MeerkeuzeAntwoord>();
+            this.Ronde = new HashSet<Ronde>();
         }
     
         public int VraagID { get; set; }
@@ -28,9 +28,9 @@ namespace QuizApp.Models
         public string AntwoordOpenVraag { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MeerkeuzeAntwoord> MeerkeuzeAntwoords { get; set; }
+        public virtual ICollection<MeerkeuzeAntwoord> MeerkeuzeAntwoord { get; set; }
         public virtual Thema Thema { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Ronde> Rondes { get; set; }
+        public virtual ICollection<Ronde> Ronde { get; set; }
     }
 }
