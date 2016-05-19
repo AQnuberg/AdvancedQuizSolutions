@@ -11,11 +11,16 @@
 </p>
 <table class="table">
     <tr>
-        <th></th>
+        <th>
+            @Html.DisplayNameFor(model => model.Naam)
+        </th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Naam)
+        </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Naam }) |
             @Html.ActionLink("Details", "Details", new { id=item.Naam }) |
