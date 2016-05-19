@@ -15,20 +15,29 @@ namespace QuizApp.Controllers
         private AQSDatabaseEntities db = new AQSDatabaseEntities();
 
         // GET: Ronde
-        public ActionResult Index()
-        {
-            var ronde = db.Ronde.Include(r => r.Evenement).Include(r => r.Thema);
-            return View(ronde.ToList());
-        }
-
-        // GET: Ronde/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Index(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Ronde ronde = db.Ronde.Find(id);
+
+            var rondeBijEvenement = from e in db.Ronde
+                            select e;
+            rondeBijEvenement = rondeBijEvenement.Where(s => s.EvenementID == id);
+
+            var ronde = rondeBijEvenement.Include(r => r.Evenement).Include(r => r.Thema);
+            return View(ronde.ToList());
+        }
+
+        // GET: Ronde/Details/5
+        public ActionResult Details(int? id, int? evenementID)
+        {
+            if (id == null || evenementID == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Ronde ronde = db.Ronde.Find(id, evenementID);
             if (ronde == null)
             {
                 return HttpNotFound();
@@ -37,9 +46,14 @@ namespace QuizApp.Controllers
         }
 
         // GET: Ronde/Create
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
-            ViewBag.EvenementID = new SelectList(db.Evenement, "EvenementID", "Email_Quizmaster");
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            ViewBag.EvenementID = new SelectList(db.Evenement, "Evenementnaam", "Evenementnaam");
             ViewBag.ThemaNaam = new SelectList(db.Thema, "Naam", "Naam");
             return View();
         }
@@ -64,18 +78,18 @@ namespace QuizApp.Controllers
         }
 
         // GET: Ronde/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int? id, int? evenementID)
         {
-            if (id == null)
+            if (id == null || evenementID == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Ronde ronde = db.Ronde.Find(id);
+            Ronde ronde = db.Ronde.Find(id,evenementID);
             if (ronde == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.EvenementID = new SelectList(db.Evenement, "EvenementID", "Email_Quizmaster", ronde.EvenementID);
+            ViewBag.EvenementID = new SelectList(db.Evenement, "EvenementID", "Evenementnaam", ronde.EvenementID);
             ViewBag.ThemaNaam = new SelectList(db.Thema, "Naam", "Naam", ronde.ThemaNaam);
             return View(ronde);
         }

@@ -12,7 +12,10 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Evenement.Email_Quizmaster)
+            @Html.DisplayNameFor(model => model.Evenement.Evenementnaam)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ronde1)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Thema.Naam)
@@ -23,15 +26,18 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Evenement.Email_Quizmaster)
+            @Html.DisplayFor(modelItem => item.Evenement.Evenementnaam)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Ronde1)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Thema.Naam)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            @Html.ActionLink("Edit", "Edit", new { id = item.Ronde1, evenementID = item.EvenementID}) |
+            @Html.ActionLink("Details", "Details", new { id = item.Ronde1, evenementID = item.EvenementID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Ronde1, evenementID = item.EvenementID })
         </td>
     </tr>
 }
