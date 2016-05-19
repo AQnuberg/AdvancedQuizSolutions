@@ -77,6 +77,10 @@ namespace QuizApp.Controllers
             {
                 return HttpNotFound();
             }
+            List<SelectListItem> vraagtypes = new List<SelectListItem>();
+            vraagtypes.Add(new SelectListItem { Text = "Open" });
+            vraagtypes.Add(new SelectListItem { Text = "Meerkeuze" });
+            ViewBag.Vraagtype = new SelectList(vraagtypes, "Text", "Text");
             ViewBag.ThemaNaam = new SelectList(db.Thema, "Naam", "Naam", vraag.ThemaNaam);
             return View(vraag);
         }
