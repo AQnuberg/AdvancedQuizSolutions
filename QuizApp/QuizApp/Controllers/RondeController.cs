@@ -89,7 +89,7 @@ namespace QuizApp.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.EvenementID = new SelectList(db.Evenement, "EvenementID", "Email_Quizmaster", ronde.EvenementID);
+            ViewBag.EvenementID = new SelectList(db.Evenement, "EvenementID", "Evenementnaam", ronde.EvenementID);
             ViewBag.ThemaNaam = new SelectList(db.Thema, "Naam", "Naam", ronde.ThemaNaam);
             return View(ronde);
         }

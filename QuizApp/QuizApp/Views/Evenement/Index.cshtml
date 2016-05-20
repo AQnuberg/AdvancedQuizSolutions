@@ -4,10 +4,11 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Evenement Beheren</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create Evenement", "Create") |
+    @Html.ActionLink("Create Locatie", "Create", "Locatie")
 </p>
 <table class="table">
     <tr>
@@ -24,7 +25,7 @@
             @Html.DisplayNameFor(model => model.Evenementtype)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Account.Rol)
+            @Html.DisplayNameFor(model => model.Account.Email)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Locatie.Locatienaam)
@@ -47,7 +48,7 @@
             @Html.DisplayFor(modelItem => item.Evenementtype)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Account.Rol)
+            @Html.DisplayFor(modelItem => item.Account.Email)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Locatie.Locatienaam)

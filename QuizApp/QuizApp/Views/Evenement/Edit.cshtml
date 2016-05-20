@@ -74,7 +74,8 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Index") |
+    @Html.ActionLink("Edit Locatie", "Edit", "Locatie", new {id = Model.LocatieID}, null)
 </div>
 
 @section Scripts {

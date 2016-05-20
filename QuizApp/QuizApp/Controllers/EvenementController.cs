@@ -39,8 +39,20 @@ namespace QuizApp.Controllers
         // GET: Evenement/Create
         public ActionResult Create()
         {
-            ViewBag.Email_Quizmaster = new SelectList(db.Account, "Email", "Rol");
-            ViewBag.LocatieID = new SelectList(db.Locatie, "LocatieID", "Locatienaam");
+            ViewBag.Email_Quizmaster = new SelectList(db.Account, "Email", "Email");
+
+            var locaties = db.Locatie.Select(s => new
+            {
+                Text = s.Plaatsnaam + "|" + s.Locatienaam,
+                Value = s.LocatieID
+            }).ToList();
+            ViewBag.LocatieNaamPlaats = new SelectList(locaties, "Value", "Text");
+
+            List<SelectListItem> evenementtypes = new List<SelectListItem>();
+            evenementtypes.Add(new SelectListItem { Text = "PubQuiz" });
+            evenementtypes.Add(new SelectListItem { Text = "Top100" });
+            ViewBag.Evenementtype = new SelectList(evenementtypes, "Text", "Text");
+
             return View();
         }
 
