@@ -15,9 +15,14 @@ namespace QuizApp.Controllers
         private AQSDatabaseEntities db = new AQSDatabaseEntities();
 
         // GET: MeerkeuzeAntwoords
-        public ActionResult Index()
+        public ActionResult Index(int id)
         {
-            var meerkeuzeAntwoord = db.MeerkeuzeAntwoord.Include(m => m.Vraag);
+            var antwoord = from a in db.MeerkeuzeAntwoord
+                           select a;
+
+            antwoord = antwoord.Where(s => s.VraagID == id);
+
+            var meerkeuzeAntwoord = antwoord.Include(m => m.Vraag);
             return View(meerkeuzeAntwoord.ToList());
         }
 
@@ -62,13 +67,13 @@ namespace QuizApp.Controllers
         }
 
         // GET: MeerkeuzeAntwoords/Edit/5
-        public ActionResult Edit(string id)
+        public ActionResult Edit(string id, string antwoord)
         {
-            if (id == null)
+            if (antwoord == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            MeerkeuzeAntwoord meerkeuzeAntwoord = db.MeerkeuzeAntwoord.Find(id);
+            MeerkeuzeAntwoord meerkeuzeAntwoord = db.MeerkeuzeAntwoord.Find(id, antwoord);
             if (meerkeuzeAntwoord == null)
             {
                 return HttpNotFound();

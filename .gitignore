@@ -1,7 +1,7 @@
 ﻿###################
 # compiled source #
 ###################
-Web.config
+Quizapp/Web.config
 *.com
 *.class
 *.dll

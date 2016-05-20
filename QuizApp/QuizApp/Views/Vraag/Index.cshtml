@@ -43,7 +43,8 @@
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.VraagID }) |
             @Html.ActionLink("Details", "Details", new { id=item.VraagID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.VraagID })
+            @Html.ActionLink("Delete", "Delete", new { id=item.VraagID }) |
+            @Html.ActionLink("Show Meerkeuzeantwoorden", "Index", "MeerkeuzeAntwoords", new {id =item.VraagID}, null)
         </td>
     </tr>
 }
