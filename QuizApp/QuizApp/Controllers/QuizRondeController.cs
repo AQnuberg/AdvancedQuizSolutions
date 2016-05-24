@@ -15,9 +15,24 @@ namespace QuizApp.Controllers
         private AQSDatabaseEntities db = new AQSDatabaseEntities();
 
         // GET: QuizRonde
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
-            var quizRondes = db.QuizRondes.Include(q => q.Evenement).Include(q => q.Thema);
+            if (id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+
+            var evenementNaam = from e in db.Evenementen
+                                select e;
+            string evenementNaamByID = evenementNaam.Where(s => s.EvenementID == id).ToString();
+
+            var rondeBijEvenement = from e in db.QuizRondes
+                                    select e;
+            rondeBijEvenement = rondeBijEvenement.Where(s => s.EvenementID == id);
+            var quizRondes = rondeBijEvenement.Include(r => r.Evenement).Include(r => r.Thema).Include(evenementNaamByID);
+
+          
+
             return View(quizRondes.ToList());
         }
 
@@ -37,9 +52,13 @@ namespace QuizApp.Controllers
         }
 
         // GET: QuizRonde/Create
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
-            ViewBag.EvenementID = new SelectList(db.Evenementen, "EvenementID", "Email_Quizmaster");
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ViewBag.EvenementID = new SelectList(db.Evenementen, "EvenementID", "Evenementnaam");
             ViewBag.Thema_Naam = new SelectList(db.Themas, "Thema_Naam", "Thema_Naam");
             return View();
         }
