@@ -4,7 +4,7 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<h2>Evenement aanmaken</h2>
 
 
 @using (Html.BeginForm()) 
@@ -12,13 +12,12 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Evenement</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.LocatieID, "LocatieID", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("LocatieID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.LocatieID, (SelectList)ViewBag.LocatieNaamPlaats, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.LocatieID, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -56,9 +55,9 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Evenement_Type, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Evenement_Type, "Evenement_Type", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Evenement_Type, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownList("Evenement_Type", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Evenement_Type, "", new { @class = "text-danger" })
             </div>
         </div>

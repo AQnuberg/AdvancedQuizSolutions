@@ -17,7 +17,7 @@ namespace QuizApp.Controllers
         // GET: Rol
         public ActionResult Index()
         {
-            return View(db.Rols.ToList());
+            return View(db.Rollen.ToList());
         }
 
         // GET: Rol/Details/5
@@ -27,7 +27,7 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Rol rol = db.Rols.Find(id);
+            Rol rol = db.Rollen.Find(id);
             if (rol == null)
             {
                 return HttpNotFound();
@@ -50,7 +50,7 @@ namespace QuizApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Rols.Add(rol);
+                db.Rollen.Add(rol);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -65,7 +65,7 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Rol rol = db.Rols.Find(id);
+            Rol rol = db.Rollen.Find(id);
             if (rol == null)
             {
                 return HttpNotFound();
@@ -96,7 +96,7 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Rol rol = db.Rols.Find(id);
+            Rol rol = db.Rollen.Find(id);
             if (rol == null)
             {
                 return HttpNotFound();
@@ -109,8 +109,8 @@ namespace QuizApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            Rol rol = db.Rols.Find(id);
-            db.Rols.Remove(rol);
+            Rol rol = db.Rollen.Find(id);
+            db.Rollen.Remove(rol);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -17,7 +17,7 @@ namespace QuizApp.Controllers
         // GET: Evenement
         public ActionResult Index()
         {
-            var evenements = db.Evenements.Include(e => e.Account).Include(e => e.Locatie);
+            var evenements = db.Evenementen.Include(e => e.Account).Include(e => e.Locatie);
             return View(evenements.ToList());
         }
 
@@ -28,7 +28,7 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Evenement evenement = db.Evenements.Find(id);
+            Evenement evenement = db.Evenementen.Find(id);
             if (evenement == null)
             {
                 return HttpNotFound();
@@ -39,8 +39,20 @@ namespace QuizApp.Controllers
         // GET: Evenement/Create
         public ActionResult Create()
         {
-            ViewBag.Email_Quizmaster = new SelectList(db.Accounts, "Email", "Rolnaam");
-            ViewBag.LocatieID = new SelectList(db.Locaties, "LocatieID", "Locatie_Naam");
+            ViewBag.Email_Quizmaster = new SelectList(db.Accounts, "Email", "Email");
+
+            var locaties = db.Locaties.Select(s => new
+            {
+                Text = s.Plaatsnaam + " | " + s.Locatie_Naam,
+                Value = s.LocatieID
+            }).ToList();
+            ViewBag.LocatieNaamPlaats = new SelectList(locaties, "Value", "Text");
+
+            List<SelectListItem> evenementtypes = new List<SelectListItem>();
+            evenementtypes.Add(new SelectListItem { Text = "PubQuiz" });
+            evenementtypes.Add(new SelectListItem { Text = "Top100" });
+            ViewBag.Evenement_Type = new SelectList(evenementtypes, "Text", "Text");
+
             return View();
         }
 
@@ -53,13 +65,10 @@ namespace QuizApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Evenements.Add(evenement);
+                db.Evenementen.Add(evenement);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.Email_Quizmaster = new SelectList(db.Accounts, "Email", "Rolnaam", evenement.Email_Quizmaster);
-            ViewBag.LocatieID = new SelectList(db.Locaties, "LocatieID", "Locatie_Naam", evenement.LocatieID);
             return View(evenement);
         }
 
@@ -70,7 +79,7 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Evenement evenement = db.Evenements.Find(id);
+            Evenement evenement = db.Evenementen.Find(id);
             if (evenement == null)
             {
                 return HttpNotFound();
@@ -105,7 +114,7 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Evenement evenement = db.Evenements.Find(id);
+            Evenement evenement = db.Evenementen.Find(id);
             if (evenement == null)
             {
                 return HttpNotFound();
@@ -118,8 +127,8 @@ namespace QuizApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Evenement evenement = db.Evenements.Find(id);
-            db.Evenements.Remove(evenement);
+            Evenement evenement = db.Evenementen.Find(id);
+            db.Evenementen.Remove(evenement);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

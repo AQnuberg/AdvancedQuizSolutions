@@ -17,7 +17,7 @@ namespace QuizApp.Controllers
         // GET: TeamAntwoord
         public ActionResult Index()
         {
-            var teamAntwoords = db.TeamAntwoords.Include(t => t.QuizVraag).Include(t => t.Team);
+            var teamAntwoords = db.TeamAntwoorden.Include(t => t.QuizVraag).Include(t => t.Team);
             return View(teamAntwoords.ToList());
         }
 
@@ -28,7 +28,7 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TeamAntwoord teamAntwoord = db.TeamAntwoords.Find(id);
+            TeamAntwoord teamAntwoord = db.TeamAntwoorden.Find(id);
             if (teamAntwoord == null)
             {
                 return HttpNotFound();
@@ -39,7 +39,7 @@ namespace QuizApp.Controllers
         // GET: TeamAntwoord/Create
         public ActionResult Create()
         {
-            ViewBag.QuizVraagID = new SelectList(db.QuizVraags, "QuizVraagID", "Thema_Naam");
+            ViewBag.QuizVraagID = new SelectList(db.QuizVragen, "QuizVraagID", "Thema_Naam");
             ViewBag.TeamID = new SelectList(db.Teams, "TeamID", "Teamnaam");
             return View();
         }
@@ -53,12 +53,12 @@ namespace QuizApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.TeamAntwoords.Add(teamAntwoord);
+                db.TeamAntwoorden.Add(teamAntwoord);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.QuizVraagID = new SelectList(db.QuizVraags, "QuizVraagID", "Thema_Naam", teamAntwoord.QuizVraagID);
+            ViewBag.QuizVraagID = new SelectList(db.QuizVragen, "QuizVraagID", "Thema_Naam", teamAntwoord.QuizVraagID);
             ViewBag.TeamID = new SelectList(db.Teams, "TeamID", "Teamnaam", teamAntwoord.TeamID);
             return View(teamAntwoord);
         }
@@ -70,12 +70,12 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TeamAntwoord teamAntwoord = db.TeamAntwoords.Find(id);
+            TeamAntwoord teamAntwoord = db.TeamAntwoorden.Find(id);
             if (teamAntwoord == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.QuizVraagID = new SelectList(db.QuizVraags, "QuizVraagID", "Thema_Naam", teamAntwoord.QuizVraagID);
+            ViewBag.QuizVraagID = new SelectList(db.QuizVragen, "QuizVraagID", "Thema_Naam", teamAntwoord.QuizVraagID);
             ViewBag.TeamID = new SelectList(db.Teams, "TeamID", "Teamnaam", teamAntwoord.TeamID);
             return View(teamAntwoord);
         }
@@ -93,7 +93,7 @@ namespace QuizApp.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.QuizVraagID = new SelectList(db.QuizVraags, "QuizVraagID", "Thema_Naam", teamAntwoord.QuizVraagID);
+            ViewBag.QuizVraagID = new SelectList(db.QuizVragen, "QuizVraagID", "Thema_Naam", teamAntwoord.QuizVraagID);
             ViewBag.TeamID = new SelectList(db.Teams, "TeamID", "Teamnaam", teamAntwoord.TeamID);
             return View(teamAntwoord);
         }
@@ -105,7 +105,7 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TeamAntwoord teamAntwoord = db.TeamAntwoords.Find(id);
+            TeamAntwoord teamAntwoord = db.TeamAntwoorden.Find(id);
             if (teamAntwoord == null)
             {
                 return HttpNotFound();
@@ -118,8 +118,8 @@ namespace QuizApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            TeamAntwoord teamAntwoord = db.TeamAntwoords.Find(id);
-            db.TeamAntwoords.Remove(teamAntwoord);
+            TeamAntwoord teamAntwoord = db.TeamAntwoorden.Find(id);
+            db.TeamAntwoorden.Remove(teamAntwoord);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -40,7 +40,7 @@ namespace QuizApp.Controllers
         public ActionResult Create()
         {
             ViewBag.Email_Teamleider = new SelectList(db.Accounts, "Email", "Rolnaam");
-            ViewBag.EvenementID = new SelectList(db.Evenements, "EvenementID", "Email_Quizmaster");
+            ViewBag.EvenementID = new SelectList(db.Evenementen, "EvenementID", "Email_Quizmaster");
             return View();
         }
 
@@ -59,7 +59,7 @@ namespace QuizApp.Controllers
             }
 
             ViewBag.Email_Teamleider = new SelectList(db.Accounts, "Email", "Rolnaam", team.Email_Teamleider);
-            ViewBag.EvenementID = new SelectList(db.Evenements, "EvenementID", "Email_Quizmaster", team.EvenementID);
+            ViewBag.EvenementID = new SelectList(db.Evenementen, "EvenementID", "Email_Quizmaster", team.EvenementID);
             return View(team);
         }
 
@@ -76,7 +76,7 @@ namespace QuizApp.Controllers
                 return HttpNotFound();
             }
             ViewBag.Email_Teamleider = new SelectList(db.Accounts, "Email", "Rolnaam", team.Email_Teamleider);
-            ViewBag.EvenementID = new SelectList(db.Evenements, "EvenementID", "Email_Quizmaster", team.EvenementID);
+            ViewBag.EvenementID = new SelectList(db.Evenementen, "EvenementID", "Email_Quizmaster", team.EvenementID);
             return View(team);
         }
 
@@ -94,7 +94,7 @@ namespace QuizApp.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.Email_Teamleider = new SelectList(db.Accounts, "Email", "Rolnaam", team.Email_Teamleider);
-            ViewBag.EvenementID = new SelectList(db.Evenements, "EvenementID", "Email_Quizmaster", team.EvenementID);
+            ViewBag.EvenementID = new SelectList(db.Evenementen, "EvenementID", "Email_Quizmaster", team.EvenementID);
             return View(team);
         }
 

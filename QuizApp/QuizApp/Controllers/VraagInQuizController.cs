@@ -17,7 +17,7 @@ namespace QuizApp.Controllers
         // GET: VraagInQuiz
         public ActionResult Index()
         {
-            var vraagInQuizs = db.VraagInQuizs.Include(v => v.QuizRonde).Include(v => v.QuizVraag);
+            var vraagInQuizs = db.VraagInQuizzen.Include(v => v.QuizRonde).Include(v => v.QuizVraag);
             return View(vraagInQuizs.ToList());
         }
 
@@ -28,7 +28,7 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            VraagInQuiz vraagInQuiz = db.VraagInQuizs.Find(id);
+            VraagInQuiz vraagInQuiz = db.VraagInQuizzen.Find(id);
             if (vraagInQuiz == null)
             {
                 return HttpNotFound();
@@ -40,7 +40,7 @@ namespace QuizApp.Controllers
         public ActionResult Create()
         {
             ViewBag.QuizRondeID = new SelectList(db.QuizRondes, "QuizRondeID", "Thema_Naam");
-            ViewBag.QuizVraagID = new SelectList(db.QuizVraags, "QuizVraagID", "Thema_Naam");
+            ViewBag.QuizVraagID = new SelectList(db.QuizVragen, "QuizVraagID", "Thema_Naam");
             return View();
         }
 
@@ -53,13 +53,13 @@ namespace QuizApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.VraagInQuizs.Add(vraagInQuiz);
+                db.VraagInQuizzen.Add(vraagInQuiz);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
             ViewBag.QuizRondeID = new SelectList(db.QuizRondes, "QuizRondeID", "Thema_Naam", vraagInQuiz.QuizRondeID);
-            ViewBag.QuizVraagID = new SelectList(db.QuizVraags, "QuizVraagID", "Thema_Naam", vraagInQuiz.QuizVraagID);
+            ViewBag.QuizVraagID = new SelectList(db.QuizVragen, "QuizVraagID", "Thema_Naam", vraagInQuiz.QuizVraagID);
             return View(vraagInQuiz);
         }
 
@@ -70,13 +70,13 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            VraagInQuiz vraagInQuiz = db.VraagInQuizs.Find(id);
+            VraagInQuiz vraagInQuiz = db.VraagInQuizzen.Find(id);
             if (vraagInQuiz == null)
             {
                 return HttpNotFound();
             }
             ViewBag.QuizRondeID = new SelectList(db.QuizRondes, "QuizRondeID", "Thema_Naam", vraagInQuiz.QuizRondeID);
-            ViewBag.QuizVraagID = new SelectList(db.QuizVraags, "QuizVraagID", "Thema_Naam", vraagInQuiz.QuizVraagID);
+            ViewBag.QuizVraagID = new SelectList(db.QuizVragen, "QuizVraagID", "Thema_Naam", vraagInQuiz.QuizVraagID);
             return View(vraagInQuiz);
         }
 
@@ -94,7 +94,7 @@ namespace QuizApp.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.QuizRondeID = new SelectList(db.QuizRondes, "QuizRondeID", "Thema_Naam", vraagInQuiz.QuizRondeID);
-            ViewBag.QuizVraagID = new SelectList(db.QuizVraags, "QuizVraagID", "Thema_Naam", vraagInQuiz.QuizVraagID);
+            ViewBag.QuizVraagID = new SelectList(db.QuizVragen, "QuizVraagID", "Thema_Naam", vraagInQuiz.QuizVraagID);
             return View(vraagInQuiz);
         }
 
@@ -105,7 +105,7 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            VraagInQuiz vraagInQuiz = db.VraagInQuizs.Find(id);
+            VraagInQuiz vraagInQuiz = db.VraagInQuizzen.Find(id);
             if (vraagInQuiz == null)
             {
                 return HttpNotFound();
@@ -118,8 +118,8 @@ namespace QuizApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            VraagInQuiz vraagInQuiz = db.VraagInQuizs.Find(id);
-            db.VraagInQuizs.Remove(vraagInQuiz);
+            VraagInQuiz vraagInQuiz = db.VraagInQuizzen.Find(id);
+            db.VraagInQuizzen.Remove(vraagInQuiz);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

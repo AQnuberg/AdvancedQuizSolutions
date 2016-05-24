@@ -17,7 +17,7 @@ namespace QuizApp.Controllers
         // GET: MeerkeuzeAntwoord
         public ActionResult Index()
         {
-            var meerkeuzeAntwoords = db.MeerkeuzeAntwoords.Include(m => m.QuizVraag);
+            var meerkeuzeAntwoords = db.MeerkeuzeAntwoorden.Include(m => m.QuizVraag);
             return View(meerkeuzeAntwoords.ToList());
         }
 
@@ -28,7 +28,7 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            MeerkeuzeAntwoord meerkeuzeAntwoord = db.MeerkeuzeAntwoords.Find(id);
+            MeerkeuzeAntwoord meerkeuzeAntwoord = db.MeerkeuzeAntwoorden.Find(id);
             if (meerkeuzeAntwoord == null)
             {
                 return HttpNotFound();
@@ -39,7 +39,7 @@ namespace QuizApp.Controllers
         // GET: MeerkeuzeAntwoord/Create
         public ActionResult Create()
         {
-            ViewBag.QuizVraagID = new SelectList(db.QuizVraags, "QuizVraagID", "Thema_Naam");
+            ViewBag.QuizVraagID = new SelectList(db.QuizVragen, "QuizVraagID", "Thema_Naam");
             return View();
         }
 
@@ -52,12 +52,12 @@ namespace QuizApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.MeerkeuzeAntwoords.Add(meerkeuzeAntwoord);
+                db.MeerkeuzeAntwoorden.Add(meerkeuzeAntwoord);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.QuizVraagID = new SelectList(db.QuizVraags, "QuizVraagID", "Thema_Naam", meerkeuzeAntwoord.QuizVraagID);
+            ViewBag.QuizVraagID = new SelectList(db.QuizVragen, "QuizVraagID", "Thema_Naam", meerkeuzeAntwoord.QuizVraagID);
             return View(meerkeuzeAntwoord);
         }
 
@@ -68,12 +68,12 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            MeerkeuzeAntwoord meerkeuzeAntwoord = db.MeerkeuzeAntwoords.Find(id);
+            MeerkeuzeAntwoord meerkeuzeAntwoord = db.MeerkeuzeAntwoorden.Find(id);
             if (meerkeuzeAntwoord == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.QuizVraagID = new SelectList(db.QuizVraags, "QuizVraagID", "Thema_Naam", meerkeuzeAntwoord.QuizVraagID);
+            ViewBag.QuizVraagID = new SelectList(db.QuizVragen, "QuizVraagID", "Thema_Naam", meerkeuzeAntwoord.QuizVraagID);
             return View(meerkeuzeAntwoord);
         }
 
@@ -90,7 +90,7 @@ namespace QuizApp.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.QuizVraagID = new SelectList(db.QuizVraags, "QuizVraagID", "Thema_Naam", meerkeuzeAntwoord.QuizVraagID);
+            ViewBag.QuizVraagID = new SelectList(db.QuizVragen, "QuizVraagID", "Thema_Naam", meerkeuzeAntwoord.QuizVraagID);
             return View(meerkeuzeAntwoord);
         }
 
@@ -101,7 +101,7 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            MeerkeuzeAntwoord meerkeuzeAntwoord = db.MeerkeuzeAntwoords.Find(id);
+            MeerkeuzeAntwoord meerkeuzeAntwoord = db.MeerkeuzeAntwoorden.Find(id);
             if (meerkeuzeAntwoord == null)
             {
                 return HttpNotFound();
@@ -114,8 +114,8 @@ namespace QuizApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            MeerkeuzeAntwoord meerkeuzeAntwoord = db.MeerkeuzeAntwoords.Find(id);
-            db.MeerkeuzeAntwoords.Remove(meerkeuzeAntwoord);
+            MeerkeuzeAntwoord meerkeuzeAntwoord = db.MeerkeuzeAntwoorden.Find(id);
+            db.MeerkeuzeAntwoorden.Remove(meerkeuzeAntwoord);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

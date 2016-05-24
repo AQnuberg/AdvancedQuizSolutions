@@ -17,7 +17,7 @@ namespace QuizApp.Controllers
         // GET: QuizVraag
         public ActionResult Index()
         {
-            var quizVraags = db.QuizVraags.Include(q => q.Thema);
+            var quizVraags = db.QuizVragen.Include(q => q.Thema);
             return View(quizVraags.ToList());
         }
 
@@ -28,7 +28,7 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            QuizVraag quizVraag = db.QuizVraags.Find(id);
+            QuizVraag quizVraag = db.QuizVragen.Find(id);
             if (quizVraag == null)
             {
                 return HttpNotFound();
@@ -52,7 +52,7 @@ namespace QuizApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.QuizVraags.Add(quizVraag);
+                db.QuizVragen.Add(quizVraag);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -68,7 +68,7 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            QuizVraag quizVraag = db.QuizVraags.Find(id);
+            QuizVraag quizVraag = db.QuizVragen.Find(id);
             if (quizVraag == null)
             {
                 return HttpNotFound();
@@ -101,7 +101,7 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            QuizVraag quizVraag = db.QuizVraags.Find(id);
+            QuizVraag quizVraag = db.QuizVragen.Find(id);
             if (quizVraag == null)
             {
                 return HttpNotFound();
@@ -114,8 +114,8 @@ namespace QuizApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            QuizVraag quizVraag = db.QuizVraags.Find(id);
-            db.QuizVraags.Remove(quizVraag);
+            QuizVraag quizVraag = db.QuizVragen.Find(id);
+            db.QuizVragen.Remove(quizVraag);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

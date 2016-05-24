@@ -26,15 +26,15 @@ namespace QuizApp.Models
         }
     
         public virtual DbSet<Account> Accounts { get; set; }
-        public virtual DbSet<Evenement> Evenements { get; set; }
+        public virtual DbSet<Evenement> Evenementen { get; set; }
         public virtual DbSet<Locatie> Locaties { get; set; }
-        public virtual DbSet<MeerkeuzeAntwoord> MeerkeuzeAntwoords { get; set; }
+        public virtual DbSet<MeerkeuzeAntwoord> MeerkeuzeAntwoorden { get; set; }
         public virtual DbSet<QuizRonde> QuizRondes { get; set; }
-        public virtual DbSet<QuizVraag> QuizVraags { get; set; }
-        public virtual DbSet<Rol> Rols { get; set; }
+        public virtual DbSet<QuizVraag> QuizVragen { get; set; }
+        public virtual DbSet<Rol> Rollen { get; set; }
         public virtual DbSet<Team> Teams { get; set; }
-        public virtual DbSet<TeamAntwoord> TeamAntwoords { get; set; }
+        public virtual DbSet<TeamAntwoord> TeamAntwoorden { get; set; }
         public virtual DbSet<Thema> Themas { get; set; }
-        public virtual DbSet<VraagInQuiz> VraagInQuizs { get; set; }
+        public virtual DbSet<VraagInQuiz> VraagInQuizzen { get; set; }
     }
 }

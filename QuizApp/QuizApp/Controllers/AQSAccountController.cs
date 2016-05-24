@@ -39,7 +39,7 @@ namespace QuizApp.Controllers
         // GET: AQSAccount/Create
         public ActionResult Create()
         {
-            ViewBag.Rolnaam = new SelectList(db.Rols, "Rolnaam", "Rolnaam");
+            ViewBag.Rolnaam = new SelectList(db.Rollen, "Rolnaam", "Rolnaam");
             return View();
         }
 
@@ -57,7 +57,7 @@ namespace QuizApp.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.Rolnaam = new SelectList(db.Rols, "Rolnaam", "Rolnaam", account.Rolnaam);
+            ViewBag.Rolnaam = new SelectList(db.Rollen, "Rolnaam", "Rolnaam", account.Rolnaam);
             return View(account);
         }
 
@@ -73,7 +73,7 @@ namespace QuizApp.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.Rolnaam = new SelectList(db.Rols, "Rolnaam", "Rolnaam", account.Rolnaam);
+            ViewBag.Rolnaam = new SelectList(db.Rollen, "Rolnaam", "Rolnaam", account.Rolnaam);
             return View(account);
         }
 
@@ -90,7 +90,7 @@ namespace QuizApp.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Rolnaam = new SelectList(db.Rols, "Rolnaam", "Rolnaam", account.Rolnaam);
+            ViewBag.Rolnaam = new SelectList(db.Rollen, "Rolnaam", "Rolnaam", account.Rolnaam);
             return View(account);
         }
 

@@ -39,7 +39,7 @@ namespace QuizApp.Controllers
         // GET: QuizRonde/Create
         public ActionResult Create()
         {
-            ViewBag.EvenementID = new SelectList(db.Evenements, "EvenementID", "Email_Quizmaster");
+            ViewBag.EvenementID = new SelectList(db.Evenementen, "EvenementID", "Email_Quizmaster");
             ViewBag.Thema_Naam = new SelectList(db.Themas, "Thema_Naam", "Thema_Naam");
             return View();
         }
@@ -58,7 +58,7 @@ namespace QuizApp.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.EvenementID = new SelectList(db.Evenements, "EvenementID", "Email_Quizmaster", quizRonde.EvenementID);
+            ViewBag.EvenementID = new SelectList(db.Evenementen, "EvenementID", "Email_Quizmaster", quizRonde.EvenementID);
             ViewBag.Thema_Naam = new SelectList(db.Themas, "Thema_Naam", "Thema_Naam", quizRonde.Thema_Naam);
             return View(quizRonde);
         }
@@ -75,7 +75,7 @@ namespace QuizApp.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.EvenementID = new SelectList(db.Evenements, "EvenementID", "Email_Quizmaster", quizRonde.EvenementID);
+            ViewBag.EvenementID = new SelectList(db.Evenementen, "EvenementID", "Email_Quizmaster", quizRonde.EvenementID);
             ViewBag.Thema_Naam = new SelectList(db.Themas, "Thema_Naam", "Thema_Naam", quizRonde.Thema_Naam);
             return View(quizRonde);
         }
@@ -93,7 +93,7 @@ namespace QuizApp.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.EvenementID = new SelectList(db.Evenements, "EvenementID", "Email_Quizmaster", quizRonde.EvenementID);
+            ViewBag.EvenementID = new SelectList(db.Evenementen, "EvenementID", "Email_Quizmaster", quizRonde.EvenementID);
             ViewBag.Thema_Naam = new SelectList(db.Themas, "Thema_Naam", "Thema_Naam", quizRonde.Thema_Naam);
             return View(quizRonde);
         }
