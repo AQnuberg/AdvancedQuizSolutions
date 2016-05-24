@@ -1,0 +1,845 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="AQSDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="Email" />
+          </Key>
+          <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Rolnaam" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Wachtwoord" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Voornaam" Type="nvarchar" MaxLength="50" />
+          <Property Name="Achternaam" Type="nvarchar" MaxLength="50" />
+          <Property Name="Woonplaats" Type="nvarchar" MaxLength="50" />
+          <Property Name="Straatnaam" Type="nvarchar" MaxLength="50" />
+          <Property Name="Huisnummer" Type="nvarchar" MaxLength="10" />
+          <Property Name="Postcode" Type="varchar" MaxLength="7" />
+          <Property Name="Telefoonnummer" Type="varchar" MaxLength="12" />
+        </EntityType>
+        <EntityType Name="Evenement">
+          <Key>
+            <PropertyRef Name="EvenementID" />
+          </Key>
+          <Property Name="EvenementID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LocatieID" Type="int" Nullable="false" />
+          <Property Name="Email_Quizmaster" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Evenement_Naam" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Begintijd" Type="datetime" Nullable="false" />
+          <Property Name="Eindtijd" Type="datetime" Nullable="false" />
+          <Property Name="Evenement_Type" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Locatie">
+          <Key>
+            <PropertyRef Name="LocatieID" />
+          </Key>
+          <Property Name="LocatieID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Locatie_Naam" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Plaatsnaam" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Postcode" Type="varchar" MaxLength="7" Nullable="false" />
+          <Property Name="Huisnummer" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Straatnaam" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Telefoonnummer" Type="nvarchar" MaxLength="12" />
+          <Property Name="Website" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="MeerkeuzeAntwoord">
+          <Key>
+            <PropertyRef Name="MeerkeuzeAntwoordID" />
+          </Key>
+          <Property Name="MeerkeuzeAntwoordID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Meerkeuze_Antwoord" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="QuizVraagID" Type="int" Nullable="false" />
+          <Property Name="Is_Juist" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="QuizRonde">
+          <Key>
+            <PropertyRef Name="QuizRondeID" />
+          </Key>
+          <Property Name="QuizRondeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EvenementID" Type="int" Nullable="false" />
+          <Property Name="Rondenummer" Type="int" Nullable="false" />
+          <Property Name="Thema_Naam" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="QuizVraag">
+          <Key>
+            <PropertyRef Name="QuizVraagID" />
+          </Key>
+          <Property Name="QuizVraagID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Thema_Naam" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Vraag" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Vraagtype" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Open_Vraag_Antwoord" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Rol">
+          <Key>
+            <PropertyRef Name="Rolnaam" />
+          </Key>
+          <Property Name="Rolnaam" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Team">
+          <Key>
+            <PropertyRef Name="TeamID" />
+          </Key>
+          <Property Name="TeamID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EvenementID" Type="int" Nullable="false" />
+          <Property Name="Teamnaam" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email_Teamleider" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Puntentotaal" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TeamAntwoord">
+          <Key>
+            <PropertyRef Name="TeamAntwoordID" />
+          </Key>
+          <Property Name="TeamAntwoordID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TeamID" Type="int" Nullable="false" />
+          <Property Name="QuizVraagID" Type="int" Nullable="false" />
+          <Property Name="Gegeven_Antwoord" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Thema">
+          <Key>
+            <PropertyRef Name="Thema_Naam" />
+          </Key>
+          <Property Name="Thema_Naam" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VraagInQuiz">
+          <Key>
+            <PropertyRef Name="VraagInQuizID" />
+          </Key>
+          <Property Name="VraagInQuizID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="QuizRondeID" Type="int" Nullable="false" />
+          <Property Name="QuizVraagID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Account_Rol">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
+          <End Role="Account" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="Rolnaam" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="Rolnaam" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Evenement_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="Evenement" Type="Self.Evenement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="Evenement">
+              <PropertyRef Name="Email_Quizmaster" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Evenement_Locatie">
+          <End Role="Locatie" Type="Self.Locatie" Multiplicity="1" />
+          <End Role="Evenement" Type="Self.Evenement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locatie">
+              <PropertyRef Name="LocatieID" />
+            </Principal>
+            <Dependent Role="Evenement">
+              <PropertyRef Name="LocatieID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Meerkeuzeantwoord_Vraag">
+          <End Role="QuizVraag" Type="Self.QuizVraag" Multiplicity="1" />
+          <End Role="MeerkeuzeAntwoord" Type="Self.MeerkeuzeAntwoord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuizVraag">
+              <PropertyRef Name="QuizVraagID" />
+            </Principal>
+            <Dependent Role="MeerkeuzeAntwoord">
+              <PropertyRef Name="QuizVraagID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ronde_Evenement">
+          <End Role="Evenement" Type="Self.Evenement" Multiplicity="1" />
+          <End Role="QuizRonde" Type="Self.QuizRonde" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Evenement">
+              <PropertyRef Name="EvenementID" />
+            </Principal>
+            <Dependent Role="QuizRonde">
+              <PropertyRef Name="EvenementID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ronde_Thema">
+          <End Role="Thema" Type="Self.Thema" Multiplicity="1" />
+          <End Role="QuizRonde" Type="Self.QuizRonde" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Thema">
+              <PropertyRef Name="Thema_Naam" />
+            </Principal>
+            <Dependent Role="QuizRonde">
+              <PropertyRef Name="Thema_Naam" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Team_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="Team" Type="Self.Team" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="Team">
+              <PropertyRef Name="Email_Teamleider" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Team_Evenement">
+          <End Role="Evenement" Type="Self.Evenement" Multiplicity="1" />
+          <End Role="Team" Type="Self.Team" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Evenement">
+              <PropertyRef Name="EvenementID" />
+            </Principal>
+            <Dependent Role="Team">
+              <PropertyRef Name="EvenementID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamAntwoord_QuizVraag">
+          <End Role="QuizVraag" Type="Self.QuizVraag" Multiplicity="1" />
+          <End Role="TeamAntwoord" Type="Self.TeamAntwoord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuizVraag">
+              <PropertyRef Name="QuizVraagID" />
+            </Principal>
+            <Dependent Role="TeamAntwoord">
+              <PropertyRef Name="QuizVraagID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamAntwoord_Team">
+          <End Role="Team" Type="Self.Team" Multiplicity="1" />
+          <End Role="TeamAntwoord" Type="Self.TeamAntwoord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="TeamID" />
+            </Principal>
+            <Dependent Role="TeamAntwoord">
+              <PropertyRef Name="TeamID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Vraag_Thema">
+          <End Role="Thema" Type="Self.Thema" Multiplicity="1" />
+          <End Role="QuizVraag" Type="Self.QuizVraag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Thema">
+              <PropertyRef Name="Thema_Naam" />
+            </Principal>
+            <Dependent Role="QuizVraag">
+              <PropertyRef Name="Thema_Naam" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VraagInQuiz_QuizRonde">
+          <End Role="QuizRonde" Type="Self.QuizRonde" Multiplicity="1" />
+          <End Role="VraagInQuiz" Type="Self.VraagInQuiz" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuizRonde">
+              <PropertyRef Name="QuizRondeID" />
+            </Principal>
+            <Dependent Role="VraagInQuiz">
+              <PropertyRef Name="QuizRondeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VraagInQuiz_Vraag">
+          <End Role="QuizVraag" Type="Self.QuizVraag" Multiplicity="1" />
+          <End Role="VraagInQuiz" Type="Self.VraagInQuiz" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuizVraag">
+              <PropertyRef Name="QuizVraagID" />
+            </Principal>
+            <Dependent Role="VraagInQuiz">
+              <PropertyRef Name="QuizVraagID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AQSDatabaseModelStoreContainer">
+          <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Evenement" EntityType="Self.Evenement" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Locatie" EntityType="Self.Locatie" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MeerkeuzeAntwoord" EntityType="Self.MeerkeuzeAntwoord" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QuizRonde" EntityType="Self.QuizRonde" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QuizVraag" EntityType="Self.QuizVraag" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Team" EntityType="Self.Team" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TeamAntwoord" EntityType="Self.TeamAntwoord" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Thema" EntityType="Self.Thema" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VraagInQuiz" EntityType="Self.VraagInQuiz" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Account_Rol" Association="Self.FK_Account_Rol">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="Account" EntitySet="Account" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Evenement_Account" Association="Self.FK_Evenement_Account">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Evenement" EntitySet="Evenement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Evenement_Locatie" Association="Self.FK_Evenement_Locatie">
+            <End Role="Locatie" EntitySet="Locatie" />
+            <End Role="Evenement" EntitySet="Evenement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Meerkeuzeantwoord_Vraag" Association="Self.FK_Meerkeuzeantwoord_Vraag">
+            <End Role="QuizVraag" EntitySet="QuizVraag" />
+            <End Role="MeerkeuzeAntwoord" EntitySet="MeerkeuzeAntwoord" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ronde_Evenement" Association="Self.FK_Ronde_Evenement">
+            <End Role="Evenement" EntitySet="Evenement" />
+            <End Role="QuizRonde" EntitySet="QuizRonde" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ronde_Thema" Association="Self.FK_Ronde_Thema">
+            <End Role="Thema" EntitySet="Thema" />
+            <End Role="QuizRonde" EntitySet="QuizRonde" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Team_Account" Association="Self.FK_Team_Account">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Team" EntitySet="Team" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Team_Evenement" Association="Self.FK_Team_Evenement">
+            <End Role="Evenement" EntitySet="Evenement" />
+            <End Role="Team" EntitySet="Team" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamAntwoord_QuizVraag" Association="Self.FK_TeamAntwoord_QuizVraag">
+            <End Role="QuizVraag" EntitySet="QuizVraag" />
+            <End Role="TeamAntwoord" EntitySet="TeamAntwoord" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamAntwoord_Team" Association="Self.FK_TeamAntwoord_Team">
+            <End Role="Team" EntitySet="Team" />
+            <End Role="TeamAntwoord" EntitySet="TeamAntwoord" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vraag_Thema" Association="Self.FK_Vraag_Thema">
+            <End Role="Thema" EntitySet="Thema" />
+            <End Role="QuizVraag" EntitySet="QuizVraag" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VraagInQuiz_QuizRonde" Association="Self.FK_VraagInQuiz_QuizRonde">
+            <End Role="QuizRonde" EntitySet="QuizRonde" />
+            <End Role="VraagInQuiz" EntitySet="VraagInQuiz" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VraagInQuiz_Vraag" Association="Self.FK_VraagInQuiz_Vraag">
+            <End Role="QuizVraag" EntitySet="QuizVraag" />
+            <End Role="VraagInQuiz" EntitySet="VraagInQuiz" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AQSDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="Email" />
+          </Key>
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Rolnaam" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Wachtwoord" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Voornaam" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Achternaam" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Woonplaats" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Straatnaam" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Huisnummer" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Postcode" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="Telefoonnummer" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Rol" Relationship="Self.FK_Account_Rol" FromRole="Account" ToRole="Rol" />
+          <NavigationProperty Name="Evenements" Relationship="Self.FK_Evenement_Account" FromRole="Account" ToRole="Evenement" />
+          <NavigationProperty Name="Teams" Relationship="Self.FK_Team_Account" FromRole="Account" ToRole="Team" />
+        </EntityType>
+        <EntityType Name="Evenement">
+          <Key>
+            <PropertyRef Name="EvenementID" />
+          </Key>
+          <Property Name="EvenementID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LocatieID" Type="Int32" Nullable="false" />
+          <Property Name="Email_Quizmaster" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Evenement_Naam" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Begintijd" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Eindtijd" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Evenement_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Account" Relationship="Self.FK_Evenement_Account" FromRole="Evenement" ToRole="Account" />
+          <NavigationProperty Name="Locatie" Relationship="Self.FK_Evenement_Locatie" FromRole="Evenement" ToRole="Locatie" />
+          <NavigationProperty Name="QuizRondes" Relationship="Self.FK_Ronde_Evenement" FromRole="Evenement" ToRole="QuizRonde" />
+          <NavigationProperty Name="Teams" Relationship="Self.FK_Team_Evenement" FromRole="Evenement" ToRole="Team" />
+        </EntityType>
+        <EntityType Name="Locatie">
+          <Key>
+            <PropertyRef Name="LocatieID" />
+          </Key>
+          <Property Name="LocatieID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Locatie_Naam" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Plaatsnaam" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Postcode" Type="String" MaxLength="7" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Huisnummer" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Straatnaam" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Telefoonnummer" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="Website" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Evenements" Relationship="Self.FK_Evenement_Locatie" FromRole="Locatie" ToRole="Evenement" />
+        </EntityType>
+        <EntityType Name="MeerkeuzeAntwoord">
+          <Key>
+            <PropertyRef Name="MeerkeuzeAntwoordID" />
+          </Key>
+          <Property Name="MeerkeuzeAntwoordID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Meerkeuze_Antwoord" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="QuizVraagID" Type="Int32" Nullable="false" />
+          <Property Name="Is_Juist" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="QuizVraag" Relationship="Self.FK_Meerkeuzeantwoord_Vraag" FromRole="MeerkeuzeAntwoord" ToRole="QuizVraag" />
+        </EntityType>
+        <EntityType Name="QuizRonde">
+          <Key>
+            <PropertyRef Name="QuizRondeID" />
+          </Key>
+          <Property Name="QuizRondeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EvenementID" Type="Int32" Nullable="false" />
+          <Property Name="Rondenummer" Type="Int32" Nullable="false" />
+          <Property Name="Thema_Naam" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Evenement" Relationship="Self.FK_Ronde_Evenement" FromRole="QuizRonde" ToRole="Evenement" />
+          <NavigationProperty Name="Thema" Relationship="Self.FK_Ronde_Thema" FromRole="QuizRonde" ToRole="Thema" />
+          <NavigationProperty Name="VraagInQuizs" Relationship="Self.FK_VraagInQuiz_QuizRonde" FromRole="QuizRonde" ToRole="VraagInQuiz" />
+        </EntityType>
+        <EntityType Name="QuizVraag">
+          <Key>
+            <PropertyRef Name="QuizVraagID" />
+          </Key>
+          <Property Name="QuizVraagID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Thema_Naam" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Vraag" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Vraagtype" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Open_Vraag_Antwoord" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MeerkeuzeAntwoords" Relationship="Self.FK_Meerkeuzeantwoord_Vraag" FromRole="QuizVraag" ToRole="MeerkeuzeAntwoord" />
+          <NavigationProperty Name="TeamAntwoords" Relationship="Self.FK_TeamAntwoord_QuizVraag" FromRole="QuizVraag" ToRole="TeamAntwoord" />
+          <NavigationProperty Name="Thema" Relationship="Self.FK_Vraag_Thema" FromRole="QuizVraag" ToRole="Thema" />
+          <NavigationProperty Name="VraagInQuizs" Relationship="Self.FK_VraagInQuiz_Vraag" FromRole="QuizVraag" ToRole="VraagInQuiz" />
+        </EntityType>
+        <EntityType Name="Rol">
+          <Key>
+            <PropertyRef Name="Rolnaam" />
+          </Key>
+          <Property Name="Rolnaam" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Accounts" Relationship="Self.FK_Account_Rol" FromRole="Rol" ToRole="Account" />
+        </EntityType>
+        <EntityType Name="Team">
+          <Key>
+            <PropertyRef Name="TeamID" />
+          </Key>
+          <Property Name="TeamID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EvenementID" Type="Int32" Nullable="false" />
+          <Property Name="Teamnaam" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email_Teamleider" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Puntentotaal" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Account" Relationship="Self.FK_Team_Account" FromRole="Team" ToRole="Account" />
+          <NavigationProperty Name="Evenement" Relationship="Self.FK_Team_Evenement" FromRole="Team" ToRole="Evenement" />
+          <NavigationProperty Name="TeamAntwoords" Relationship="Self.FK_TeamAntwoord_Team" FromRole="Team" ToRole="TeamAntwoord" />
+        </EntityType>
+        <EntityType Name="TeamAntwoord">
+          <Key>
+            <PropertyRef Name="TeamAntwoordID" />
+          </Key>
+          <Property Name="TeamAntwoordID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TeamID" Type="Int32" Nullable="false" />
+          <Property Name="QuizVraagID" Type="Int32" Nullable="false" />
+          <Property Name="Gegeven_Antwoord" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="QuizVraag" Relationship="Self.FK_TeamAntwoord_QuizVraag" FromRole="TeamAntwoord" ToRole="QuizVraag" />
+          <NavigationProperty Name="Team" Relationship="Self.FK_TeamAntwoord_Team" FromRole="TeamAntwoord" ToRole="Team" />
+        </EntityType>
+        <EntityType Name="Thema">
+          <Key>
+            <PropertyRef Name="Thema_Naam" />
+          </Key>
+          <Property Name="Thema_Naam" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="QuizRondes" Relationship="Self.FK_Ronde_Thema" FromRole="Thema" ToRole="QuizRonde" />
+          <NavigationProperty Name="QuizVraags" Relationship="Self.FK_Vraag_Thema" FromRole="Thema" ToRole="QuizVraag" />
+        </EntityType>
+        <EntityType Name="VraagInQuiz">
+          <Key>
+            <PropertyRef Name="VraagInQuizID" />
+          </Key>
+          <Property Name="VraagInQuizID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QuizRondeID" Type="Int32" Nullable="false" />
+          <Property Name="QuizVraagID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="QuizRonde" Relationship="Self.FK_VraagInQuiz_QuizRonde" FromRole="VraagInQuiz" ToRole="QuizRonde" />
+          <NavigationProperty Name="QuizVraag" Relationship="Self.FK_VraagInQuiz_Vraag" FromRole="VraagInQuiz" ToRole="QuizVraag" />
+        </EntityType>
+        <Association Name="FK_Account_Rol">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
+          <End Role="Account" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="Rolnaam" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="Rolnaam" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Evenement_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="Evenement" Type="Self.Evenement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="Evenement">
+              <PropertyRef Name="Email_Quizmaster" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Team_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="Team" Type="Self.Team" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Email" />
+            </Principal>
+            <Dependent Role="Team">
+              <PropertyRef Name="Email_Teamleider" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Evenement_Locatie">
+          <End Role="Locatie" Type="Self.Locatie" Multiplicity="1" />
+          <End Role="Evenement" Type="Self.Evenement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locatie">
+              <PropertyRef Name="LocatieID" />
+            </Principal>
+            <Dependent Role="Evenement">
+              <PropertyRef Name="LocatieID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ronde_Evenement">
+          <End Role="Evenement" Type="Self.Evenement" Multiplicity="1" />
+          <End Role="QuizRonde" Type="Self.QuizRonde" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Evenement">
+              <PropertyRef Name="EvenementID" />
+            </Principal>
+            <Dependent Role="QuizRonde">
+              <PropertyRef Name="EvenementID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Team_Evenement">
+          <End Role="Evenement" Type="Self.Evenement" Multiplicity="1" />
+          <End Role="Team" Type="Self.Team" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Evenement">
+              <PropertyRef Name="EvenementID" />
+            </Principal>
+            <Dependent Role="Team">
+              <PropertyRef Name="EvenementID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Meerkeuzeantwoord_Vraag">
+          <End Role="QuizVraag" Type="Self.QuizVraag" Multiplicity="1" />
+          <End Role="MeerkeuzeAntwoord" Type="Self.MeerkeuzeAntwoord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuizVraag">
+              <PropertyRef Name="QuizVraagID" />
+            </Principal>
+            <Dependent Role="MeerkeuzeAntwoord">
+              <PropertyRef Name="QuizVraagID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ronde_Thema">
+          <End Role="Thema" Type="Self.Thema" Multiplicity="1" />
+          <End Role="QuizRonde" Type="Self.QuizRonde" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Thema">
+              <PropertyRef Name="Thema_Naam" />
+            </Principal>
+            <Dependent Role="QuizRonde">
+              <PropertyRef Name="Thema_Naam" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VraagInQuiz_QuizRonde">
+          <End Role="QuizRonde" Type="Self.QuizRonde" Multiplicity="1" />
+          <End Role="VraagInQuiz" Type="Self.VraagInQuiz" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuizRonde">
+              <PropertyRef Name="QuizRondeID" />
+            </Principal>
+            <Dependent Role="VraagInQuiz">
+              <PropertyRef Name="QuizRondeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamAntwoord_QuizVraag">
+          <End Role="QuizVraag" Type="Self.QuizVraag" Multiplicity="1" />
+          <End Role="TeamAntwoord" Type="Self.TeamAntwoord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuizVraag">
+              <PropertyRef Name="QuizVraagID" />
+            </Principal>
+            <Dependent Role="TeamAntwoord">
+              <PropertyRef Name="QuizVraagID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Vraag_Thema">
+          <End Role="Thema" Type="Self.Thema" Multiplicity="1" />
+          <End Role="QuizVraag" Type="Self.QuizVraag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Thema">
+              <PropertyRef Name="Thema_Naam" />
+            </Principal>
+            <Dependent Role="QuizVraag">
+              <PropertyRef Name="Thema_Naam" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VraagInQuiz_Vraag">
+          <End Role="QuizVraag" Type="Self.QuizVraag" Multiplicity="1" />
+          <End Role="VraagInQuiz" Type="Self.VraagInQuiz" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuizVraag">
+              <PropertyRef Name="QuizVraagID" />
+            </Principal>
+            <Dependent Role="VraagInQuiz">
+              <PropertyRef Name="QuizVraagID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeamAntwoord_Team">
+          <End Role="Team" Type="Self.Team" Multiplicity="1" />
+          <End Role="TeamAntwoord" Type="Self.TeamAntwoord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Team">
+              <PropertyRef Name="TeamID" />
+            </Principal>
+            <Dependent Role="TeamAntwoord">
+              <PropertyRef Name="TeamID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AQSDatabaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Accounts" EntityType="Self.Account" />
+          <EntitySet Name="Evenements" EntityType="Self.Evenement" />
+          <EntitySet Name="Locaties" EntityType="Self.Locatie" />
+          <EntitySet Name="MeerkeuzeAntwoords" EntityType="Self.MeerkeuzeAntwoord" />
+          <EntitySet Name="QuizRondes" EntityType="Self.QuizRonde" />
+          <EntitySet Name="QuizVraags" EntityType="Self.QuizVraag" />
+          <EntitySet Name="Rols" EntityType="Self.Rol" />
+          <EntitySet Name="Teams" EntityType="Self.Team" />
+          <EntitySet Name="TeamAntwoords" EntityType="Self.TeamAntwoord" />
+          <EntitySet Name="Themas" EntityType="Self.Thema" />
+          <EntitySet Name="VraagInQuizs" EntityType="Self.VraagInQuiz" />
+          <AssociationSet Name="FK_Account_Rol" Association="Self.FK_Account_Rol">
+            <End Role="Rol" EntitySet="Rols" />
+            <End Role="Account" EntitySet="Accounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Evenement_Account" Association="Self.FK_Evenement_Account">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Evenement" EntitySet="Evenements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Team_Account" Association="Self.FK_Team_Account">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Team" EntitySet="Teams" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Evenement_Locatie" Association="Self.FK_Evenement_Locatie">
+            <End Role="Locatie" EntitySet="Locaties" />
+            <End Role="Evenement" EntitySet="Evenements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ronde_Evenement" Association="Self.FK_Ronde_Evenement">
+            <End Role="Evenement" EntitySet="Evenements" />
+            <End Role="QuizRonde" EntitySet="QuizRondes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Team_Evenement" Association="Self.FK_Team_Evenement">
+            <End Role="Evenement" EntitySet="Evenements" />
+            <End Role="Team" EntitySet="Teams" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Meerkeuzeantwoord_Vraag" Association="Self.FK_Meerkeuzeantwoord_Vraag">
+            <End Role="QuizVraag" EntitySet="QuizVraags" />
+            <End Role="MeerkeuzeAntwoord" EntitySet="MeerkeuzeAntwoords" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ronde_Thema" Association="Self.FK_Ronde_Thema">
+            <End Role="Thema" EntitySet="Themas" />
+            <End Role="QuizRonde" EntitySet="QuizRondes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VraagInQuiz_QuizRonde" Association="Self.FK_VraagInQuiz_QuizRonde">
+            <End Role="QuizRonde" EntitySet="QuizRondes" />
+            <End Role="VraagInQuiz" EntitySet="VraagInQuizs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamAntwoord_QuizVraag" Association="Self.FK_TeamAntwoord_QuizVraag">
+            <End Role="QuizVraag" EntitySet="QuizVraags" />
+            <End Role="TeamAntwoord" EntitySet="TeamAntwoords" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vraag_Thema" Association="Self.FK_Vraag_Thema">
+            <End Role="Thema" EntitySet="Themas" />
+            <End Role="QuizVraag" EntitySet="QuizVraags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VraagInQuiz_Vraag" Association="Self.FK_VraagInQuiz_Vraag">
+            <End Role="QuizVraag" EntitySet="QuizVraags" />
+            <End Role="VraagInQuiz" EntitySet="VraagInQuizs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamAntwoord_Team" Association="Self.FK_TeamAntwoord_Team">
+            <End Role="Team" EntitySet="Teams" />
+            <End Role="TeamAntwoord" EntitySet="TeamAntwoords" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AQSDatabaseModelStoreContainer" CdmEntityContainer="AQSDatabaseEntities">
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="AQSDatabaseModel.Account">
+              <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Rolnaam" ColumnName="Rolnaam" />
+                <ScalarProperty Name="Wachtwoord" ColumnName="Wachtwoord" />
+                <ScalarProperty Name="Voornaam" ColumnName="Voornaam" />
+                <ScalarProperty Name="Achternaam" ColumnName="Achternaam" />
+                <ScalarProperty Name="Woonplaats" ColumnName="Woonplaats" />
+                <ScalarProperty Name="Straatnaam" ColumnName="Straatnaam" />
+                <ScalarProperty Name="Huisnummer" ColumnName="Huisnummer" />
+                <ScalarProperty Name="Postcode" ColumnName="Postcode" />
+                <ScalarProperty Name="Telefoonnummer" ColumnName="Telefoonnummer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Evenements">
+            <EntityTypeMapping TypeName="AQSDatabaseModel.Evenement">
+              <MappingFragment StoreEntitySet="Evenement">
+                <ScalarProperty Name="EvenementID" ColumnName="EvenementID" />
+                <ScalarProperty Name="LocatieID" ColumnName="LocatieID" />
+                <ScalarProperty Name="Email_Quizmaster" ColumnName="Email_Quizmaster" />
+                <ScalarProperty Name="Evenement_Naam" ColumnName="Evenement_Naam" />
+                <ScalarProperty Name="Begintijd" ColumnName="Begintijd" />
+                <ScalarProperty Name="Eindtijd" ColumnName="Eindtijd" />
+                <ScalarProperty Name="Evenement_Type" ColumnName="Evenement_Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Locaties">
+            <EntityTypeMapping TypeName="AQSDatabaseModel.Locatie">
+              <MappingFragment StoreEntitySet="Locatie">
+                <ScalarProperty Name="LocatieID" ColumnName="LocatieID" />
+                <ScalarProperty Name="Locatie_Naam" ColumnName="Locatie_Naam" />
+                <ScalarProperty Name="Plaatsnaam" ColumnName="Plaatsnaam" />
+                <ScalarProperty Name="Postcode" ColumnName="Postcode" />
+                <ScalarProperty Name="Huisnummer" ColumnName="Huisnummer" />
+                <ScalarProperty Name="Straatnaam" ColumnName="Straatnaam" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Telefoonnummer" ColumnName="Telefoonnummer" />
+                <ScalarProperty Name="Website" ColumnName="Website" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MeerkeuzeAntwoords">
+            <EntityTypeMapping TypeName="AQSDatabaseModel.MeerkeuzeAntwoord">
+              <MappingFragment StoreEntitySet="MeerkeuzeAntwoord">
+                <ScalarProperty Name="MeerkeuzeAntwoordID" ColumnName="MeerkeuzeAntwoordID" />
+                <ScalarProperty Name="Meerkeuze_Antwoord" ColumnName="Meerkeuze_Antwoord" />
+                <ScalarProperty Name="QuizVraagID" ColumnName="QuizVraagID" />
+                <ScalarProperty Name="Is_Juist" ColumnName="Is_Juist" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QuizRondes">
+            <EntityTypeMapping TypeName="AQSDatabaseModel.QuizRonde">
+              <MappingFragment StoreEntitySet="QuizRonde">
+                <ScalarProperty Name="QuizRondeID" ColumnName="QuizRondeID" />
+                <ScalarProperty Name="EvenementID" ColumnName="EvenementID" />
+                <ScalarProperty Name="Rondenummer" ColumnName="Rondenummer" />
+                <ScalarProperty Name="Thema_Naam" ColumnName="Thema_Naam" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QuizVraags">
+            <EntityTypeMapping TypeName="AQSDatabaseModel.QuizVraag">
+              <MappingFragment StoreEntitySet="QuizVraag">
+                <ScalarProperty Name="QuizVraagID" ColumnName="QuizVraagID" />
+                <ScalarProperty Name="Thema_Naam" ColumnName="Thema_Naam" />
+                <ScalarProperty Name="Vraag" ColumnName="Vraag" />
+                <ScalarProperty Name="Vraagtype" ColumnName="Vraagtype" />
+                <ScalarProperty Name="Open_Vraag_Antwoord" ColumnName="Open_Vraag_Antwoord" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rols">
+            <EntityTypeMapping TypeName="AQSDatabaseModel.Rol">
+              <MappingFragment StoreEntitySet="Rol">
+                <ScalarProperty Name="Rolnaam" ColumnName="Rolnaam" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teams">
+            <EntityTypeMapping TypeName="AQSDatabaseModel.Team">
+              <MappingFragment StoreEntitySet="Team">
+                <ScalarProperty Name="TeamID" ColumnName="TeamID" />
+                <ScalarProperty Name="EvenementID" ColumnName="EvenementID" />
+                <ScalarProperty Name="Teamnaam" ColumnName="Teamnaam" />
+                <ScalarProperty Name="Email_Teamleider" ColumnName="Email_Teamleider" />
+                <ScalarProperty Name="Puntentotaal" ColumnName="Puntentotaal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TeamAntwoords">
+            <EntityTypeMapping TypeName="AQSDatabaseModel.TeamAntwoord">
+              <MappingFragment StoreEntitySet="TeamAntwoord">
+                <ScalarProperty Name="TeamAntwoordID" ColumnName="TeamAntwoordID" />
+                <ScalarProperty Name="TeamID" ColumnName="TeamID" />
+                <ScalarProperty Name="QuizVraagID" ColumnName="QuizVraagID" />
+                <ScalarProperty Name="Gegeven_Antwoord" ColumnName="Gegeven_Antwoord" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Themas">
+            <EntityTypeMapping TypeName="AQSDatabaseModel.Thema">
+              <MappingFragment StoreEntitySet="Thema">
+                <ScalarProperty Name="Thema_Naam" ColumnName="Thema_Naam" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VraagInQuizs">
+            <EntityTypeMapping TypeName="AQSDatabaseModel.VraagInQuiz">
+              <MappingFragment StoreEntitySet="VraagInQuiz">
+                <ScalarProperty Name="VraagInQuizID" ColumnName="VraagInQuizID" />
+                <ScalarProperty Name="QuizRondeID" ColumnName="QuizRondeID" />
+                <ScalarProperty Name="QuizVraagID" ColumnName="QuizVraagID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,45 @@
+﻿@model IEnumerable<QuizApp.Models.MeerkeuzeAntwoord>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Meerkeuze_Antwoord)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Is_Juist)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.QuizVraag.Thema_Naam)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Meerkeuze_Antwoord)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Is_Juist)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.QuizVraag.Thema_Naam)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.MeerkeuzeAntwoordID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.MeerkeuzeAntwoordID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.MeerkeuzeAntwoordID })
+        </td>
+    </tr>
+}
+
+</table>

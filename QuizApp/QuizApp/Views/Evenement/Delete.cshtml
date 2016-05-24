@@ -1,0 +1,72 @@
+﻿@model QuizApp.Models.Evenement
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Evenement</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Evenement_Naam)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Evenement_Naam)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Begintijd)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Begintijd)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Eindtijd)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Eindtijd)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Evenement_Type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Evenement_Type)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Account.Rolnaam)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Account.Rolnaam)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Locatie.Locatie_Naam)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Locatie.Locatie_Naam)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

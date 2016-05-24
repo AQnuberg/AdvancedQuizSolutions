@@ -1,0 +1,42 @@
+﻿@model QuizApp.Models.TeamAntwoord
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>TeamAntwoord</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Gegeven_Antwoord)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Gegeven_Antwoord)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QuizVraag.Thema_Naam)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QuizVraag.Thema_Naam)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Team.Teamnaam)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Team.Teamnaam)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.TeamAntwoordID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

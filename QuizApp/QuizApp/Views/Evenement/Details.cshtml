@@ -1,0 +1,66 @@
+﻿@model QuizApp.Models.Evenement
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Evenement</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Evenement_Naam)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Evenement_Naam)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Begintijd)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Begintijd)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Eindtijd)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Eindtijd)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Evenement_Type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Evenement_Type)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Account.Rolnaam)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Account.Rolnaam)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Locatie.Locatie_Naam)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Locatie.Locatie_Naam)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.EvenementID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

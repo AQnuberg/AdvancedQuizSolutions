@@ -1,0 +1,45 @@
+﻿@model IEnumerable<QuizApp.Models.QuizRonde>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Rondenummer)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Evenement.Email_Quizmaster)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Thema.Thema_Naam)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Rondenummer)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Evenement.Email_Quizmaster)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Thema.Thema_Naam)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.QuizRondeID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.QuizRondeID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.QuizRondeID })
+        </td>
+    </tr>
+}
+
+</table>

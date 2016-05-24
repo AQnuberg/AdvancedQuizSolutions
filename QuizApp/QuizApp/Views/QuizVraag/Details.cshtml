@@ -1,0 +1,50 @@
+﻿@model QuizApp.Models.QuizVraag
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>QuizVraag</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Vraag)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Vraag)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Vraagtype)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Vraagtype)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Open_Vraag_Antwoord)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Open_Vraag_Antwoord)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Thema.Thema_Naam)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Thema.Thema_Naam)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.QuizVraagID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

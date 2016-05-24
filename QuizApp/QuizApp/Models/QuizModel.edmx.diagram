@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="67ea81f1ac894b4cbe9bd14699105ffc" Name="Diagram1">
+        <EntityTypeShape EntityType="AQSDatabaseModel.Account" Width="1.5" PointX="1.5" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AQSDatabaseModel.Evenement" Width="1.5" PointX="0.75" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AQSDatabaseModel.Locatie" Width="1.5" PointX="1.5" PointY="23.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AQSDatabaseModel.MeerkeuzeAntwoord" Width="1.5" PointX="5.25" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="AQSDatabaseModel.QuizRonde" Width="1.5" PointX="3" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AQSDatabaseModel.QuizVraag" Width="1.5" PointX="3" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="AQSDatabaseModel.Rol" Width="1.5" PointX="1.5" PointY="20.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AQSDatabaseModel.Team" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AQSDatabaseModel.TeamAntwoord" Width="1.5" PointX="5.25" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="AQSDatabaseModel.Thema" Width="1.5" PointX="0.75" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AQSDatabaseModel.VraagInQuiz" Width="1.5" PointX="8.25" PointY="7.125" IsExpanded="true" />
+        <AssociationConnector Association="AQSDatabaseModel.FK_Account_Rol" ManuallyRouted="false" />
+        <AssociationConnector Association="AQSDatabaseModel.FK_Evenement_Account" ManuallyRouted="false" />
+        <AssociationConnector Association="AQSDatabaseModel.FK_Team_Account" ManuallyRouted="false" />
+        <AssociationConnector Association="AQSDatabaseModel.FK_Evenement_Locatie" ManuallyRouted="false" />
+        <AssociationConnector Association="AQSDatabaseModel.FK_Ronde_Evenement" ManuallyRouted="false" />
+        <AssociationConnector Association="AQSDatabaseModel.FK_Team_Evenement" ManuallyRouted="false" />
+        <AssociationConnector Association="AQSDatabaseModel.FK_Meerkeuzeantwoord_Vraag" ManuallyRouted="false" />
+        <AssociationConnector Association="AQSDatabaseModel.FK_Ronde_Thema" ManuallyRouted="false" />
+        <AssociationConnector Association="AQSDatabaseModel.FK_VraagInQuiz_QuizRonde" ManuallyRouted="false" />
+        <AssociationConnector Association="AQSDatabaseModel.FK_TeamAntwoord_QuizVraag" ManuallyRouted="false" />
+        <AssociationConnector Association="AQSDatabaseModel.FK_Vraag_Thema" ManuallyRouted="false" />
+        <AssociationConnector Association="AQSDatabaseModel.FK_VraagInQuiz_Vraag" ManuallyRouted="false" />
+        <AssociationConnector Association="AQSDatabaseModel.FK_TeamAntwoord_Team" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

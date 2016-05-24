@@ -1,0 +1,75 @@
+﻿@model IEnumerable<QuizApp.Models.Locatie>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Locatie_Naam)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Plaatsnaam)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Postcode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Huisnummer)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Straatnaam)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Telefoonnummer)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Website)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Locatie_Naam)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Plaatsnaam)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Postcode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Huisnummer)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Straatnaam)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Telefoonnummer)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Website)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.LocatieID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.LocatieID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.LocatieID })
+        </td>
+    </tr>
+}
+
+</table>
