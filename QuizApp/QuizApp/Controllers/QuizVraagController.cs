@@ -39,6 +39,10 @@ namespace QuizApp.Controllers
         // GET: QuizVraag/Create
         public ActionResult Create()
         {
+            List < SelectListItem > vraagtypes = new List<SelectListItem>();
+            vraagtypes.Add(new SelectListItem { Text = "Open" });
+            vraagtypes.Add(new SelectListItem { Text = "Meerkeuze" });
+            ViewBag.Vraagtype = new SelectList(vraagtypes, "Text", "Text");
             ViewBag.Thema_Naam = new SelectList(db.Themas, "Thema_Naam", "Thema_Naam");
             return View();
         }
@@ -73,6 +77,10 @@ namespace QuizApp.Controllers
             {
                 return HttpNotFound();
             }
+            List<SelectListItem> vraagtypes = new List<SelectListItem>();
+            vraagtypes.Add(new SelectListItem { Text = "Open" });
+            vraagtypes.Add(new SelectListItem { Text = "Meerkeuze" });
+            ViewBag.Vraagtype = new SelectList(vraagtypes, "Text", "Text", quizVraag.Vraagtype);
             ViewBag.Thema_Naam = new SelectList(db.Themas, "Thema_Naam", "Thema_Naam", quizVraag.Thema_Naam);
             return View(quizVraag);
         }

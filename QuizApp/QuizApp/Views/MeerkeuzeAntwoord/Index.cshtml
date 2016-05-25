@@ -4,10 +4,11 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>MeerkeuzeAntwoord beheren</h2>
+<h4>@Html.Raw(ViewBag.Vraag)</h4>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", new { id = ViewBag.VraagID})
 </p>
 <table class="table">
     <tr>
@@ -16,9 +17,6 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Is_Juist)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.QuizVraag.Thema_Naam)
         </th>
         <th></th>
     </tr>
@@ -32,9 +30,6 @@
             @Html.DisplayFor(modelItem => item.Is_Juist)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.QuizVraag.Thema_Naam)
-        </td>
-        <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.MeerkeuzeAntwoordID }) |
             @Html.ActionLink("Details", "Details", new { id=item.MeerkeuzeAntwoordID }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.MeerkeuzeAntwoordID })
@@ -43,3 +38,6 @@
 }
 
 </table>
+<p>
+    @Html.ActionLink("Back to List", "Index", new { controller = "QuizVraag", action = "Index"})
+</p>
