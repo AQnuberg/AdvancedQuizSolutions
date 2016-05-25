@@ -4,12 +4,18 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Thema details</h2>
 
 <div>
-    <h4>Thema</h4>
     <hr />
     <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Thema_Naam)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Thema_Naam)
+        </dd>
+
     </dl>
 </div>
 <p>
