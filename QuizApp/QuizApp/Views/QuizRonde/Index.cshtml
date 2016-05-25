@@ -5,9 +5,11 @@
 }
 
 <h2>Ronde beheren</h2>
+<h4>@Html.Raw(ViewBag.naamBijID) 
+    </h4>
 
-<p
-    @Html.ActionLink("Create New", "Create")
+<p>
+    @Html.ActionLink("Create New", "Create", new {id = ViewBag.evenementID})
 </p>
 <table class="table">
     <tr>
