@@ -7,33 +7,18 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New Account", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Wachtwoord)
+            @Html.DisplayNameFor(model => model.Email)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Voornaam)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Achternaam)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Woonplaats)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Straatnaam)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Huisnummer)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Postcode)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Telefoonnummer)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Rol.Rolnaam)
@@ -44,7 +29,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Wachtwoord)
+            @Html.DisplayFor(modelItem => item.Email)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Voornaam)
@@ -53,27 +38,12 @@
             @Html.DisplayFor(modelItem => item.Achternaam)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Woonplaats)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Straatnaam)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Huisnummer)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Postcode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Telefoonnummer)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.Rol.Rolnaam)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Email }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Email }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Email })
+            @Html.ActionLink("Edit", "Edit", new { id = item.Email }) |
+            @Html.ActionLink("Details", "Details", new { id = item.Email }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Email })
         </td>
     </tr>
 }
