@@ -11,7 +11,7 @@ namespace QuizApp.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
     public partial class Thema
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -20,7 +20,8 @@ namespace QuizApp.Models
             this.QuizRondes = new HashSet<QuizRonde>();
             this.QuizVraags = new HashSet<QuizVraag>();
         }
-    
+
+        [StringLength(50)]
         public string Thema_Naam { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

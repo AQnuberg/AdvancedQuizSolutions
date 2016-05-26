@@ -48,11 +48,26 @@ namespace QuizApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Thema_Naam")] Thema thema)
         {
-            if (ModelState.IsValid)
+            var Themanamen = from t in db.Themas
+                             where t.Thema_Naam == thema.Thema_Naam
+                             select t;
+            if (Themanamen.First() == null)
             {
-                db.Themas.Add(thema);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+
+                if (ModelState.IsValid)
+                {
+                    db.Themas.Add(thema);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+            }
+            else
+            {
+                ViewBag.message = "Thema_naam bestaat al";
+                ViewBag.linkText = "Terug naar thema";
+                ViewBag.actionName = "index";
+                ViewBag.routeValue = new { controller = thema };
+                return View("Error");
             }
 
             return View(thema);
