@@ -144,7 +144,7 @@ namespace QuizApp.Controllers
             VraagInQuiz vraagInQuiz = db.VraagInQuizzen.Find(id);
             db.VraagInQuizzen.Remove(vraagInQuiz);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new {id = vraagInQuiz.QuizRondeID});
         }
 
         protected override void Dispose(bool disposing)
