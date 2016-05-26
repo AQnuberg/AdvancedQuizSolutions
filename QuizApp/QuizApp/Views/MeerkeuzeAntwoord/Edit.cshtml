@@ -32,13 +32,6 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.MeerkeuzeAntwoordID, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DisplayFor(model => model.MeerkeuzeAntwoordID)
-                @Html.ValidationMessageFor(model => model.MeerkeuzeAntwoordID, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Is_Juist, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -59,7 +52,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index", new { id = Model.QuizVraagID})
+    @Html.ActionLink("Terug", "index", new { controller = "MeerkeuzeAntwoord", id = Model.QuizVraagID })
 </div>
 
 @section Scripts {

@@ -4,10 +4,11 @@
     ViewBag.Title = "Quizvraag Beheren";
 }
 
-<h2>Index</h2>
+<h2>Quizvraag Beheren</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Nieuwe QuizVraag aanmaken", "Create") |
+    @Html.ActionLink("Thema Beheren", "index", new { controller = "Thema"})
 </p>
 <table class="table">
     <tr>
@@ -43,7 +44,8 @@
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.QuizVraagID }) |
             @Html.ActionLink("Details", "Details", new { id=item.QuizVraagID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.QuizVraagID })
+            @Html.ActionLink("Delete", "Delete", new { id=item.QuizVraagID }) |
+            @Html.ActionLink("Wijzig MKA", "index", new { controller = "MeerkeuzeAntwoord", id=item.QuizVraagID})
         </td>
     </tr>
 }
