@@ -29,29 +29,31 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Locatie_Naam)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Plaatsnaam)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Postcode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Huisnummer)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Straatnaam)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.LocatieID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.LocatieID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.LocatieID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Locatie_Naam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Plaatsnaam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Postcode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Huisnummer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Straatnaam)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {id = item.LocatieID}) |
+                @Html.ActionLink("Details", "Details", new {id = item.LocatieID}) |
+                @Html.ActionLink("Delete", "Delete", new {id = item.LocatieID})
+            </td>
+        </tr>
+    }
 
 </table>
+@Html.ActionLink("Terug naar evenement beheren", "Index", "Evenement")

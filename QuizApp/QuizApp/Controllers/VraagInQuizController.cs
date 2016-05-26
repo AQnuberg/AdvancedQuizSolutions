@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using QuizApp.Models;
 
@@ -15,32 +11,59 @@ namespace QuizApp.Controllers
         private AQSDatabaseEntities db = new AQSDatabaseEntities();
 
         // GET: VraagInQuiz
-        public ActionResult Index()
-        {
-            var vraagInQuizs = db.VraagInQuizzen.Include(v => v.QuizRonde).Include(v => v.QuizVraag);
-            return View(vraagInQuizs.ToList());
-        }
-
-        // GET: VraagInQuiz/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Index(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            VraagInQuiz vraagInQuiz = db.VraagInQuizzen.Find(id);
-            if (vraagInQuiz == null)
-            {
-                return HttpNotFound();
-            }
-            return View(vraagInQuiz);
+            var evenement = from e in db.Evenementen
+                join q in db.QuizRondes on e.EvenementID equals q.EvenementID
+                where q.QuizRondeID == id
+                select e;
+
+            var quizRonde = from r in db.QuizRondes
+                where r.QuizRondeID == id
+                select r;
+
+            var vraagInRonde = from e in db.VraagInQuizzen
+                                    select e;
+            vraagInRonde = vraagInRonde.Where(s => s.QuizRondeID == id);
+
+            ViewBag.naamBijQuizRondeID = evenement.First().Evenement_Naam;
+            ViewBag.rondeNummer = quizRonde.First().Rondenummer;
+            ViewBag.themaNaam = quizRonde.First().Thema_Naam;
+            ViewBag.evenementID = evenement.First().EvenementID;
+            ViewBag.quizRondeID = id; 
+
+            var vraagInQuizs = vraagInRonde.Include(v => v.QuizRonde).Include(v => v.QuizVraag);
+            return View(vraagInQuizs.ToList());
         }
 
         // GET: VraagInQuiz/Create
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
-            ViewBag.QuizRondeID = new SelectList(db.QuizRondes, "QuizRondeID", "Thema_Naam");
-            ViewBag.QuizVraagID = new SelectList(db.QuizVragen, "QuizVraagID", "Thema_Naam");
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            /* In case of surrogate keys:
+               var themaNaam = from t in db.Themas
+                                join q in db.QuizRondes on t.themaId equals q.themaId
+                                where q.QuizRondeID == id
+                                select t.Thema_Naam;*/
+
+            var quizRonde = from r in db.QuizRondes
+                            where r.QuizRondeID == id
+                            select r;
+
+            var vragenBijThema = from v in db.QuizVragen
+                where v.Thema_Naam == quizRonde.FirstOrDefault().Thema_Naam 
+                select v;
+
+            ViewBag.QuizRondeID = id;
+            ViewBag.VragenBijThema = vragenBijThema;
             return View();
         }
 
@@ -55,7 +78,7 @@ namespace QuizApp.Controllers
             {
                 db.VraagInQuizzen.Add(vraagInQuiz);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new {id = vraagInQuiz.QuizRondeID});
             }
 
             ViewBag.QuizRondeID = new SelectList(db.QuizRondes, "QuizRondeID", "Thema_Naam", vraagInQuiz.QuizRondeID);

@@ -25,7 +25,9 @@ namespace QuizApp.Controllers
             var evenementNaam = from e in db.Evenementen
                                 where e.EvenementID == id
                                 select e;
-            ViewBag.naamBijID = evenementNaam.FirstOrDefault<Evenement>().Evenement_Naam;
+            var firstOrDefault = evenementNaam.FirstOrDefault<Evenement>();
+            if (firstOrDefault != null)
+                ViewBag.naamBijID = firstOrDefault.Evenement_Naam;
             ViewBag.evenementID = id;
 
 

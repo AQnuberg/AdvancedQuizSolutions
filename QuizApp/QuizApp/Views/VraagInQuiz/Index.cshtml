@@ -4,18 +4,19 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Vragen bij ronde beheren</h2>
+<h4>@Html.Raw(ViewBag.naamBijQuizRondeId) </h4>
+<h5>Rondenummer: @Html.Raw(ViewBag.rondeNummer)</h5>
+<h5>Thema naam: @Html.Raw(ViewBag.themaNaam)</h5>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Vraag toevoegen", "Create", new {id = ViewBag.quizRondeID}) |
+    @Html.ActionLink("Vragen beheren", "Index", new { controller = "QuizVraag", action= "Index", id = ViewBag.quizRondeID })
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.QuizRonde.Thema_Naam)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.QuizVraag.Thema_Naam)
+            @Html.DisplayNameFor(model => model.QuizVraag.Vraag)
         </th>
         <th></th>
     </tr>
@@ -23,17 +24,13 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.QuizRonde.Thema_Naam)
+            @Html.DisplayFor(modelItem => item.QuizVraag.Vraag)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.QuizVraag.Thema_Naam)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.VraagInQuizID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.VraagInQuizID }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.VraagInQuizID })
         </td>
     </tr>
 }
 
 </table>
+@Html.ActionLink("Terug naar rondes", "Index", new {controller ="QuizRonde", action = "Index", id = ViewBag.evenementID })
