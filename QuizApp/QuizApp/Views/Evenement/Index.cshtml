@@ -56,7 +56,8 @@
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.EvenementID }) |
             @Html.ActionLink("Details", "Details", new { id=item.EvenementID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.EvenementID })
+            @Html.ActionLink("Delete", "Delete", new { id=item.EvenementID }) |
+            @Html.ActionLink("Ronde toevoegen", "Create", new { controller = "QuizRonde", action = "Create", id = item.EvenementID })
         </td>
     </tr>
 }

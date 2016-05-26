@@ -4,18 +4,17 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Ronde beheren</h2>
+<h4>@Html.Raw(ViewBag.naamBijID) 
+    </h4>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", new {id = ViewBag.evenementID})
 </p>
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Rondenummer)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Evenement.Email_Quizmaster)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Thema.Thema_Naam)
@@ -27,9 +26,6 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Rondenummer)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Evenement.Email_Quizmaster)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Thema.Thema_Naam)

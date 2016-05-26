@@ -15,9 +15,25 @@ namespace QuizApp.Controllers
         private AQSDatabaseEntities db = new AQSDatabaseEntities();
 
         // GET: QuizRonde
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
-            var quizRondes = db.QuizRondes.Include(q => q.Evenement).Include(q => q.Thema);
+            if (id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+
+            var evenementNaam = from e in db.Evenementen
+                                where e.EvenementID == id
+                                select e;
+            ViewBag.naamBijID = evenementNaam.FirstOrDefault<Evenement>().Evenement_Naam;
+            ViewBag.evenementID = id;
+
+
+            var rondeBijEvenement = from e in db.QuizRondes
+                                    select e;
+            rondeBijEvenement = rondeBijEvenement.Where(s => s.EvenementID == id);
+            var quizRondes = rondeBijEvenement.Include(r => r.Evenement).Include(r => r.Thema);
+            
             return View(quizRondes.ToList());
         }
 
@@ -36,10 +52,15 @@ namespace QuizApp.Controllers
             return View(quizRonde);
         }
 
-        // GET: QuizRonde/Create
-        public ActionResult Create()
+        // GET: QuizRonde/Create/5
+        public ActionResult Create(int? id)
         {
-            ViewBag.EvenementID = new SelectList(db.Evenementen, "EvenementID", "Email_Quizmaster");
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            ViewBag.EvenementID = id;
             ViewBag.Thema_Naam = new SelectList(db.Themas, "Thema_Naam", "Thema_Naam");
             return View();
         }
@@ -55,7 +76,7 @@ namespace QuizApp.Controllers
             {
                 db.QuizRondes.Add(quizRonde);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { id = quizRonde.EvenementID });
             }
 
             ViewBag.EvenementID = new SelectList(db.Evenementen, "EvenementID", "Email_Quizmaster", quizRonde.EvenementID);
@@ -75,7 +96,7 @@ namespace QuizApp.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.EvenementID = new SelectList(db.Evenementen, "EvenementID", "Email_Quizmaster", quizRonde.EvenementID);
+            ViewBag.EvenementID = new SelectList(db.Evenementen, "EvenementID", "Evenement_Naam", quizRonde.EvenementID);
             ViewBag.Thema_Naam = new SelectList(db.Themas, "Thema_Naam", "Thema_Naam", quizRonde.Thema_Naam);
             return View(quizRonde);
         }
@@ -91,7 +112,7 @@ namespace QuizApp.Controllers
             {
                 db.Entry(quizRonde).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { id = quizRonde.EvenementID });
             }
             ViewBag.EvenementID = new SelectList(db.Evenementen, "EvenementID", "Email_Quizmaster", quizRonde.EvenementID);
             ViewBag.Thema_Naam = new SelectList(db.Themas, "Thema_Naam", "Thema_Naam", quizRonde.Thema_Naam);
@@ -121,7 +142,7 @@ namespace QuizApp.Controllers
             QuizRonde quizRonde = db.QuizRondes.Find(id);
             db.QuizRondes.Remove(quizRonde);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { id = quizRonde.EvenementID });
         }
 
         protected override void Dispose(bool disposing)
