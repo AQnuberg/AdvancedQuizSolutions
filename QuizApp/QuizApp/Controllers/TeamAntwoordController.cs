@@ -39,7 +39,12 @@ namespace QuizApp.Controllers
         // GET: TeamAntwoord/Create
         public ActionResult Create()
         {
-            ViewBag.QuizVraagID = new SelectList(db.QuizVragen, "QuizVraagID", "Thema_Naam");
+            var vragen = db.QuizVragen.Select(q => new
+            {
+                Text = q.Thema_Naam + " | " + q.Vraag,
+                Value = q.QuizVraagID
+            }).ToList();
+            ViewBag.QuizVraagID = new SelectList(vragen, "Value", "Text");
             ViewBag.TeamID = new SelectList(db.Teams, "TeamID", "Teamnaam");
             return View();
         }

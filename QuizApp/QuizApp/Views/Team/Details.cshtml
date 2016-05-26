@@ -17,7 +17,13 @@
         <dd>
             @Html.DisplayFor(model => model.Teamnaam)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Email_Teamleider)
+        </dt>
 
+        <dd>
+            @Html.DisplayFor(model => model.Email_Teamleider)
+        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Puntentotaal)
         </dt>
@@ -25,15 +31,20 @@
         <dd>
             @Html.DisplayFor(model => model.Puntentotaal)
         </dd>
-
         <dt>
-            @Html.DisplayNameFor(model => model.Account.Rolnaam)
+            @Html.DisplayNameFor(model => model.Evenement.EvenementID)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Account.Rolnaam)
+            @Html.DisplayFor(model => model.Evenement.EvenementID)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Evenement.Evenement_Naam)
+        </dt>
 
+        <dd>
+            @Html.DisplayFor(model => model.Evenement.Evenement_Naam)
+        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Evenement.Email_Quizmaster)
         </dt>
