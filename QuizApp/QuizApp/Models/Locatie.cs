@@ -7,6 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.ComponentModel.DataAnnotations;
+
 namespace QuizApp.Models
 {
     using System;
@@ -19,15 +21,23 @@ namespace QuizApp.Models
         {
             this.Evenements = new HashSet<Evenement>();
         }
-    
+        
         public int LocatieID { get; set; }
+        [StringLength(100)]
         public string Locatie_Naam { get; set; }
+        [StringLength(50)]
         public string Plaatsnaam { get; set; }
+        [StringLength(7)]
         public string Postcode { get; set; }
+        [StringLength(10)]
         public string Huisnummer { get; set; }
+        [StringLength(50)]
         public string Straatnaam { get; set; }
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
         public string Email { get; set; }
+        [StringLength(12)]
         public string Telefoonnummer { get; set; }
+        [StringLength(50)]
         public string Website { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

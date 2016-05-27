@@ -7,6 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.ComponentModel.DataAnnotations;
+
 namespace QuizApp.Models
 {
     using System;
@@ -23,10 +25,14 @@ namespace QuizApp.Models
     
         public int EvenementID { get; set; }
         public int LocatieID { get; set; }
+        [StringLength(50)]
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
         public string Email_Quizmaster { get; set; }
+        [StringLength(100)]
         public string Evenement_Naam { get; set; }
         public System.DateTime Begintijd { get; set; }
         public System.DateTime Eindtijd { get; set; }
+        [StringLength(50)]
         public string Evenement_Type { get; set; }
     
         public virtual Account Account { get; set; }

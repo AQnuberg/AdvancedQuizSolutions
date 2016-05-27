@@ -7,6 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.ComponentModel.DataAnnotations;
+
 namespace QuizApp.Models
 {
     using System;
@@ -23,6 +25,7 @@ namespace QuizApp.Models
         public int QuizRondeID { get; set; }
         public int EvenementID { get; set; }
         public int Rondenummer { get; set; }
+        [StringLength(50)]
         public string Thema_Naam { get; set; }
     
         public virtual Evenement Evenement { get; set; }

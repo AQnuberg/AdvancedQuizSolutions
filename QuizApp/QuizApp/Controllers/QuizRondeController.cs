@@ -27,7 +27,7 @@ namespace QuizApp.Controllers
                                 select e;
             var firstOrDefault = evenementNaam.FirstOrDefault<Evenement>();
             if (firstOrDefault != null)
-                ViewBag.naamBijID = firstOrDefault.Evenement_Naam;
+            ViewBag.naamBijID = firstOrDefault.Evenement_Naam;
             ViewBag.evenementID = id;
 
 
