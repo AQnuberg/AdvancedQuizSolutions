@@ -48,10 +48,10 @@ namespace QuizApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Thema_Naam")] Thema thema)
         {
-            var Themanamen = from t in db.Themas
+            var themanamen = from t in db.Themas
                              where t.Thema_Naam == thema.Thema_Naam
                              select t;
-            if (Themanamen.First() == null)
+            if (themanamen.First() == null)
             {
 
                 if (ModelState.IsValid)
@@ -60,17 +60,19 @@ namespace QuizApp.Controllers
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
+                else
+                {
+                    return View(thema);
+                }
             }
             else
             {
                 ViewBag.message = "Thema_naam bestaat al";
                 ViewBag.linkText = "Terug naar thema";
                 ViewBag.actionName = "index";
-                ViewBag.routeValue = new { controller = thema };
+                ViewBag.routeValue = new { controller = "thema" };
                 return View("Error");
             }
-
-            return View(thema);
         }
 
         // GET: Thema/Edit/5

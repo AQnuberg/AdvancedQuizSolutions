@@ -72,15 +72,29 @@ namespace QuizApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "MeerkeuzeAntwoordID,Meerkeuze_Antwoord,QuizVraagID,Is_Juist")] MeerkeuzeAntwoord meerkeuzeAntwoord)
         {
-            if (ModelState.IsValid)
+            var antwoord = from a in db.MeerkeuzeAntwoorden
+                           where a.QuizVraagID == meerkeuzeAntwoord.QuizVraagID && a.Meerkeuze_Antwoord == meerkeuzeAntwoord.Meerkeuze_Antwoord
+                           select a;
+            if (antwoord.FirstOrDefault() == null)
             {
-                db.MeerkeuzeAntwoorden.Add(meerkeuzeAntwoord);
-                db.SaveChanges();
-                return RedirectToAction("Index", new { id = meerkeuzeAntwoord.QuizVraagID });
-            }
+                if (ModelState.IsValid)
+                {
+                    db.MeerkeuzeAntwoorden.Add(meerkeuzeAntwoord);
+                    db.SaveChanges();
+                    return RedirectToAction("Index", new { id = meerkeuzeAntwoord.QuizVraagID });
+                }
 
-            ViewBag.QuizVraagID = new SelectList(db.QuizVragen, "QuizVraagID", "Thema_Naam", meerkeuzeAntwoord.QuizVraagID);
-            return View(meerkeuzeAntwoord);
+                ViewBag.QuizVraagID = new SelectList(db.QuizVragen, "QuizVraagID", "Thema_Naam", meerkeuzeAntwoord.QuizVraagID);
+                return View(meerkeuzeAntwoord);
+            }
+            else
+            {
+                ViewBag.message = "Antwoord bestaat al";
+                ViewBag.linkText = "Terug naar meerkeuzeAntwoord";
+                ViewBag.actionName = "index";
+                ViewBag.routeValue = new { controller = "MeerkeuzeAntwoord", id = meerkeuzeAntwoord.QuizVraagID};
+                return View("Error");
+            }
         }
 
         // GET: MeerkeuzeAntwoord/Edit/5
@@ -105,14 +119,30 @@ namespace QuizApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "MeerkeuzeAntwoordID,Meerkeuze_Antwoord,QuizVraagID,Is_Juist,Quizvraag")] MeerkeuzeAntwoord meerkeuzeAntwoord)
         {
-            if (ModelState.IsValid)
+            var antwoord = from a in db.MeerkeuzeAntwoorden
+                           where a.QuizVraagID == meerkeuzeAntwoord.QuizVraagID && 
+                           a.Meerkeuze_Antwoord == meerkeuzeAntwoord.Meerkeuze_Antwoord &&
+                           a.MeerkeuzeAntwoordID != meerkeuzeAntwoord.MeerkeuzeAntwoordID
+                           select a;
+            if (antwoord.FirstOrDefault() == null)
             {
-                db.Entry(meerkeuzeAntwoord).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index", new { id = meerkeuzeAntwoord.QuizVraagID });
+                if (ModelState.IsValid)
+                {
+                    db.Entry(meerkeuzeAntwoord).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index", new { id = meerkeuzeAntwoord.QuizVraagID });
+                }
+                ViewBag.QuizVraagID = new SelectList(db.QuizVragen, "QuizVraagID", "Thema_Naam", meerkeuzeAntwoord.QuizVraagID);
+                return View(meerkeuzeAntwoord);
             }
-            ViewBag.QuizVraagID = new SelectList(db.QuizVragen, "QuizVraagID", "Thema_Naam", meerkeuzeAntwoord.QuizVraagID);
-            return View(meerkeuzeAntwoord);
+            else
+            {
+                ViewBag.message = "Antwoord bestaat al";
+                ViewBag.linkText = "Terug naar meerkeuzeAntwoord";
+                ViewBag.actionName = "index";
+                ViewBag.routeValue = new { controller = "MeerkeuzeAntwoord", id = meerkeuzeAntwoord.QuizVraagID };
+                return View("Error");
+            }
         }
 
         // GET: MeerkeuzeAntwoord/Delete/5

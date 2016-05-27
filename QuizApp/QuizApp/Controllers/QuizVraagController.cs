@@ -54,15 +54,29 @@ namespace QuizApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "QuizVraagID,Thema_Naam,Vraag,Vraagtype,Open_Vraag_Antwoord")] QuizVraag quizVraag)
         {
-            if (ModelState.IsValid)
-            {
-                db.QuizVragen.Add(quizVraag);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+            var quizvragen = from qv in db.QuizVragen
+                             where qv.Vraag == quizVraag.Vraag
+                             select qv;
 
-            ViewBag.Thema_Naam = new SelectList(db.Themas, "Thema_Naam", "Thema_Naam", quizVraag.Thema_Naam);
-            return View(quizVraag);
+            if (quizvragen.FirstOrDefault() == null) {
+                if (ModelState.IsValid)
+                {
+                    db.QuizVragen.Add(quizVraag);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+
+                ViewBag.Thema_Naam = new SelectList(db.Themas, "Thema_Naam", "Thema_Naam", quizVraag.Thema_Naam);
+                return View(quizVraag);
+            }
+            else
+            {
+                ViewBag.message = "Vraag bestaat al";
+                ViewBag.linkText = "Terug naar vraag";
+                ViewBag.actionName = "index";
+                ViewBag.routeValue = new { controller = "QuizVraag" };
+                return View("Error");
+            }
         }
 
         // GET: QuizVraag/Edit/5
@@ -92,14 +106,29 @@ namespace QuizApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "QuizVraagID,Thema_Naam,Vraag,Vraagtype,Open_Vraag_Antwoord")] QuizVraag quizVraag)
         {
-            if (ModelState.IsValid)
+            var quizvragen = from qv in db.QuizVragen
+                             where qv.Vraag == quizVraag.Vraag && qv.QuizVraagID != quizVraag.QuizVraagID
+                             select qv;
+
+            if (quizvragen.FirstOrDefault() == null)
             {
-                db.Entry(quizVraag).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(quizVraag).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                ViewBag.Thema_Naam = new SelectList(db.Themas, "Thema_Naam", "Thema_Naam", quizVraag.Thema_Naam);
+                return View(quizVraag);
             }
-            ViewBag.Thema_Naam = new SelectList(db.Themas, "Thema_Naam", "Thema_Naam", quizVraag.Thema_Naam);
-            return View(quizVraag);
+            else
+            {
+                ViewBag.message = "Vraag bestaat al";
+                ViewBag.linkText = "Terug naar vraag";
+                ViewBag.actionName = "index";
+                ViewBag.routeValue = new { controller = "QuizVraag" };
+                return View("Error");
+            }
         }
 
         // GET: QuizVraag/Delete/5
