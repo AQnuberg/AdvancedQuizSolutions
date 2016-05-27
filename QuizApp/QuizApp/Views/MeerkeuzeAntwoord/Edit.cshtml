@@ -12,7 +12,7 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>MeerkeuzeAntwoord</h4>
+        <h4>@Html.DisplayFor(model => model.QuizVraag.Vraag)</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.MeerkeuzeAntwoordID)
@@ -26,12 +26,12 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.QuizVraagID, "QuizVraagID", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("QuizVraagID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.TextBoxFor(model => model.QuizVraagID, new { @class = "hidden"})
                 @Html.ValidationMessageFor(model => model.QuizVraagID, "", new { @class = "text-danger" })
             </div>
         </div>
+
 
         <div class="form-group">
             @Html.LabelFor(model => model.Is_Juist, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -52,7 +52,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Terug", "index", new { controller = "MeerkeuzeAntwoord", id = Model.QuizVraagID })
 </div>
 
 @section Scripts {
