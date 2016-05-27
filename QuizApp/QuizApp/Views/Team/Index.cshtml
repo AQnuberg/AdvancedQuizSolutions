@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<QuizApp.Models.Team>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Team beheer";
 }
 
-<h2>Index</h2>
+<h2>Team beheren</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Nieuw team toevoegen", "Create")
 </p>
 <table class="table">
     <tr>
@@ -15,15 +15,11 @@
             @Html.DisplayNameFor(model => model.Teamnaam)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Puntentotaal)
+            @Html.DisplayNameFor(model => model.Evenement.Evenement_Naam)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Account.Rolnaam)
+            @Html.DisplayNameFor(model => model.Account.Email)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Evenement.Email_Quizmaster)
-        </th>
-        <th></th>
     </tr>
 
 @foreach (var item in Model) {
@@ -32,18 +28,16 @@
             @Html.DisplayFor(modelItem => item.Teamnaam)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Puntentotaal)
+            @Html.DisplayFor(modelItem => item.Evenement.Evenement_Naam,"Evenement")
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Account.Rolnaam)
+            @Html.DisplayFor(modelItem => item.Email_Teamleider)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Evenement.Email_Quizmaster)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.TeamID }) |
+            @Html.ActionLink("Wijzig", "Edit", new { id=item.TeamID }) |
             @Html.ActionLink("Details", "Details", new { id=item.TeamID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.TeamID })
+            @Html.ActionLink("Verwijder", "Delete", new { id=item.TeamID }) |
+            @Html.ActionLink("Team antwoord beheren", "Index", new { controller = "TeamAntwoord", action = "Index",id = item.TeamID})
         </td>
     </tr>
 }

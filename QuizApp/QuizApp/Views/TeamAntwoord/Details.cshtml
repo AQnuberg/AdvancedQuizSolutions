@@ -11,13 +11,12 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Gegeven_Antwoord)
+            @Html.DisplayNameFor(model => model.Team.Teamnaam)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Gegeven_Antwoord)
+            @Html.DisplayFor(model => model.Team.Teamnaam)
         </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.QuizVraag.Thema_Naam)
         </dt>
@@ -25,18 +24,23 @@
         <dd>
             @Html.DisplayFor(model => model.QuizVraag.Thema_Naam)
         </dd>
-
         <dt>
-            @Html.DisplayNameFor(model => model.Team.Teamnaam)
+            @Html.DisplayNameFor(model => model.QuizVraag.Vraag)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Team.Teamnaam)
+            @Html.DisplayFor(model => model.QuizVraag.Vraag)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Gegeven_Antwoord)
+        </dt>
 
+        <dd>
+            @Html.DisplayFor(model => model.Gegeven_Antwoord)
+        </dd>
     </dl>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.TeamAntwoordID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Terug naar team antwoord", "Index", new { id= Model.TeamID})
 </p>

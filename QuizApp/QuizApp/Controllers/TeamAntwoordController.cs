@@ -14,11 +14,25 @@ namespace QuizApp.Controllers
     {
         private AQSDatabaseEntities db = new AQSDatabaseEntities();
 
-        // GET: TeamAntwoord
-        public ActionResult Index()
+       
+        // GET: TeamAntwoord/Index/5
+        public ActionResult Index(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var teamNaam = from e in db.Teams
+                           where e.TeamID == id
+                           select e;
+
+            var firstOrDefault = teamNaam.FirstOrDefault<Team>();
+            if (firstOrDefault != null)
+                ViewBag.naamBijID = firstOrDefault.Teamnaam;
+            ViewBag.TeamID = id;
+
             var teamAntwoords = db.TeamAntwoorden.Include(t => t.QuizVraag).Include(t => t.Team);
-            return View(teamAntwoords.ToList());
+            return View(teamAntwoords);
         }
 
         // GET: TeamAntwoord/Details/5
@@ -39,7 +53,7 @@ namespace QuizApp.Controllers
         // GET: TeamAntwoord/Create
         public ActionResult Create()
         {
-            ViewBag.QuizVraagID = new SelectList(db.QuizVragen, "QuizVraagID", "Thema_Naam");
+            ViewBag.QuizVraagID = new SelectList(db.QuizVragen, "QuizVraagID", "Vraag");
             ViewBag.TeamID = new SelectList(db.Teams, "TeamID", "Teamnaam");
             return View();
         }

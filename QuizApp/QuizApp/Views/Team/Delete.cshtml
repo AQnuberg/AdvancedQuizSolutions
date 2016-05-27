@@ -4,9 +4,9 @@
     ViewBag.Title = "Delete";
 }
 
-<h2>Delete</h2>
+<h2>Verwijder team</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Weet je zeker dat je dit wilt verwijderen?</h3>
 <div>
     <h4>Team</h4>
     <hr />
@@ -20,27 +20,19 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Puntentotaal)
+            @Html.DisplayNameFor(model => model.Evenement.Evenement_Naam)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Puntentotaal)
+            @Html.DisplayFor(model => model.Evenement.Evenement_Naam)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Account.Rolnaam)
+            @Html.DisplayNameFor(model => model.Email_Teamleider)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Account.Rolnaam)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Evenement.Email_Quizmaster)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Evenement.Email_Quizmaster)
+            @Html.DisplayFor(model => model.Email_Teamleider)
         </dd>
 
     </dl>
@@ -50,7 +42,7 @@
 
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            @Html.ActionLink("Terug naar Team beheren", "Index")
         </div>
     }
 </div>

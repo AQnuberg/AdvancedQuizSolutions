@@ -39,8 +39,8 @@ namespace QuizApp.Controllers
         // GET: Team/Create
         public ActionResult Create()
         {
-            ViewBag.Email_Teamleider = new SelectList(db.Accounts, "Email", "Rolnaam");
-            ViewBag.EvenementID = new SelectList(db.Evenementen, "EvenementID", "Email_Quizmaster");
+            ViewBag.Email_Teamleider = new SelectList(db.Accounts, "Email","Email");
+            ViewBag.EvenementID = new SelectList(db.Evenementen, "EvenementID", "Evenement_Naam");
             return View();
         }
 
@@ -75,8 +75,8 @@ namespace QuizApp.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.Email_Teamleider = new SelectList(db.Accounts, "Email", "Rolnaam", team.Email_Teamleider);
-            ViewBag.EvenementID = new SelectList(db.Evenementen, "EvenementID", "Email_Quizmaster", team.EvenementID);
+            ViewBag.Email_Teamleider = new SelectList(db.Accounts, "Email", "Email", team.Email_Teamleider);
+            ViewBag.EvenementID = new SelectList(db.Evenementen, "EvenementID", "Evenement_Naam", team.EvenementID);
             return View(team);
         }
 
