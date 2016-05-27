@@ -84,7 +84,7 @@ namespace QuizApp.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.Email_Quizmaster = new SelectList(db.Accounts, "Email", "Rolnaam", evenement.Email_Quizmaster);
+            ViewBag.Email_Quizmaster = new SelectList(db.Accounts, "Email", "Email", evenement.Email_Quizmaster);
             ViewBag.LocatieID = new SelectList(db.Locaties, "LocatieID", "Locatie_Naam", evenement.LocatieID);
             return View(evenement);
         }
