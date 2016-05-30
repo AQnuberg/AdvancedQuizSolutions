@@ -1,0 +1,41 @@
+﻿@model IEnumerable<SpelleiderEvenementVraagModels>
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Vragen voor de quiz: <%= Model.Evenement_Naam %></h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Rondenummer)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Thema_Naam)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Vraag)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rondenummer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Thema_Naam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Vraag)
+            </td>
+            <td>
+                @Html.ActionLink("Speel", "Edit") 
+            </td>
+        </tr>
+    }
+
+</table>
+

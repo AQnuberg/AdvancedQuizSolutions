@@ -207,6 +207,7 @@
     <Compile Include="Controllers\QuizRondeController.cs" />
     <Compile Include="Controllers\QuizVraagController.cs" />
     <Compile Include="Controllers\RolController.cs" />
+    <Compile Include="Controllers\SpelleiderController.cs" />
     <Compile Include="Controllers\TeamAntwoordController.cs" />
     <Compile Include="Controllers\TeamController.cs" />
     <Compile Include="Controllers\ThemaController.cs" />
@@ -218,6 +219,7 @@
       <DependentUpon>QuizModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\SpelleiderEvenementVraagModels.cs" />
     <Compile Include="Models\Evenement.cs">
       <DependentUpon>QuizModel.tt</DependentUpon>
     </Compile>
@@ -400,6 +402,8 @@
     <Content Include="Views\VraagInQuiz\Details.cshtml" />
     <Content Include="Views\VraagInQuiz\Edit.cshtml" />
     <Content Include="Views\VraagInQuiz\Index.cshtml" />
+    <Content Include="Views\Spelleider\Index.cshtml" />
+    <Content Include="Views\Spelleider\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
