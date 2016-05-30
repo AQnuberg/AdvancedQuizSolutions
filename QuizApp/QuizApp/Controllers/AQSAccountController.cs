@@ -22,7 +22,7 @@ namespace QuizApp.Controllers
         }
 
         // GET: AQSAccount/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details(int? id)
         {
             if (id == null)
             {
@@ -39,7 +39,7 @@ namespace QuizApp.Controllers
         // GET: AQSAccount/Create
         public ActionResult Create()
         {
-            ViewBag.Rolnaam = new SelectList(db.Rol, "Rolnaam", "Rolnaam");
+            ViewBag.Rollen = new SelectList(db.Rol, "RolID", "Rolnaam");
             return View();
         }
 
@@ -48,7 +48,7 @@ namespace QuizApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Email,Rolnaam,Wachtwoord,Voornaam,Achternaam,Woonplaats,Straatnaam,Huisnummer,Postcode,Telefoonnummer")] Account account)
+        public ActionResult Create([Bind(Include = "Email,RolID,Wachtwoord,Voornaam,Achternaam,Woonplaats,Straatnaam,Huisnummer,Postcode,Telefoonnummer")] Account account)
         {
             if (ModelState.IsValid)
             {
@@ -61,7 +61,7 @@ namespace QuizApp.Controllers
         }
 
         // GET: AQSAccount/Edit/5
-        public ActionResult Edit(string id)
+        public ActionResult Edit(int? id)
         {
             if (id == null)
             {
@@ -72,7 +72,7 @@ namespace QuizApp.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.Rolnaam = new SelectList(db.Rol, "Rolnaam", "Rolnaam", account.Rol);
+            ViewBag.Rollen = new SelectList(db.Rol, "RolID", "Rolnaam", account.RolID);
             return View(account);
         }
 
@@ -81,7 +81,7 @@ namespace QuizApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Email,Rolnaam,Wachtwoord,Voornaam,Achternaam,Woonplaats,Straatnaam,Huisnummer,Postcode,Telefoonnummer")] Account account)
+        public ActionResult Edit([Bind(Include = "AccountID,Email,RolID,Wachtwoord,Voornaam,Achternaam,Woonplaats,Straatnaam,Huisnummer,Postcode,Telefoonnummer")] Account account)
         {
             if (ModelState.IsValid)
             {
@@ -89,12 +89,12 @@ namespace QuizApp.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Rolnaam = new SelectList(db.Rol, "Rolnaam", "Rolnaam", account.RolID);
+            ViewBag.Rolnaam = new SelectList(db.Rol, "RolID", "Rolnaam", account.RolID);
             return View(account);
         }
 
         // GET: AQSAccount/Delete/5
-        public ActionResult Delete(string id)
+        public ActionResult Delete(int? id)
         {
             if (id == null)
             {
@@ -111,7 +111,7 @@ namespace QuizApp.Controllers
         // POST: AQSAccount/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(int id)
         {
             Account account = db.Account.Find(id);
             db.Account.Remove(account);
