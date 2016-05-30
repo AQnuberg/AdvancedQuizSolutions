@@ -400,6 +400,7 @@
     <Content Include="Views\VraagInQuiz\Details.cshtml" />
     <Content Include="Views\VraagInQuiz\Edit.cshtml" />
     <Content Include="Views\VraagInQuiz\Index.cshtml" />
+    <Content Include="Views\TeamAntwoord\Play.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
