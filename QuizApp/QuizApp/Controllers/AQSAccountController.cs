@@ -17,7 +17,7 @@ namespace QuizApp.Controllers
         // GET: AQSAccount
         public ActionResult Index()
         {
-            var accounts = db.Accounts.Include(a => a.Rol);
+            var accounts = db.Account.Include(a => a.Rol);
             return View(accounts.ToList());
         }
 
@@ -28,7 +28,7 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Account account = db.Accounts.Find(id);
+            Account account = db.Account.Find(id);
             if (account == null)
             {
                 return HttpNotFound();
@@ -39,7 +39,7 @@ namespace QuizApp.Controllers
         // GET: AQSAccount/Create
         public ActionResult Create()
         {
-            ViewBag.Rolnaam = new SelectList(db.Rollen, "Rolnaam", "Rolnaam");
+            ViewBag.Rolnaam = new SelectList(db.Rol, "Rolnaam", "Rolnaam");
             return View();
         }
 
@@ -52,12 +52,11 @@ namespace QuizApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Accounts.Add(account);
+                db.Account.Add(account);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.Rolnaam = new SelectList(db.Rollen, "Rolnaam", "Rolnaam", account.Rolnaam);
+            ViewBag.Rolnaam = new SelectList(db.Rol, "Rolnaam", "Rolnaam", account.RolID);
             return View(account);
         }
 
@@ -68,12 +67,12 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Account account = db.Accounts.Find(id);
+            Account account = db.Account.Find(id);
             if (account == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.Rolnaam = new SelectList(db.Rollen, "Rolnaam", "Rolnaam", account.Rolnaam);
+            ViewBag.Rolnaam = new SelectList(db.Rol, "Rolnaam", "Rolnaam", account.Rol);
             return View(account);
         }
 
@@ -86,11 +85,11 @@ namespace QuizApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(account).State = EntityState.Modified;
+                db.Entry(account).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Rolnaam = new SelectList(db.Rollen, "Rolnaam", "Rolnaam", account.Rolnaam);
+            ViewBag.Rolnaam = new SelectList(db.Rol, "Rolnaam", "Rolnaam", account.RolID);
             return View(account);
         }
 
@@ -101,7 +100,7 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Account account = db.Accounts.Find(id);
+            Account account = db.Account.Find(id);
             if (account == null)
             {
                 return HttpNotFound();
@@ -114,8 +113,8 @@ namespace QuizApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            Account account = db.Accounts.Find(id);
-            db.Accounts.Remove(account);
+            Account account = db.Account.Find(id);
+            db.Account.Remove(account);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

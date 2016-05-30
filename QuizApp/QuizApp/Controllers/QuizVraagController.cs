@@ -17,7 +17,7 @@ namespace QuizApp.Controllers
         // GET: QuizVraag
         public ActionResult Index()
         {
-            var quizVraags = db.QuizVragen.Include(q => q.Thema);
+            var quizVraags = db.QuizVraag.Include(q => q.Thema);
             return View(quizVraags.ToList());
         }
 
@@ -28,7 +28,7 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            QuizVraag quizVraag = db.QuizVragen.Find(id);
+            QuizVraag quizVraag = db.QuizVraag.Find(id);
             if (quizVraag == null)
             {
                 return HttpNotFound();
@@ -43,7 +43,7 @@ namespace QuizApp.Controllers
             vraagtypes.Add(new SelectListItem { Text = "Open" });
             vraagtypes.Add(new SelectListItem { Text = "Meerkeuze" });
             ViewBag.Vraagtype = new SelectList(vraagtypes, "Text", "Text");
-            ViewBag.Thema_Naam = new SelectList(db.Themas, "Thema_Naam", "Thema_Naam");
+            ViewBag.Themas = new SelectList(db.Thema, "ThemaID", "Thema_Naam");
             return View();
         }
 
@@ -52,21 +52,21 @@ namespace QuizApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "QuizVraagID,Thema_Naam,Vraag,Vraagtype,Open_Vraag_Antwoord")] QuizVraag quizVraag)
+        public ActionResult Create([Bind(Include = "QuizVraagID,ThemaID,Vraag,Vraagtype,Open_Vraag_Antwoord")] QuizVraag quizVraag)
         {
-            var quizvragen = from qv in db.QuizVragen
+            var quizvragen = from qv in db.QuizVraag
                              where qv.Vraag == quizVraag.Vraag
                              select qv;
 
             if (quizvragen.FirstOrDefault() == null) {
                 if (ModelState.IsValid)
                 {
-                    db.QuizVragen.Add(quizVraag);
+                    db.QuizVraag.Add(quizVraag);
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
 
-                ViewBag.Thema_Naam = new SelectList(db.Themas, "Thema_Naam", "Thema_Naam", quizVraag.Thema_Naam);
+                ViewBag.Thema_Naam = new SelectList(db.Thema, "Thema_Naam", "Thema_Naam", quizVraag.ThemaID);
                 return View(quizVraag);
             }
             else
@@ -86,7 +86,7 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            QuizVraag quizVraag = db.QuizVragen.Find(id);
+            QuizVraag quizVraag = db.QuizVraag.Find(id);
             if (quizVraag == null)
             {
                 return HttpNotFound();
@@ -95,7 +95,7 @@ namespace QuizApp.Controllers
             vraagtypes.Add(new SelectListItem { Text = "Open" });
             vraagtypes.Add(new SelectListItem { Text = "Meerkeuze" });
             ViewBag.Vraagtype = new SelectList(vraagtypes, "Text", "Text", quizVraag.Vraagtype);
-            ViewBag.Thema_Naam = new SelectList(db.Themas, "Thema_Naam", "Thema_Naam", quizVraag.Thema_Naam);
+            ViewBag.Themas = new SelectList(db.Thema, "ThemaID", "Thema_Naam", quizVraag.ThemaID);
             return View(quizVraag);
         }
 
@@ -104,9 +104,9 @@ namespace QuizApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "QuizVraagID,Thema_Naam,Vraag,Vraagtype,Open_Vraag_Antwoord")] QuizVraag quizVraag)
+        public ActionResult Edit([Bind(Include = "QuizVraagID,ThemaID,Vraag,Vraagtype,Open_Vraag_Antwoord")] QuizVraag quizVraag)
         {
-            var quizvragen = from qv in db.QuizVragen
+            var quizvragen = from qv in db.QuizVraag
                              where qv.Vraag == quizVraag.Vraag && qv.QuizVraagID != quizVraag.QuizVraagID
                              select qv;
 
@@ -114,11 +114,11 @@ namespace QuizApp.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    db.Entry(quizVraag).State = EntityState.Modified;
+                    db.Entry(quizVraag).State = System.Data.Entity.EntityState.Modified; ;
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
-                ViewBag.Thema_Naam = new SelectList(db.Themas, "Thema_Naam", "Thema_Naam", quizVraag.Thema_Naam);
+                ViewBag.Thema_Naam = new SelectList(db.Thema, "Thema_Naam", "Thema_Naam", quizVraag.ThemaID);
                 return View(quizVraag);
             }
             else
@@ -138,7 +138,7 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            QuizVraag quizVraag = db.QuizVragen.Find(id);
+            QuizVraag quizVraag = db.QuizVraag.Find(id);
             if (quizVraag == null)
             {
                 return HttpNotFound();
@@ -151,8 +151,8 @@ namespace QuizApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            QuizVraag quizVraag = db.QuizVragen.Find(id);
-            db.QuizVragen.Remove(quizVraag);
+            QuizVraag quizVraag = db.QuizVraag.Find(id);
+            db.QuizVraag.Remove(quizVraag);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

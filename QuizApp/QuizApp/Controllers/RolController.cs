@@ -17,7 +17,7 @@ namespace QuizApp.Controllers
         // GET: Rol
         public ActionResult Index()
         {
-            return View(db.Rollen.ToList());
+            return View(db.Rol.ToList());
         }
 
         // GET: Rol/Details/5
@@ -27,7 +27,7 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Rol rol = db.Rollen.Find(id);
+            Rol rol = db.Rol.Find(id);
             if (rol == null)
             {
                 return HttpNotFound();
@@ -50,7 +50,7 @@ namespace QuizApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Rollen.Add(rol);
+                db.Rol.Add(rol);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -65,7 +65,7 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Rol rol = db.Rollen.Find(id);
+            Rol rol = db.Rol.Find(id);
             if (rol == null)
             {
                 return HttpNotFound();
@@ -82,7 +82,7 @@ namespace QuizApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(rol).State = EntityState.Modified;
+                db.Entry(rol).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -96,7 +96,7 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Rol rol = db.Rollen.Find(id);
+            Rol rol = db.Rol.Find(id);
             if (rol == null)
             {
                 return HttpNotFound();
@@ -109,8 +109,8 @@ namespace QuizApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            Rol rol = db.Rollen.Find(id);
-            db.Rollen.Remove(rol);
+            Rol rol = db.Rol.Find(id);
+            db.Rol.Remove(rol);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

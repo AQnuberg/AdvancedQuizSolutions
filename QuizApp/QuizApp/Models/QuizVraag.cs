@@ -11,32 +11,29 @@ namespace QuizApp.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
+    
     public partial class QuizVraag
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public QuizVraag()
         {
-            this.MeerkeuzeAntwoords = new HashSet<MeerkeuzeAntwoord>();
-            this.TeamAntwoords = new HashSet<TeamAntwoord>();
-            this.VraagInQuizs = new HashSet<VraagInQuiz>();
+            this.MeerkeuzeAntwoord = new HashSet<MeerkeuzeAntwoord>();
+            this.TeamAntwoord = new HashSet<TeamAntwoord>();
+            this.VraagInQuiz = new HashSet<VraagInQuiz>();
         }
     
         public int QuizVraagID { get; set; }
-        public string Thema_Naam { get; set; }
-
-        [StringLength(200)]
+        public int ThemaID { get; set; }
         public string Vraag { get; set; }
         public string Vraagtype { get; set; }
-        [StringLength(100)]
         public string Open_Vraag_Antwoord { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MeerkeuzeAntwoord> MeerkeuzeAntwoords { get; set; }
+        public virtual ICollection<MeerkeuzeAntwoord> MeerkeuzeAntwoord { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TeamAntwoord> TeamAntwoords { get; set; }
+        public virtual ICollection<TeamAntwoord> TeamAntwoord { get; set; }
         public virtual Thema Thema { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<VraagInQuiz> VraagInQuizs { get; set; }
+        public virtual ICollection<VraagInQuiz> VraagInQuiz { get; set; }
     }
 }

@@ -7,8 +7,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.ComponentModel.DataAnnotations;
-
 namespace QuizApp.Models
 {
     using System;
@@ -19,27 +17,23 @@ namespace QuizApp.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Evenement()
         {
-            this.QuizRondes = new HashSet<QuizRonde>();
-            this.Teams = new HashSet<Team>();
+            this.QuizRonde = new HashSet<QuizRonde>();
+            this.Team = new HashSet<Team>();
         }
     
         public int EvenementID { get; set; }
         public int LocatieID { get; set; }
-        [StringLength(50)]
-        [EmailAddress(ErrorMessage = "Invalid Email Address")]
-        public string Email_Quizmaster { get; set; }
-        [StringLength(100)]
+        public int AccountID { get; set; }
         public string Evenement_Naam { get; set; }
         public System.DateTime Begintijd { get; set; }
         public System.DateTime Eindtijd { get; set; }
-        [StringLength(50)]
         public string Evenement_Type { get; set; }
     
         public virtual Account Account { get; set; }
         public virtual Locatie Locatie { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<QuizRonde> QuizRondes { get; set; }
+        public virtual ICollection<QuizRonde> QuizRonde { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Team> Teams { get; set; }
+        public virtual ICollection<Team> Team { get; set; }
     }
 }

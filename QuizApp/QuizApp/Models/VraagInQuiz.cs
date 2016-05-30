@@ -17,6 +17,7 @@ namespace QuizApp.Models
         public int VraagInQuizID { get; set; }
         public int QuizRondeID { get; set; }
         public int QuizVraagID { get; set; }
+        public bool isActief { get; set; }
     
         public virtual QuizRonde QuizRonde { get; set; }
         public virtual QuizVraag QuizVraag { get; set; }
