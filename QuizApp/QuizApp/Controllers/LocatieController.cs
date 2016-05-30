@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -17,7 +16,7 @@ namespace QuizApp.Controllers
         // GET: Locatie
         public ActionResult Index()
         {
-            return View(db.Locaties.ToList());
+            return View(db.Locatie.ToList());
         }
 
         // GET: Locatie/Details/5
@@ -27,7 +26,7 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Locatie locatie = db.Locaties.Find(id);
+            Locatie locatie = db.Locatie.Find(id);
             if (locatie == null)
             {
                 return HttpNotFound();
@@ -50,7 +49,7 @@ namespace QuizApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Locaties.Add(locatie);
+                db.Locatie.Add(locatie);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -65,7 +64,7 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Locatie locatie = db.Locaties.Find(id);
+            Locatie locatie = db.Locatie.Find(id);
             if (locatie == null)
             {
                 return HttpNotFound();
@@ -82,7 +81,7 @@ namespace QuizApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(locatie).State = EntityState.Modified;
+                db.Entry(locatie).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -96,7 +95,7 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Locatie locatie = db.Locaties.Find(id);
+            Locatie locatie = db.Locatie.Find(id);
             if (locatie == null)
             {
                 return HttpNotFound();
@@ -109,8 +108,8 @@ namespace QuizApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Locatie locatie = db.Locaties.Find(id);
-            db.Locaties.Remove(locatie);
+            Locatie locatie = db.Locatie.Find(id);
+            db.Locatie.Remove(locatie);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

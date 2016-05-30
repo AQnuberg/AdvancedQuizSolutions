@@ -17,7 +17,7 @@ namespace QuizApp.Controllers
         // GET: TeamAntwoord
         public ActionResult Index()
         {
-            var teamAntwoords = db.TeamAntwoorden.Include(t => t.QuizVraag).Include(t => t.Team);
+            var teamAntwoords = db.TeamAntwoord.Include(t => t.QuizVraag).Include(t => t.Team);
             return View(teamAntwoords.ToList());
         }
 
@@ -28,7 +28,7 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TeamAntwoord teamAntwoord = db.TeamAntwoorden.Find(id);
+            TeamAntwoord teamAntwoord = db.TeamAntwoord.Find(id);
             if (teamAntwoord == null)
             {
                 return HttpNotFound();
@@ -39,8 +39,8 @@ namespace QuizApp.Controllers
         // GET: TeamAntwoord/Create
         public ActionResult Create()
         {
-            ViewBag.QuizVraagID = new SelectList(db.QuizVragen, "QuizVraagID", "Thema_Naam");
-            ViewBag.TeamID = new SelectList(db.Teams, "TeamID", "Teamnaam");
+            ViewBag.QuizVraagID = new SelectList(db.QuizVraag, "QuizVraagID", "Thema_Naam");
+            ViewBag.TeamID = new SelectList(db.Team, "TeamID", "Teamnaam");
             return View();
         }
 
@@ -53,13 +53,13 @@ namespace QuizApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.TeamAntwoorden.Add(teamAntwoord);
+                db.TeamAntwoord.Add(teamAntwoord);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.QuizVraagID = new SelectList(db.QuizVragen, "QuizVraagID", "Thema_Naam", teamAntwoord.QuizVraagID);
-            ViewBag.TeamID = new SelectList(db.Teams, "TeamID", "Teamnaam", teamAntwoord.TeamID);
+            ViewBag.QuizVraagID = new SelectList(db.QuizVraag, "QuizVraagID", "Thema_Naam", teamAntwoord.QuizVraagID);
+            ViewBag.TeamID = new SelectList(db.Team, "TeamID", "Teamnaam", teamAntwoord.TeamID);
             return View(teamAntwoord);
         }
 
@@ -70,13 +70,13 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TeamAntwoord teamAntwoord = db.TeamAntwoorden.Find(id);
+            TeamAntwoord teamAntwoord = db.TeamAntwoord.Find(id);
             if (teamAntwoord == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.QuizVraagID = new SelectList(db.QuizVragen, "QuizVraagID", "Thema_Naam", teamAntwoord.QuizVraagID);
-            ViewBag.TeamID = new SelectList(db.Teams, "TeamID", "Teamnaam", teamAntwoord.TeamID);
+            ViewBag.QuizVraagID = new SelectList(db.QuizVraag, "QuizVraagID", "Thema_Naam", teamAntwoord.QuizVraagID);
+            ViewBag.TeamID = new SelectList(db.Team, "TeamID", "Teamnaam", teamAntwoord.TeamID);
             return View(teamAntwoord);
         }
 
@@ -89,12 +89,12 @@ namespace QuizApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(teamAntwoord).State = EntityState.Modified;
+                db.Entry(teamAntwoord).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.QuizVraagID = new SelectList(db.QuizVragen, "QuizVraagID", "Thema_Naam", teamAntwoord.QuizVraagID);
-            ViewBag.TeamID = new SelectList(db.Teams, "TeamID", "Teamnaam", teamAntwoord.TeamID);
+            ViewBag.QuizVraagID = new SelectList(db.QuizVraag, "QuizVraagID", "Thema_Naam", teamAntwoord.QuizVraagID);
+            ViewBag.TeamID = new SelectList(db.Team, "TeamID", "Teamnaam", teamAntwoord.TeamID);
             return View(teamAntwoord);
         }
 
@@ -105,7 +105,7 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TeamAntwoord teamAntwoord = db.TeamAntwoorden.Find(id);
+            TeamAntwoord teamAntwoord = db.TeamAntwoord.Find(id);
             if (teamAntwoord == null)
             {
                 return HttpNotFound();
@@ -118,8 +118,8 @@ namespace QuizApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            TeamAntwoord teamAntwoord = db.TeamAntwoorden.Find(id);
-            db.TeamAntwoorden.Remove(teamAntwoord);
+            TeamAntwoord teamAntwoord = db.TeamAntwoord.Find(id);
+            db.TeamAntwoord.Remove(teamAntwoord);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

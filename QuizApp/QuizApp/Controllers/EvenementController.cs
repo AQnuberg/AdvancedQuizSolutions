@@ -17,7 +17,7 @@ namespace QuizApp.Controllers
         // GET: Evenement
         public ActionResult Index()
         {
-            var evenements = db.Evenementen.Include(e => e.Account).Include(e => e.Locatie);
+            var evenements = db.Evenement.Include(e => e.Account).Include(e => e.Locatie);
             return View(evenements.ToList());
         }
 
@@ -28,7 +28,7 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Evenement evenement = db.Evenementen.Find(id);
+            Evenement evenement = db.Evenement.Find(id);
             if (evenement == null)
             {
                 return HttpNotFound();
@@ -39,9 +39,9 @@ namespace QuizApp.Controllers
         // GET: Evenement/Create
         public ActionResult Create()
         {
-            ViewBag.Email_Quizmaster = new SelectList(db.Accounts, "Email", "Email");
+            ViewBag.Email_Quizmaster = new SelectList(db.Account, "Email", "Email");
 
-            var locaties = db.Locaties.Select(s => new
+            var locaties = db.Locatie.Select(s => new
             {
                 Text = s.Plaatsnaam + " | " + s.Locatie_Naam,
                 Value = s.LocatieID
@@ -65,7 +65,7 @@ namespace QuizApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Evenementen.Add(evenement);
+                db.Evenement.Add(evenement);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -79,13 +79,13 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Evenement evenement = db.Evenementen.Find(id);
+            Evenement evenement = db.Evenement.Find(id);
             if (evenement == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.Email_Quizmaster = new SelectList(db.Accounts, "Email", "Rolnaam", evenement.Email_Quizmaster);
-            ViewBag.LocatieID = new SelectList(db.Locaties, "LocatieID", "Locatie_Naam", evenement.LocatieID);
+            ViewBag.Email_Quizmaster = new SelectList(db.Account, "Email", "Rolnaam", evenement.AccountID);
+            ViewBag.LocatieID = new SelectList(db.Locatie, "LocatieID", "Locatie_Naam", evenement.LocatieID);
             return View(evenement);
         }
 
@@ -98,12 +98,12 @@ namespace QuizApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(evenement).State = EntityState.Modified;
+                db.Entry(evenement).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Email_Quizmaster = new SelectList(db.Accounts, "Email", "Rolnaam", evenement.Email_Quizmaster);
-            ViewBag.LocatieID = new SelectList(db.Locaties, "LocatieID", "Locatie_Naam", evenement.LocatieID);
+            ViewBag.Email_Quizmaster = new SelectList(db.Account, "Email", "Rolnaam", evenement.AccountID);
+            ViewBag.LocatieID = new SelectList(db.Locatie, "LocatieID", "Locatie_Naam", evenement.LocatieID);
             return View(evenement);
         }
 
@@ -114,7 +114,7 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Evenement evenement = db.Evenementen.Find(id);
+            Evenement evenement = db.Evenement.Find(id);
             if (evenement == null)
             {
                 return HttpNotFound();
@@ -127,8 +127,8 @@ namespace QuizApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Evenement evenement = db.Evenementen.Find(id);
-            db.Evenementen.Remove(evenement);
+            Evenement evenement = db.Evenement.Find(id);
+            db.Evenement.Remove(evenement);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

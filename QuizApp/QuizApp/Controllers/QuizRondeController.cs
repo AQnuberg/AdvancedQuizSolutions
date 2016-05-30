@@ -22,7 +22,7 @@ namespace QuizApp.Controllers
                         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                     }
 
-            var evenementNaam = from e in db.Evenementen
+            var evenementNaam = from e in db.Evenement
                                 where e.EvenementID == id
                                 select e;
             var firstOrDefault = evenementNaam.FirstOrDefault<Evenement>();
@@ -31,7 +31,7 @@ namespace QuizApp.Controllers
             ViewBag.evenementID = id;
 
 
-            var rondeBijEvenement = from e in db.QuizRondes
+            var rondeBijEvenement = from e in db.QuizRonde
                                     select e;
             rondeBijEvenement = rondeBijEvenement.Where(s => s.EvenementID == id);
             var quizRondes = rondeBijEvenement.Include(r => r.Evenement).Include(r => r.Thema);
@@ -46,7 +46,7 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            QuizRonde quizRonde = db.QuizRondes.Find(id);
+            QuizRonde quizRonde = db.QuizRonde.Find(id);
             if (quizRonde == null)
             {
                 return HttpNotFound();
@@ -63,7 +63,7 @@ namespace QuizApp.Controllers
             }
 
             ViewBag.EvenementID = id;
-            ViewBag.Thema_Naam = new SelectList(db.Themas, "Thema_Naam", "Thema_Naam");
+            ViewBag.Themas = new SelectList(db.Thema, "ThemaID", "Thema_Naam");
             return View();
         }
 
@@ -72,17 +72,17 @@ namespace QuizApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "QuizRondeID,EvenementID,Rondenummer,Thema_Naam")] QuizRonde quizRonde)
+        public ActionResult Create([Bind(Include = "QuizRondeID,EvenementID,Rondenummer,ThemaID")] QuizRonde quizRonde)
         {
             if (ModelState.IsValid)
             {
-                db.QuizRondes.Add(quizRonde);
+                db.QuizRonde.Add(quizRonde);
                 db.SaveChanges();
                 return RedirectToAction("Index", new { id = quizRonde.EvenementID });
             }
 
-            ViewBag.EvenementID = new SelectList(db.Evenementen, "EvenementID", "Email_Quizmaster", quizRonde.EvenementID);
-            ViewBag.Thema_Naam = new SelectList(db.Themas, "Thema_Naam", "Thema_Naam", quizRonde.Thema_Naam);
+            ViewBag.EvenementID = new SelectList(db.Evenement, "EvenementID", "Email_Quizmaster", quizRonde.EvenementID);
+            ViewBag.Thema_Naam = new SelectList(db.Thema, "Thema_Naam", "Thema_Naam", quizRonde.ThemaID);
             return View(quizRonde);
         }
 
@@ -93,13 +93,13 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            QuizRonde quizRonde = db.QuizRondes.Find(id);
+            QuizRonde quizRonde = db.QuizRonde.Find(id);
             if (quizRonde == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.EvenementID = new SelectList(db.Evenementen, "EvenementID", "Evenement_Naam", quizRonde.EvenementID);
-            ViewBag.Thema_Naam = new SelectList(db.Themas, "Thema_Naam", "Thema_Naam", quizRonde.Thema_Naam);
+            ViewBag.EvenementID = new SelectList(db.Evenement, "EvenementID", "Evenement_Naam", quizRonde.EvenementID);
+            ViewBag.Themas = new SelectList(db.Thema, "ThemaID", "Thema_Naam", quizRonde.ThemaID);
             return View(quizRonde);
         }
 
@@ -108,16 +108,16 @@ namespace QuizApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "QuizRondeID,EvenementID,Rondenummer,Thema_Naam")] QuizRonde quizRonde)
+        public ActionResult Edit([Bind(Include = "QuizRondeID,EvenementID,Rondenummer,ThemaID")] QuizRonde quizRonde)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(quizRonde).State = EntityState.Modified;
+                db.Entry(quizRonde).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index", new { id = quizRonde.EvenementID });
             }
-            ViewBag.EvenementID = new SelectList(db.Evenementen, "EvenementID", "Email_Quizmaster", quizRonde.EvenementID);
-            ViewBag.Thema_Naam = new SelectList(db.Themas, "Thema_Naam", "Thema_Naam", quizRonde.Thema_Naam);
+            ViewBag.EvenementID = new SelectList(db.Evenement, "EvenementID", "Email_Quizmaster", quizRonde.EvenementID);
+            ViewBag.Thema_Naam = new SelectList(db.Thema, "Thema_Naam", "Thema_Naam", quizRonde.ThemaID);
             return View(quizRonde);
         }
 
@@ -128,7 +128,7 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            QuizRonde quizRonde = db.QuizRondes.Find(id);
+            QuizRonde quizRonde = db.QuizRonde.Find(id);
             if (quizRonde == null)
             {
                 return HttpNotFound();
@@ -141,8 +141,8 @@ namespace QuizApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            QuizRonde quizRonde = db.QuizRondes.Find(id);
-            db.QuizRondes.Remove(quizRonde);
+            QuizRonde quizRonde = db.QuizRonde.Find(id);
+            db.QuizRonde.Remove(quizRonde);
             db.SaveChanges();
             return RedirectToAction("Index", new { id = quizRonde.EvenementID });
         }

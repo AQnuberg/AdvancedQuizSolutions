@@ -17,7 +17,7 @@ namespace QuizApp.Controllers
         // GET: Team
         public ActionResult Index()
         {
-            var teams = db.Teams.Include(t => t.Account).Include(t => t.Evenement);
+            var teams = db.Team.Include(t => t.Account).Include(t => t.Evenement);
             return View(teams.ToList());
         }
 
@@ -28,7 +28,7 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Team team = db.Teams.Find(id);
+            Team team = db.Team.Find(id);
             if (team == null)
             {
                 return HttpNotFound();
@@ -39,8 +39,8 @@ namespace QuizApp.Controllers
         // GET: Team/Create
         public ActionResult Create()
         {
-            ViewBag.Email_Teamleider = new SelectList(db.Accounts, "Email", "Rolnaam");
-            ViewBag.EvenementID = new SelectList(db.Evenementen, "EvenementID", "Email_Quizmaster");
+            ViewBag.Email_Teamleider = new SelectList(db.Account, "Email", "Rolnaam");
+            ViewBag.EvenementID = new SelectList(db.Evenement, "EvenementID", "Email_Quizmaster");
             return View();
         }
 
@@ -53,13 +53,13 @@ namespace QuizApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Teams.Add(team);
+                db.Team.Add(team);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.Email_Teamleider = new SelectList(db.Accounts, "Email", "Rolnaam", team.Email_Teamleider);
-            ViewBag.EvenementID = new SelectList(db.Evenementen, "EvenementID", "Email_Quizmaster", team.EvenementID);
+            ViewBag.Email_Teamleider = new SelectList(db.Account, "Email", "Rolnaam", team.AccountID);
+            ViewBag.EvenementID = new SelectList(db.Evenement, "EvenementID", "Email_Quizmaster", team.EvenementID);
             return View(team);
         }
 
@@ -70,13 +70,13 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Team team = db.Teams.Find(id);
+            Team team = db.Team.Find(id);
             if (team == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.Email_Teamleider = new SelectList(db.Accounts, "Email", "Rolnaam", team.Email_Teamleider);
-            ViewBag.EvenementID = new SelectList(db.Evenementen, "EvenementID", "Email_Quizmaster", team.EvenementID);
+            ViewBag.Email_Teamleider = new SelectList(db.Account, "Email", "Rolnaam", team.AccountID);
+            ViewBag.EvenementID = new SelectList(db.Evenement, "EvenementID", "Email_Quizmaster", team.EvenementID);
             return View(team);
         }
 
@@ -89,12 +89,12 @@ namespace QuizApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(team).State = EntityState.Modified;
+                db.Entry(team).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Email_Teamleider = new SelectList(db.Accounts, "Email", "Rolnaam", team.Email_Teamleider);
-            ViewBag.EvenementID = new SelectList(db.Evenementen, "EvenementID", "Email_Quizmaster", team.EvenementID);
+            ViewBag.Email_Teamleider = new SelectList(db.Account, "Email", "Rolnaam", team.AccountID);
+            ViewBag.EvenementID = new SelectList(db.Evenement, "EvenementID", "Email_Quizmaster", team.EvenementID);
             return View(team);
         }
 
@@ -105,7 +105,7 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Team team = db.Teams.Find(id);
+            Team team = db.Team.Find(id);
             if (team == null)
             {
                 return HttpNotFound();
@@ -118,8 +118,8 @@ namespace QuizApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Team team = db.Teams.Find(id);
-            db.Teams.Remove(team);
+            Team team = db.Team.Find(id);
+            db.Team.Remove(team);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

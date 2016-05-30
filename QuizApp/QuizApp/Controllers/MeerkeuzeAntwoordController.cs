@@ -17,12 +17,12 @@ namespace QuizApp.Controllers
         // GET: MeerkeuzeAntwoord
         public ActionResult Index(int id)
         {
-            var QueryQuizvraag  = from qv in db.QuizVragen
+            var QueryQuizvraag  = from qv in db.QuizVraag
                                 where qv.QuizVraagID == id
                                 select qv;
             var Vraag = QueryQuizvraag.FirstOrDefault<QuizVraag>();
 
-            var QueryMKAntwoord = from mk in db.MeerkeuzeAntwoorden
+            var QueryMKAntwoord = from mk in db.MeerkeuzeAntwoord
                                   where mk.QuizVraagID == id
                                   select mk;
 
@@ -39,7 +39,7 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            MeerkeuzeAntwoord meerkeuzeAntwoord = db.MeerkeuzeAntwoorden.Find(id);
+            MeerkeuzeAntwoord meerkeuzeAntwoord = db.MeerkeuzeAntwoord.Find(id);
             if (meerkeuzeAntwoord == null)
             {
                 return HttpNotFound();
@@ -55,7 +55,7 @@ namespace QuizApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var QueryQuizvraag = from qv in db.QuizVragen
+            var QueryQuizvraag = from qv in db.QuizVraag
                                  where qv.QuizVraagID == id
                                  select qv;
             var Vraag = QueryQuizvraag.FirstOrDefault<QuizVraag>();
@@ -72,19 +72,19 @@ namespace QuizApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "MeerkeuzeAntwoordID,Meerkeuze_Antwoord,QuizVraagID,Is_Juist")] MeerkeuzeAntwoord meerkeuzeAntwoord)
         {
-            var antwoord = from a in db.MeerkeuzeAntwoorden
+            var antwoord = from a in db.MeerkeuzeAntwoord
                            where a.QuizVraagID == meerkeuzeAntwoord.QuizVraagID && a.Meerkeuze_Antwoord == meerkeuzeAntwoord.Meerkeuze_Antwoord
                            select a;
             if (antwoord.FirstOrDefault() == null)
             {
                 if (ModelState.IsValid)
                 {
-                    db.MeerkeuzeAntwoorden.Add(meerkeuzeAntwoord);
+                    db.MeerkeuzeAntwoord.Add(meerkeuzeAntwoord);
                     db.SaveChanges();
                     return RedirectToAction("Index", new { id = meerkeuzeAntwoord.QuizVraagID });
                 }
 
-                ViewBag.QuizVraagID = new SelectList(db.QuizVragen, "QuizVraagID", "Thema_Naam", meerkeuzeAntwoord.QuizVraagID);
+                ViewBag.QuizVraagID = new SelectList(db.QuizVraag, "QuizVraagID", "Thema_Naam", meerkeuzeAntwoord.QuizVraagID);
                 return View(meerkeuzeAntwoord);
             }
             else
@@ -104,7 +104,7 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            MeerkeuzeAntwoord meerkeuzeAntwoord = db.MeerkeuzeAntwoorden.Find(id);
+            MeerkeuzeAntwoord meerkeuzeAntwoord = db.MeerkeuzeAntwoord.Find(id);
             if (meerkeuzeAntwoord == null)
             {
                 return HttpNotFound();
@@ -119,7 +119,7 @@ namespace QuizApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "MeerkeuzeAntwoordID,Meerkeuze_Antwoord,QuizVraagID,Is_Juist,Quizvraag")] MeerkeuzeAntwoord meerkeuzeAntwoord)
         {
-            var antwoord = from a in db.MeerkeuzeAntwoorden
+            var antwoord = from a in db.MeerkeuzeAntwoord
                            where a.QuizVraagID == meerkeuzeAntwoord.QuizVraagID && 
                            a.Meerkeuze_Antwoord == meerkeuzeAntwoord.Meerkeuze_Antwoord &&
                            a.MeerkeuzeAntwoordID != meerkeuzeAntwoord.MeerkeuzeAntwoordID
@@ -128,11 +128,11 @@ namespace QuizApp.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    db.Entry(meerkeuzeAntwoord).State = EntityState.Modified;
+                    db.Entry(meerkeuzeAntwoord).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
                     return RedirectToAction("Index", new { id = meerkeuzeAntwoord.QuizVraagID });
                 }
-                ViewBag.QuizVraagID = new SelectList(db.QuizVragen, "QuizVraagID", "Thema_Naam", meerkeuzeAntwoord.QuizVraagID);
+                ViewBag.QuizVraagID = new SelectList(db.QuizVraag, "QuizVraagID", "Thema_Naam", meerkeuzeAntwoord.QuizVraagID);
                 return View(meerkeuzeAntwoord);
             }
             else
@@ -152,7 +152,7 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            MeerkeuzeAntwoord meerkeuzeAntwoord = db.MeerkeuzeAntwoorden.Find(id);
+            MeerkeuzeAntwoord meerkeuzeAntwoord = db.MeerkeuzeAntwoord.Find(id);
             if (meerkeuzeAntwoord == null)
             {
                 return HttpNotFound();
@@ -165,8 +165,8 @@ namespace QuizApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            MeerkeuzeAntwoord meerkeuzeAntwoord = db.MeerkeuzeAntwoorden.Find(id);
-            db.MeerkeuzeAntwoorden.Remove(meerkeuzeAntwoord);
+            MeerkeuzeAntwoord meerkeuzeAntwoord = db.MeerkeuzeAntwoord.Find(id);
+            db.MeerkeuzeAntwoord.Remove(meerkeuzeAntwoord);
             db.SaveChanges();
             return RedirectToAction("Index", new { id = meerkeuzeAntwoord.QuizVraagID });
         }

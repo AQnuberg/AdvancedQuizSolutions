@@ -11,22 +11,22 @@ namespace QuizApp.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
+    
     public partial class Thema
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Thema()
         {
-            this.QuizRondes = new HashSet<QuizRonde>();
-            this.QuizVraags = new HashSet<QuizVraag>();
+            this.QuizRonde = new HashSet<QuizRonde>();
+            this.QuizVraag = new HashSet<QuizVraag>();
         }
-
-        [StringLength(50)]
+    
+        public int ThemaID { get; set; }
         public string Thema_Naam { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<QuizRonde> QuizRondes { get; set; }
+        public virtual ICollection<QuizRonde> QuizRonde { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<QuizVraag> QuizVraags { get; set; }
+        public virtual ICollection<QuizVraag> QuizVraag { get; set; }
     }
 }
