@@ -17,7 +17,7 @@ namespace QuizApp.Controllers
         // GET: Spelleider
         public ActionResult Index()
         {
-            var evenement = from e in db.Evenementen
+            var evenement = from e in db.Evenement
                             where e.Eindtijd >= DateTime.Now
                             select e;
 
@@ -31,17 +31,17 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Evenement evenement = db.Evenementen.Find(id);
+            Evenement evenement = db.Evenement.Find(id);
             if (evenement == null)
             {
                 return HttpNotFound();
             }
-            var evenementVragen = from e in db.Evenementen
-                                  join qr in db.QuizRondes on e.EvenementID equals qr.EvenementID
-                                  join viq in db.VraagInQuizzen on qr.QuizRondeID equals viq.QuizRondeID
-                                  join qv in db.QuizVragen on viq.QuizVraagID equals qv.QuizVraagID
+            var evenementVragen = from e in db.Evenement
+                                  join qr in db.QuizRonde on e.EvenementID equals qr.EvenementID
+                                  join viq in db.VraagInQuiz on qr.QuizRondeID equals viq.QuizRondeID
+                                  join qv in db.QuizVraag on viq.QuizVraagID equals qv.QuizVraagID
                                   where e.EvenementID == id
-                                  select new  {e.EvenementID,e.Evenement_Naam,qr.Rondenummer, qr.Thema_Naam, qv.Vraag};
+                                  select new  {e.EvenementID,e.Evenement_Naam,qr.Rondenummer, qv.Thema.Thema_Naam, qv.Vraag};
             var model = evenementVragen.Select(x => new SpelleiderEvenementVraagModels
             {
                 EvenementID = x.EvenementID,
