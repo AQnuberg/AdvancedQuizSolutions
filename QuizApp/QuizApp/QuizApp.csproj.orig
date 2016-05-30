@@ -402,9 +402,12 @@
     <Content Include="Views\VraagInQuiz\Details.cshtml" />
     <Content Include="Views\VraagInQuiz\Edit.cshtml" />
     <Content Include="Views\VraagInQuiz\Index.cshtml" />
+<<<<<<< HEAD
     <Content Include="Views\TeamAntwoord\Play.cshtml" />
+=======
     <Content Include="Views\Spelleider\Index.cshtml" />
     <Content Include="Views\Spelleider\Details.cshtml" />
+>>>>>>> f9a27d421c9958ca9fae46bb1e50fdc1caa83c7c
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
