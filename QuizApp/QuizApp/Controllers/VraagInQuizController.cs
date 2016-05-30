@@ -17,22 +17,22 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var evenement = from e in db.Evenementen
-                join q in db.QuizRondes on e.EvenementID equals q.EvenementID
+            var evenement = from e in db.Evenement
+                join q in db.QuizRonde on e.EvenementID equals q.EvenementID
                 where q.QuizRondeID == id
                 select e;
 
-            var quizRonde = from r in db.QuizRondes
+            var quizRonde = from r in db.QuizRonde
                 where r.QuizRondeID == id
                 select r;
 
-            var vraagInRonde = from e in db.VraagInQuizzen
+            var vraagInRonde = from e in db.VraagInQuiz
                                     select e;
             vraagInRonde = vraagInRonde.Where(s => s.QuizRondeID == id);
 
             ViewBag.naamBijQuizRondeID = evenement.First().Evenement_Naam;
             ViewBag.rondeNummer = quizRonde.First().Rondenummer;
-            ViewBag.themaNaam = quizRonde.First().Thema_Naam;
+            ViewBag.themaNaam = quizRonde.First().Thema.Thema_Naam;
             ViewBag.evenementID = evenement.First().EvenementID;
             ViewBag.quizRondeID = id; 
 
@@ -54,12 +54,12 @@ namespace QuizApp.Controllers
                                 where q.QuizRondeID == id
                                 select t.Thema_Naam;*/
 
-            var quizRonde = from r in db.QuizRondes
+            var quizRonde = from r in db.QuizRonde
                             where r.QuizRondeID == id
                             select r;
 
-            var vragenBijThema = from v in db.QuizVragen
-                where v.Thema_Naam == quizRonde.FirstOrDefault().Thema_Naam 
+            var vragenBijThema = from v in db.QuizVraag
+                where v.ThemaID == quizRonde.FirstOrDefault().ThemaID
                 select v;
 
             ViewBag.QuizRondeID = id;
@@ -76,13 +76,13 @@ namespace QuizApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.VraagInQuizzen.Add(vraagInQuiz);
+                db.VraagInQuiz.Add(vraagInQuiz);
                 db.SaveChanges();
                 return RedirectToAction("Index", new {id = vraagInQuiz.QuizRondeID});
             }
 
-            ViewBag.QuizRondeID = new SelectList(db.QuizRondes, "QuizRondeID", "Thema_Naam", vraagInQuiz.QuizRondeID);
-            ViewBag.QuizVraagID = new SelectList(db.QuizVragen, "QuizVraagID", "Thema_Naam", vraagInQuiz.QuizVraagID);
+            ViewBag.QuizRondeID = new SelectList(db.QuizRonde, "QuizRondeID", "Thema_Naam", vraagInQuiz.QuizRondeID);
+            ViewBag.QuizVraagID = new SelectList(db.QuizVraag, "QuizVraagID", "Thema_Naam", vraagInQuiz.QuizVraagID);
             return View(vraagInQuiz);
         }
 
@@ -93,13 +93,13 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            VraagInQuiz vraagInQuiz = db.VraagInQuizzen.Find(id);
+            VraagInQuiz vraagInQuiz = db.VraagInQuiz.Find(id);
             if (vraagInQuiz == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.QuizRondeID = new SelectList(db.QuizRondes, "QuizRondeID", "Thema_Naam", vraagInQuiz.QuizRondeID);
-            ViewBag.QuizVraagID = new SelectList(db.QuizVragen, "QuizVraagID", "Thema_Naam", vraagInQuiz.QuizVraagID);
+            ViewBag.QuizRondeID = new SelectList(db.QuizRonde, "QuizRondeID", "Thema_Naam", vraagInQuiz.QuizRondeID);
+            ViewBag.QuizVraagID = new SelectList(db.QuizVraag, "QuizVraagID", "Thema_Naam", vraagInQuiz.QuizVraagID);
             return View(vraagInQuiz);
         }
 
@@ -116,8 +116,8 @@ namespace QuizApp.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.QuizRondeID = new SelectList(db.QuizRondes, "QuizRondeID", "Thema_Naam", vraagInQuiz.QuizRondeID);
-            ViewBag.QuizVraagID = new SelectList(db.QuizVragen, "QuizVraagID", "Thema_Naam", vraagInQuiz.QuizVraagID);
+            ViewBag.QuizRondeID = new SelectList(db.QuizRonde, "QuizRondeID", "Thema_Naam", vraagInQuiz.QuizRondeID);
+            ViewBag.QuizVraagID = new SelectList(db.QuizVraag, "QuizVraagID", "Thema_Naam", vraagInQuiz.QuizVraagID);
             return View(vraagInQuiz);
         }
 
@@ -128,7 +128,7 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            VraagInQuiz vraagInQuiz = db.VraagInQuizzen.Find(id);
+            VraagInQuiz vraagInQuiz = db.VraagInQuiz.Find(id);
             if (vraagInQuiz == null)
             {
                 return HttpNotFound();
@@ -141,8 +141,8 @@ namespace QuizApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            VraagInQuiz vraagInQuiz = db.VraagInQuizzen.Find(id);
-            db.VraagInQuizzen.Remove(vraagInQuiz);
+            VraagInQuiz vraagInQuiz = db.VraagInQuiz.Find(id);
+            db.VraagInQuiz.Remove(vraagInQuiz);
             db.SaveChanges();
             return RedirectToAction("Index", new {id = vraagInQuiz.QuizRondeID});
         }

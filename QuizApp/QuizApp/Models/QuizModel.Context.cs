@@ -25,16 +25,16 @@ namespace QuizApp.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Account> Accounts { get; set; }
-        public virtual DbSet<Evenement> Evenementen { get; set; }
-        public virtual DbSet<Locatie> Locaties { get; set; }
-        public virtual DbSet<MeerkeuzeAntwoord> MeerkeuzeAntwoorden { get; set; }
-        public virtual DbSet<QuizRonde> QuizRondes { get; set; }
-        public virtual DbSet<QuizVraag> QuizVragen { get; set; }
-        public virtual DbSet<Rol> Rollen { get; set; }
-        public virtual DbSet<Team> Teams { get; set; }
-        public virtual DbSet<TeamAntwoord> TeamAntwoorden { get; set; }
-        public virtual DbSet<Thema> Themas { get; set; }
-        public virtual DbSet<VraagInQuiz> VraagInQuizzen { get; set; }
+        public virtual DbSet<Account> Account { get; set; }
+        public virtual DbSet<Evenement> Evenement { get; set; }
+        public virtual DbSet<Locatie> Locatie { get; set; }
+        public virtual DbSet<MeerkeuzeAntwoord> MeerkeuzeAntwoord { get; set; }
+        public virtual DbSet<QuizRonde> QuizRonde { get; set; }
+        public virtual DbSet<QuizVraag> QuizVraag { get; set; }
+        public virtual DbSet<Rol> Rol { get; set; }
+        public virtual DbSet<Team> Team { get; set; }
+        public virtual DbSet<TeamAntwoord> TeamAntwoord { get; set; }
+        public virtual DbSet<Thema> Thema { get; set; }
+        public virtual DbSet<VraagInQuiz> VraagInQuiz { get; set; }
     }
 }

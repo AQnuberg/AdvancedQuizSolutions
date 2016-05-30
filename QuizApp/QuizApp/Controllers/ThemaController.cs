@@ -17,17 +17,17 @@ namespace QuizApp.Controllers
         // GET: Thema
         public ActionResult Index()
         {
-            return View(db.Themas.ToList());
+            return View(db.Thema.ToList());
         }
 
         // GET: Thema/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Thema thema = db.Themas.Find(id);
+            Thema thema = db.Thema.Find(id);
             if (thema == null)
             {
                 return HttpNotFound();
@@ -48,15 +48,15 @@ namespace QuizApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Thema_Naam")] Thema thema)
         {
-            var themanamen = from t in db.Themas
+            var themanamen = from t in db.Thema
                              where t.Thema_Naam == thema.Thema_Naam
                              select t;
-            if (themanamen.First() == null)
+            if (themanamen.FirstOrDefault() == null)
             {
 
                 if (ModelState.IsValid)
                 {
-                    db.Themas.Add(thema);
+                    db.Thema.Add(thema);
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
@@ -76,13 +76,13 @@ namespace QuizApp.Controllers
         }
 
         // GET: Thema/Edit/5
-        public ActionResult Edit(string id)
+        public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Thema thema = db.Themas.Find(id);
+            Thema thema = db.Thema.Find(id);
             if (thema == null)
             {
                 return HttpNotFound();
@@ -95,11 +95,11 @@ namespace QuizApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Thema_Naam")] Thema thema)
+        public ActionResult Edit([Bind(Include = "ThemaID,Thema_Naam")] Thema thema)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(thema).State = EntityState.Modified;
+                db.Entry(thema).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -107,13 +107,13 @@ namespace QuizApp.Controllers
         }
 
         // GET: Thema/Delete/5
-        public ActionResult Delete(string id)
+        public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Thema thema = db.Themas.Find(id);
+            Thema thema = db.Thema.Find(id);
             if (thema == null)
             {
                 return HttpNotFound();
@@ -124,10 +124,10 @@ namespace QuizApp.Controllers
         // POST: Thema/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(int id)
         {
-            Thema thema = db.Themas.Find(id);
-            db.Themas.Remove(thema);
+            Thema thema = db.Thema.Find(id);
+            db.Thema.Remove(thema);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

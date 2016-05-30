@@ -17,12 +17,13 @@ namespace QuizApp.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Account()
         {
-            this.Evenements = new HashSet<Evenement>();
-            this.Teams = new HashSet<Team>();
+            this.Evenement = new HashSet<Evenement>();
+            this.Team = new HashSet<Team>();
         }
     
+        public int AccountID { get; set; }
         public string Email { get; set; }
-        public string Rolnaam { get; set; }
+        public int RolID { get; set; }
         public string Wachtwoord { get; set; }
         public string Voornaam { get; set; }
         public string Achternaam { get; set; }
@@ -34,8 +35,8 @@ namespace QuizApp.Models
     
         public virtual Rol Rol { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Evenement> Evenements { get; set; }
+        public virtual ICollection<Evenement> Evenement { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Team> Teams { get; set; }
+        public virtual ICollection<Team> Team { get; set; }
     }
 }

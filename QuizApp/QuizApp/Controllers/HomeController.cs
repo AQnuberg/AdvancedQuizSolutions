@@ -13,7 +13,7 @@ namespace QuizApp.Controllers
 
         public ActionResult Index()
         {
-            var evenementen = from e in db.Evenementen
+            var evenementen = from e in db.Evenement
                            where e.Begintijd > DateTime.Now
                            orderby e.Begintijd ascending
                            select e;
