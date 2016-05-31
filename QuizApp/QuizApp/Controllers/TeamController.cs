@@ -39,8 +39,8 @@ namespace QuizApp.Controllers
         // GET: Team/Create
         public ActionResult Create()
         {
-            ViewBag.Email_Teamleider = new SelectList(db.Account, "Email", "Rolnaam");
-            ViewBag.EvenementID = new SelectList(db.Evenement, "EvenementID", "Email_Quizmaster");
+            ViewBag.accounts = new SelectList(db.Account, "AccountID", "email");
+            ViewBag.evenementen = new SelectList(db.Evenement, "EvenementID", "Evenement_Naam");
             return View();
         }
 
@@ -49,7 +49,7 @@ namespace QuizApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TeamID,EvenementID,Teamnaam,Email_Teamleider,Puntentotaal")] Team team)
+        public ActionResult Create([Bind(Include = "EvenementID,Teamnaam,AccountID,Puntentotaal")] Team team)
         {
             if (ModelState.IsValid)
             {
@@ -75,8 +75,7 @@ namespace QuizApp.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.Email_Teamleider = new SelectList(db.Account, "Email", "Rolnaam", team.AccountID);
-            ViewBag.EvenementID = new SelectList(db.Evenement, "EvenementID", "Email_Quizmaster", team.EvenementID);
+            ViewBag.Accounts = new SelectList(db.Account, "accountID", "email", team.AccountID);
             return View(team);
         }
 
@@ -85,7 +84,7 @@ namespace QuizApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "TeamID,EvenementID,Teamnaam,Email_Teamleider,Puntentotaal")] Team team)
+        public ActionResult Edit([Bind(Include = "TeamID,EvenementID,Teamnaam,AccountID,Puntentotaal")] Team team)
         {
             if (ModelState.IsValid)
             {

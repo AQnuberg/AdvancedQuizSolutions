@@ -31,7 +31,7 @@
             @Html.DisplayFor(modelItem => item.Evenement.Evenement_Naam,"Evenement")
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Email_Teamleider)
+            @Html.DisplayFor(modelItem => item.Account.Email)
         </td>
         <td>
             @Html.ActionLink("Wijzig", "Edit", new { id=item.TeamID }) |

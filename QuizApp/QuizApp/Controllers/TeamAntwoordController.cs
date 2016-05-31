@@ -69,7 +69,7 @@ namespace QuizApp.Controllers
             {
                 db.TeamAntwoord.Add(teamAntwoord);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { id = teamAntwoord.TeamID });
             }
 
             ViewBag.QuizVraagID = new SelectList(db.QuizVraag, "QuizVraagID", "Thema_Naam", teamAntwoord.QuizVraagID);
@@ -89,8 +89,8 @@ namespace QuizApp.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.QuizVraagID = new SelectList(db.QuizVraag, "QuizVraagID", "Thema_Naam", teamAntwoord.QuizVraagID);
-            ViewBag.TeamID = new SelectList(db.Team, "TeamID", "Teamnaam", teamAntwoord.TeamID);
+            ViewBag.QuizVragen = new SelectList(db.QuizVraag, "QuizVraagID", "Vraag", teamAntwoord.QuizVraagID);
+            ViewBag.Teams = new SelectList(db.Team, "TeamID", "Teamnaam", teamAntwoord.TeamID);
             return View(teamAntwoord);
         }
 
@@ -105,7 +105,7 @@ namespace QuizApp.Controllers
             {
                 db.Entry(teamAntwoord).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { id = teamAntwoord.TeamID });
             }
             ViewBag.QuizVraagID = new SelectList(db.QuizVraag, "QuizVraagID", "Thema_Naam", teamAntwoord.QuizVraagID);
             ViewBag.TeamID = new SelectList(db.Team, "TeamID", "Teamnaam", teamAntwoord.TeamID);
@@ -135,7 +135,7 @@ namespace QuizApp.Controllers
             TeamAntwoord teamAntwoord = db.TeamAntwoord.Find(id);
             db.TeamAntwoord.Remove(teamAntwoord);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { id = teamAntwoord.TeamID });
         }
 
         protected override void Dispose(bool disposing)
