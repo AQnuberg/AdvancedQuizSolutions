@@ -1,0 +1,85 @@
+﻿@model QuizApp.Models.TeamAntwoord
+
+@{
+    ViewBag.Title = "Play";
+}
+
+<h2>Vraag beantwoorden</h2>
+<h4> Team : @Html.Raw(ViewBag.team.Teamnaam)</h4>
+<h4>VraagType: @Html.Raw(ViewBag.vraag.Vraagtype)</h4>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <p>@Html.Raw(ViewBag.vraag.Vraag)</p>
+
+    if (ViewBag.vraag.Vraagtype == "Meerkeuze")
+    {
+     <div class="form-horizontal">
+         <hr/>
+         @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+         <div class="form-group">
+             @Html.LabelFor(model => model.Gegeven_Antwoord, htmlAttributes: new {@class = "control-label col-md-2"})
+             <div class="col-md-10">
+                 @Html.DropDownListFor(model => model.Gegeven_Antwoord, (SelectList) ViewBag.meerkeuzeAntwoorden, "Selecteer het juiste antwoord.", new {@class = "form-control"})
+                 @Html.ValidationMessageFor(model => model.Gegeven_Antwoord, "", new {@class = "text-danger"})
+             </div>
+         </div>
+
+         <div class="form-group">
+             <div class="col-md-10">
+                 @Html.TextBoxFor(model => model.TeamID, new { @Value = ViewBag.team.TeamID, @class = "hidden" })
+             </div>
+         </div>
+
+         <div class="form-group">
+             <div class="col-md-10">
+                 @Html.TextBoxFor(model => model.QuizVraagID, new { @Value = ViewBag.vraag.QuizVraagID, @class = "hidden" })
+             </div>
+         </div>
+
+         <div class="form-group">
+             <div class="col-md-offset-2 col-md-10">
+                 <input type="submit" value="Volgende" class="btn btn-default"/>
+             </div>
+         </div>
+     </div>
+    }
+
+    if (ViewBag.vraag.Vraagtype == "Open")
+    {
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Gegeven_Antwoord, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Gegeven_Antwoord, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Gegeven_Antwoord, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.TeamID, new { @Value = ViewBag.team.TeamID, @class = "hidden" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.QuizVraagID, new { @Value = ViewBag.vraag.QuizVraagID, @class = "hidden" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Volgende" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
