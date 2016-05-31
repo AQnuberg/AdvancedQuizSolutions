@@ -41,16 +41,55 @@ namespace QuizApp.Controllers
                                   join viq in db.VraagInQuiz on qr.QuizRondeID equals viq.QuizRondeID
                                   join qv in db.QuizVraag on viq.QuizVraagID equals qv.QuizVraagID
                                   where e.EvenementID == id
-                                  select new  {e.EvenementID,e.Evenement_Naam,qr.Rondenummer, qv.Thema.Thema_Naam, qv.Vraag};
+                                  select new  {e.EvenementID,e.Evenement_Naam,qr.Rondenummer, qv.Thema.Thema_Naam, qv.QuizVraagID, qv.Vraag};
             var model = evenementVragen.Select(x => new SpelleiderEvenementVraagModels
             {
                 EvenementID = x.EvenementID,
                 Evenement_Naam = x.Evenement_Naam,
                 Rondenummer = x.Rondenummer,
                 Thema_Naam = x.Thema_Naam,
+                QuizVraagID = x.QuizVraagID,
                 Vraag = x.Vraag
             });
+            ViewBag.evenementNaam = db.Evenement.Find(id).Evenement_Naam;
             return View(model);
+        }
+
+        // GET: Spelleider/Edit/5
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            VraagInQuiz vraagInQuiz = db.VraagInQuiz.Find(id);
+            if (vraagInQuiz == null)
+            {
+                return HttpNotFound();
+            }
+            return View(vraagInQuiz);
+        }
+
+        // POST: Evenement/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "VraagInQuizID, QuizRondeID, QuizVraagID, isActief")] VraagInQuiz vraagInQuiz)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(vraagInQuiz).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+                var evenementID = from viq in db.VraagInQuiz
+                                  join qr in db.QuizRonde on viq.QuizRondeID equals qr.QuizRondeID
+                                  where viq.VraagInQuizID == vraagInQuiz.VraagInQuizID
+                                  select qr.EvenementID;
+
+
+                return RedirectToAction("Details",new { id = db.QuizRonde.Find(vraagInQuiz.QuizRondeID).EvenementID });
+            }
+            return View(vraagInQuiz);
         }
     }
 }

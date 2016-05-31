@@ -3,8 +3,9 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Vragen voor de quiz: <%= Model.Evenement_Naam %></h2>
-
+<h2>Vragen voor de quiz: @ViewBag.evenementNaam</h2>
+@using (Html.BeginForm())
+{ 
 <table class="table">
     <tr>
         <th>
@@ -32,10 +33,17 @@
                 @Html.DisplayFor(modelItem => item.Vraag)
             </td>
             <td>
-                @Html.ActionLink("Speel", "Edit") 
+                @Html.ActionLink("Speel", "Edit", new { id = item.QuizVraagID })
             </td>
         </tr>
     }
 
 </table>
+}
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
 
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
