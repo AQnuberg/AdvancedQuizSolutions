@@ -31,13 +31,14 @@
             @Html.DisplayFor(modelItem => item.Evenement.Evenement_Naam,"Evenement")
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Email_Teamleider)
+            @Html.DisplayFor(modelItem => item.Account.Email)
         </td>
         <td>
             @Html.ActionLink("Wijzig", "Edit", new { id=item.TeamID }) |
             @Html.ActionLink("Details", "Details", new { id=item.TeamID }) |
             @Html.ActionLink("Verwijder", "Delete", new { id=item.TeamID }) |
-            @Html.ActionLink("Team antwoord beheren", "Index", new { controller = "TeamAntwoord", action = "Index",id = item.TeamID})
+            @Html.ActionLink("Team antwoord beheren", "Index", new { controller = "TeamAntwoord", action = "Index",id = item.TeamID}) |
+            @Html.ActionLink("Speel quiz", "Play", new { controller = "TeamAntwoord", action = "Play", id = item.TeamID })
         </td>
     </tr>
 }

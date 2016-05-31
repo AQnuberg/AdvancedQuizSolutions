@@ -30,7 +30,7 @@ namespace QuizApp.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Neem gerust contact met ons op";
 
             return View();
         }

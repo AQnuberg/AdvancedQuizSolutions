@@ -21,7 +21,7 @@ namespace QuizApp.Controllers
         }
 
         // GET: Rol/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details(int? id)
         {
             if (id == null)
             {
@@ -59,7 +59,7 @@ namespace QuizApp.Controllers
         }
 
         // GET: Rol/Edit/5
-        public ActionResult Edit(string id)
+        public ActionResult Edit(int? id)
         {
             if (id == null)
             {
@@ -78,7 +78,7 @@ namespace QuizApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Rolnaam")] Rol rol)
+        public ActionResult Edit([Bind(Include = "RolID,Rolnaam")] Rol rol)
         {
             if (ModelState.IsValid)
             {
@@ -90,7 +90,7 @@ namespace QuizApp.Controllers
         }
 
         // GET: Rol/Delete/5
-        public ActionResult Delete(string id)
+        public ActionResult Delete(int? id)
         {
             if (id == null)
             {
@@ -107,7 +107,7 @@ namespace QuizApp.Controllers
         // POST: Rol/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(int id)
         {
             Rol rol = db.Rol.Find(id);
             db.Rol.Remove(rol);

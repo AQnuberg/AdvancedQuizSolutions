@@ -14,7 +14,7 @@ namespace QuizApp.Controllers
     {
         private AQSDatabaseEntities db = new AQSDatabaseEntities();
 
-       
+
         // GET: TeamAntwoord/Index/5
         public ActionResult Index(int? id)
         {
@@ -22,11 +22,11 @@ namespace QuizApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var teamNaam = from e in db.Team
-                           where e.TeamID == id
-                           select e;
+            var team = from e in db.Team
+                       where e.TeamID == id
+                       select e;
 
-            var firstOrDefault = teamNaam.FirstOrDefault<Team>();
+            var firstOrDefault = team.FirstOrDefault<Team>();
             if (firstOrDefault != null)
                 ViewBag.naamBijID = firstOrDefault.Teamnaam;
             ViewBag.TeamID = id;
@@ -69,7 +69,7 @@ namespace QuizApp.Controllers
             {
                 db.TeamAntwoord.Add(teamAntwoord);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { id = teamAntwoord.TeamID });
             }
 
             ViewBag.QuizVraagID = new SelectList(db.QuizVraag, "QuizVraagID", "Thema_Naam", teamAntwoord.QuizVraagID);
@@ -89,8 +89,8 @@ namespace QuizApp.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.QuizVraagID = new SelectList(db.QuizVraag, "QuizVraagID", "Thema_Naam", teamAntwoord.QuizVraagID);
-            ViewBag.TeamID = new SelectList(db.Team, "TeamID", "Teamnaam", teamAntwoord.TeamID);
+            ViewBag.QuizVragen = new SelectList(db.QuizVraag, "QuizVraagID", "Vraag", teamAntwoord.QuizVraagID);
+            ViewBag.Teams = new SelectList(db.Team, "TeamID", "Teamnaam", teamAntwoord.TeamID);
             return View(teamAntwoord);
         }
 
@@ -103,9 +103,9 @@ namespace QuizApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(teamAntwoord).State = System.Data.Entity.EntityState.Modified;
+                db.Entry(teamAntwoord).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { id = teamAntwoord.TeamID });
             }
             ViewBag.QuizVraagID = new SelectList(db.QuizVraag, "QuizVraagID", "Thema_Naam", teamAntwoord.QuizVraagID);
             ViewBag.TeamID = new SelectList(db.Team, "TeamID", "Teamnaam", teamAntwoord.TeamID);
@@ -135,8 +135,70 @@ namespace QuizApp.Controllers
             TeamAntwoord teamAntwoord = db.TeamAntwoord.Find(id);
             db.TeamAntwoord.Remove(teamAntwoord);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { id = teamAntwoord.TeamID });
         }
+
+        public ActionResult Play(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var team = from e in db.Team
+                       where e.TeamID == id
+                       select e;
+
+            ViewBag.team = team.FirstOrDefault();
+
+            var vragen = from t in db.Team
+                         join r in db.QuizRonde on t.EvenementID equals r.EvenementID
+                         where t.TeamID == id
+                         join vq in db.VraagInQuiz on r.QuizRondeID equals vq.QuizRondeID
+                         where vq.isActief == true
+                         join v in db.QuizVraag on vq.QuizVraagID equals v.QuizVraagID
+                         select v;
+
+            if (vragen.FirstOrDefault().Vraagtype == "Meerkeuze")
+            {
+                var meerkeuzeVraagAntwoorden = from ma in db.MeerkeuzeAntwoord
+                                               join v in db.QuizVraag on ma.QuizVraagID equals v.QuizVraagID
+                                               where ma.QuizVraagID == vragen.FirstOrDefault().QuizVraagID
+                                               select ma;
+
+                var antwoorden = meerkeuzeVraagAntwoorden.Select(s => new
+                {
+                    Text = s.Meerkeuze_Antwoord,
+                    Value = s.MeerkeuzeAntwoordID
+                }).ToList();
+
+                ViewBag.meerkeuzeAntwoorden = new SelectList(antwoorden, "Text", "Text");
+            }
+
+            ViewBag.vraag = vragen.FirstOrDefault();
+
+            return View();
+        }
+
+        // POST: TeamAntwoord/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Play([Bind(Include = "TeamAntwoordID,TeamID,QuizVraagID,Gegeven_Antwoord")] TeamAntwoord teamAntwoord)
+        {
+            if (ModelState.IsValid)
+            {
+                db.TeamAntwoord.Add(teamAntwoord);
+                db.SaveChanges();
+                return RedirectToAction("Play");
+            }
+
+            ViewBag.QuizVraagID = new SelectList(db.QuizVraag, "QuizVraagID", "Thema_Naam", teamAntwoord.QuizVraagID);
+            ViewBag.TeamID = new SelectList(db.Team, "TeamID", "Teamnaam", teamAntwoord.TeamID);
+            return View(teamAntwoord);
+        }
+
+
 
         protected override void Dispose(bool disposing)
         {

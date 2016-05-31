@@ -39,7 +39,11 @@ namespace QuizApp.Controllers
         // GET: Evenement/Create
         public ActionResult Create()
         {
-            ViewBag.Email_Quizmaster = new SelectList(db.Account, "Email", "Email");
+            var accounts = from a in db.Account
+                           where a.Rol.Rolnaam != "Deelnemer"
+                           select a;
+
+            ViewBag.accounts = new SelectList(accounts, "AccountID", "Email");
 
             var locaties = db.Locatie.Select(s => new
             {
@@ -61,7 +65,7 @@ namespace QuizApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "EvenementID,LocatieID,Email_Quizmaster,Evenement_Naam,Begintijd,Eindtijd,Evenement_Type")] Evenement evenement)
+        public ActionResult Create([Bind(Include = "EvenementID,LocatieID,AccountID,Evenement_Naam,Begintijd,Eindtijd,Evenement_Type")] Evenement evenement)
         {
             if (ModelState.IsValid)
             {
@@ -84,7 +88,12 @@ namespace QuizApp.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.Email_Quizmaster = new SelectList(db.Account, "Email", "Rolnaam", evenement.AccountID);
+
+            var accounts = from a in db.Account
+                           where a.Rol.Rolnaam != "Deelnemer"
+                           select a;
+
+            ViewBag.Accounts = new SelectList(accounts, "AccountID", "Email", evenement.AccountID);
             ViewBag.LocatieID = new SelectList(db.Locatie, "LocatieID", "Locatie_Naam", evenement.LocatieID);
             return View(evenement);
         }
@@ -94,7 +103,7 @@ namespace QuizApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EvenementID,LocatieID,Email_Quizmaster,Evenement_Naam,Begintijd,Eindtijd,Evenement_Type")] Evenement evenement)
+        public ActionResult Edit([Bind(Include = "EvenementID,LocatieID,AccountID,Evenement_Naam,Begintijd,Eindtijd,Evenement_Type")] Evenement evenement)
         {
             if (ModelState.IsValid)
             {
