@@ -154,7 +154,7 @@ namespace QuizApp.Controllers
                          join r in db.QuizRonde on t.EvenementID equals r.EvenementID
                          where t.TeamID == id
                          join vq in db.VraagInQuiz on r.QuizRondeID equals vq.QuizRondeID
-                         where vq.QuizRondeID == 2
+                         where vq.isActief == true
                          join v in db.QuizVraag on vq.QuizVraagID equals v.QuizVraagID
                          select v;
 

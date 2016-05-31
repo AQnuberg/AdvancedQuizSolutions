@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Evenementen</h2>
+<h2>Quiz leiden</h2>
 
 <table class="table">
     <tr>
@@ -24,7 +24,7 @@
             @Html.DisplayNameFor(model => model.Evenement_Type)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Email_Quizmaster)
+            @Html.DisplayNameFor(model => model.Account.Email)
         </th>
         <th></th>
     </tr>
@@ -47,7 +47,7 @@
             @Html.DisplayFor(modelItem => item.Evenement_Type)
         </td>
         <td>
-            @Html.DisplayNameFor(model => model.Email_Quizmaster)  
+            @Html.DisplayNameFor(model => model.Account.Email)  
         </td>
         <td>
             @Html.ActionLink("Start het evenement", "Details", new { id = item.EvenementID }) 
