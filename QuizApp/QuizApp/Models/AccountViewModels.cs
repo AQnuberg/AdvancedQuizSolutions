@@ -110,7 +110,7 @@ namespace QuizApp.Models
 
         
         [Display(Name = "Huisnummer")]
-        public int Huisnummer { get; set; }
+        public int? Huisnummer { get; set; }
 
         
         [StringLength(7, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]

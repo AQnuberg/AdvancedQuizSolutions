@@ -431,7 +431,7 @@ namespace QuizApp.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register([Bind(Exclude = "Huisnummer")]RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
