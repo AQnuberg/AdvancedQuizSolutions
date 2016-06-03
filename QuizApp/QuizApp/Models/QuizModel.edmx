@@ -9,17 +9,30 @@
           <Key>
             <PropertyRef Name="AccountID" />
           </Key>
-          <Property Name="AccountID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="RolID" Type="int" Nullable="false" />
-          <Property Name="Wachtwoord" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AccountID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Wachtwoord" Type="nvarchar" MaxLength="500" />
           <Property Name="Voornaam" Type="nvarchar" MaxLength="50" />
           <Property Name="Achternaam" Type="nvarchar" MaxLength="50" />
           <Property Name="Woonplaats" Type="nvarchar" MaxLength="50" />
           <Property Name="Straatnaam" Type="nvarchar" MaxLength="50" />
           <Property Name="Huisnummer" Type="nvarchar" MaxLength="10" />
           <Property Name="Postcode" Type="varchar" MaxLength="7" />
-          <Property Name="Telefoonnummer" Type="varchar" MaxLength="12" />
+          <Property Name="CreationDate" Type="datetime" />
+          <Property Name="ApprovalDate" Type="datetime" />
+          <Property Name="LastLoginDate" Type="datetime" />
+          <Property Name="IsLocked" Type="bit" Nullable="false" />
+          <Property Name="PasswordQuestion" Type="nvarchar(max)" />
+          <Property Name="PasswordAnswer" Type="nvarchar(max)" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime2" Precision="7" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Evenement">
           <Key>
@@ -27,7 +40,7 @@
           </Key>
           <Property Name="EvenementID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="LocatieID" Type="int" Nullable="false" />
-          <Property Name="AccountID" Type="int" Nullable="false" />
+          <Property Name="AccountID" Type="bigint" Nullable="false" />
           <Property Name="Evenement_Naam" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Begintijd" Type="datetime" Nullable="false" />
           <Property Name="Eindtijd" Type="datetime" Nullable="false" />
@@ -79,8 +92,8 @@
           <Key>
             <PropertyRef Name="RolID" />
           </Key>
-          <Property Name="RolID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Rolnaam" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RolID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Rolnaam" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="Team">
           <Key>
@@ -89,7 +102,7 @@
           <Property Name="TeamID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EvenementID" Type="int" Nullable="false" />
           <Property Name="Teamnaam" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="AccountID" Type="int" Nullable="false" />
+          <Property Name="AccountID" Type="bigint" Nullable="false" />
           <Property Name="Puntentotaal" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="TeamAntwoord">
@@ -108,6 +121,41 @@
           <Property Name="ThemaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Thema_Naam" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="UserClaim">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="bigint" Nullable="false" />
+          <Property Name="Claimtype" Type="nvarchar(max)" />
+          <Property Name="ClaimValue" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="UserLogin">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+          </Key>
+          <Property Name="UserId" Type="bigint" Nullable="false" />
+          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserRegistrationToken">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="bigint" />
+          <Property Name="Token" Type="nchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="bigint" Nullable="false" />
+          <Property Name="RoleId" Type="bigint" Nullable="false" />
+        </EntityType>
         <EntityType Name="VraagInQuiz">
           <Key>
             <PropertyRef Name="VraagInQuizID" />
@@ -117,18 +165,6 @@
           <Property Name="QuizVraagID" Type="int" Nullable="false" />
           <Property Name="isActief" Type="bit" Nullable="false" />
         </EntityType>
-        <Association Name="FK_Account_Rol">
-          <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
-          <End Role="Account" Type="Self.Account" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Rol">
-              <PropertyRef Name="RolID" />
-            </Principal>
-            <Dependent Role="Account">
-              <PropertyRef Name="RolID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Evenement_Account">
           <End Role="Account" Type="Self.Account" Multiplicity="1" />
           <End Role="Evenement" Type="Self.Evenement" Multiplicity="*" />
@@ -237,6 +273,62 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UserClaim_User">
+          <End Role="Account" Type="Self.Account" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserClaim" Type="Self.UserClaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="UserClaim">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserLogin_User">
+          <End Role="Account" Type="Self.Account" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserLogin" Type="Self.UserLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="UserLogin">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRole_Role">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="RolID" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRole_User">
+          <End Role="Account" Type="Self.Account" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Vraag_Thema">
           <End Role="Thema" Type="Self.Thema" Multiplicity="1" />
           <End Role="QuizVraag" Type="Self.QuizVraag" Multiplicity="*" />
@@ -284,11 +376,11 @@
           <EntitySet Name="Team" EntityType="Self.Team" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeamAntwoord" EntityType="Self.TeamAntwoord" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Thema" EntityType="Self.Thema" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserClaim" EntityType="Self.UserClaim" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserLogin" EntityType="Self.UserLogin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRegistrationToken" EntityType="Self.UserRegistrationToken" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VraagInQuiz" EntityType="Self.VraagInQuiz" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Account_Rol" Association="Self.FK_Account_Rol">
-            <End Role="Rol" EntitySet="Rol" />
-            <End Role="Account" EntitySet="Account" />
-          </AssociationSet>
           <AssociationSet Name="FK_Evenement_Account" Association="Self.FK_Evenement_Account">
             <End Role="Account" EntitySet="Account" />
             <End Role="Evenement" EntitySet="Evenement" />
@@ -325,6 +417,22 @@
             <End Role="Team" EntitySet="Team" />
             <End Role="TeamAntwoord" EntitySet="TeamAntwoord" />
           </AssociationSet>
+          <AssociationSet Name="FK_UserClaim_User" Association="Self.FK_UserClaim_User">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="UserClaim" EntitySet="UserClaim" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserLogin_User" Association="Self.FK_UserLogin_User">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="UserLogin" EntitySet="UserLogin" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRole_Role" Association="Self.FK_UserRole_Role">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="UserRole" EntitySet="UserRole" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRole_User" Association="Self.FK_UserRole_User">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="UserRole" EntitySet="UserRole" />
+          </AssociationSet>
           <AssociationSet Name="FK_Vraag_Thema" Association="Self.FK_Vraag_Thema">
             <End Role="Thema" EntitySet="Thema" />
             <End Role="QuizVraag" EntitySet="QuizVraag" />
@@ -353,11 +461,10 @@
           <EntitySet Name="Team" EntityType="AQSDatabaseModel.Team" />
           <EntitySet Name="TeamAntwoord" EntityType="AQSDatabaseModel.TeamAntwoord" />
           <EntitySet Name="Thema" EntityType="AQSDatabaseModel.Thema" />
+          <EntitySet Name="UserClaim" EntityType="AQSDatabaseModel.UserClaim" />
+          <EntitySet Name="UserLogin" EntityType="AQSDatabaseModel.UserLogin" />
+          <EntitySet Name="UserRegistrationToken" EntityType="AQSDatabaseModel.UserRegistrationToken" />
           <EntitySet Name="VraagInQuiz" EntityType="AQSDatabaseModel.VraagInQuiz" />
-          <AssociationSet Name="FK_Account_Rol" Association="AQSDatabaseModel.FK_Account_Rol">
-            <End Role="Rol" EntitySet="Rol" />
-            <End Role="Account" EntitySet="Account" />
-          </AssociationSet>
           <AssociationSet Name="FK_Evenement_Account" Association="AQSDatabaseModel.FK_Evenement_Account">
             <End Role="Account" EntitySet="Account" />
             <End Role="Evenement" EntitySet="Evenement" />
@@ -365,6 +472,14 @@
           <AssociationSet Name="FK_Team_Account" Association="AQSDatabaseModel.FK_Team_Account">
             <End Role="Account" EntitySet="Account" />
             <End Role="Team" EntitySet="Team" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserClaim_User" Association="AQSDatabaseModel.FK_UserClaim_User">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="UserClaim" EntitySet="UserClaim" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserLogin_User" Association="AQSDatabaseModel.FK_UserLogin_User">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="UserLogin" EntitySet="UserLogin" />
           </AssociationSet>
           <AssociationSet Name="FK_Evenement_Locatie" Association="AQSDatabaseModel.FK_Evenement_Locatie">
             <End Role="Locatie" EntitySet="Locatie" />
@@ -406,25 +521,44 @@
             <End Role="Team" EntitySet="Team" />
             <End Role="TeamAntwoord" EntitySet="TeamAntwoord" />
           </AssociationSet>
+          <AssociationSet Name="UserRole" Association="AQSDatabaseModel.UserRole">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="Account" EntitySet="Account" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Account">
           <Key>
             <PropertyRef Name="AccountID" />
           </Key>
-          <Property Name="AccountID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="RolID" Type="Int32" Nullable="false" />
-          <Property Name="Wachtwoord" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AccountID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Wachtwoord" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="Voornaam" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Achternaam" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Woonplaats" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Straatnaam" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Huisnummer" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="Postcode" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
-          <Property Name="Telefoonnummer" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Rol" Relationship="AQSDatabaseModel.FK_Account_Rol" FromRole="Account" ToRole="Rol" />
+          <Property Name="CreationDate" Type="DateTime" Precision="3" />
+          <Property Name="ApprovalDate" Type="DateTime" Precision="3" />
+          <Property Name="LastLoginDate" Type="DateTime" Precision="3" />
+          <Property Name="IsLocked" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordQuestion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordAnswer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="7" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Evenement" Relationship="AQSDatabaseModel.FK_Evenement_Account" FromRole="Account" ToRole="Evenement" />
           <NavigationProperty Name="Team" Relationship="AQSDatabaseModel.FK_Team_Account" FromRole="Account" ToRole="Team" />
+          <NavigationProperty Name="UserClaim" Relationship="AQSDatabaseModel.FK_UserClaim_User" FromRole="Account" ToRole="UserClaim" />
+          <NavigationProperty Name="UserLogin" Relationship="AQSDatabaseModel.FK_UserLogin_User" FromRole="Account" ToRole="UserLogin" />
+          <NavigationProperty Name="Rol" Relationship="AQSDatabaseModel.UserRole" FromRole="Account" ToRole="Rol" />
         </EntityType>
         <EntityType Name="Evenement">
           <Key>
@@ -432,7 +566,7 @@
           </Key>
           <Property Name="EvenementID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="LocatieID" Type="Int32" Nullable="false" />
-          <Property Name="AccountID" Type="Int32" Nullable="false" />
+          <Property Name="AccountID" Type="Int64" Nullable="false" />
           <Property Name="Evenement_Naam" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Begintijd" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Eindtijd" Type="DateTime" Nullable="false" Precision="3" />
@@ -497,9 +631,9 @@
           <Key>
             <PropertyRef Name="RolID" />
           </Key>
-          <Property Name="RolID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Rolnaam" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Account" Relationship="AQSDatabaseModel.FK_Account_Rol" FromRole="Rol" ToRole="Account" />
+          <Property Name="RolID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Rolnaam" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Account" Relationship="AQSDatabaseModel.UserRole" FromRole="Rol" ToRole="Account" />
         </EntityType>
         <EntityType Name="Team">
           <Key>
@@ -508,7 +642,7 @@
           <Property Name="TeamID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EvenementID" Type="Int32" Nullable="false" />
           <Property Name="Teamnaam" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="AccountID" Type="Int32" Nullable="false" />
+          <Property Name="AccountID" Type="Int64" Nullable="false" />
           <Property Name="Puntentotaal" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Account" Relationship="AQSDatabaseModel.FK_Team_Account" FromRole="Team" ToRole="Account" />
           <NavigationProperty Name="Evenement" Relationship="AQSDatabaseModel.FK_Team_Evenement" FromRole="Team" ToRole="Evenement" />
@@ -534,6 +668,35 @@
           <NavigationProperty Name="QuizRonde" Relationship="AQSDatabaseModel.FK_Ronde_Thema" FromRole="Thema" ToRole="QuizRonde" />
           <NavigationProperty Name="QuizVraag" Relationship="AQSDatabaseModel.FK_Vraag_Thema" FromRole="Thema" ToRole="QuizVraag" />
         </EntityType>
+        <EntityType Name="UserClaim">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int64" Nullable="false" />
+          <Property Name="Claimtype" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Account" Relationship="AQSDatabaseModel.FK_UserClaim_User" FromRole="UserClaim" ToRole="Account" />
+        </EntityType>
+        <EntityType Name="UserLogin">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+          </Key>
+          <Property Name="UserId" Type="Int64" Nullable="false" />
+          <Property Name="LoginProvider" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ProviderKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Account" Relationship="AQSDatabaseModel.FK_UserLogin_User" FromRole="UserLogin" ToRole="Account" />
+        </EntityType>
+        <EntityType Name="UserRegistrationToken">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int64" />
+          <Property Name="Token" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+        </EntityType>
         <EntityType Name="VraagInQuiz">
           <Key>
             <PropertyRef Name="VraagInQuizID" />
@@ -545,18 +708,6 @@
           <NavigationProperty Name="QuizRonde" Relationship="AQSDatabaseModel.FK_VraagInQuiz_QuizRonde" FromRole="VraagInQuiz" ToRole="QuizRonde" />
           <NavigationProperty Name="QuizVraag" Relationship="AQSDatabaseModel.FK_VraagInQuiz_Vraag" FromRole="VraagInQuiz" ToRole="QuizVraag" />
         </EntityType>
-        <Association Name="FK_Account_Rol">
-          <End Type="AQSDatabaseModel.Rol" Role="Rol" Multiplicity="1" />
-          <End Type="AQSDatabaseModel.Account" Role="Account" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Rol">
-              <PropertyRef Name="RolID" />
-            </Principal>
-            <Dependent Role="Account">
-              <PropertyRef Name="RolID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Evenement_Account">
           <End Type="AQSDatabaseModel.Account" Role="Account" Multiplicity="1" />
           <End Type="AQSDatabaseModel.Evenement" Role="Evenement" Multiplicity="*" />
@@ -578,6 +729,34 @@
             </Principal>
             <Dependent Role="Team">
               <PropertyRef Name="AccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserClaim_User">
+          <End Type="AQSDatabaseModel.Account" Role="Account" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="AQSDatabaseModel.UserClaim" Role="UserClaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="UserClaim">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserLogin_User">
+          <End Type="AQSDatabaseModel.Account" Role="Account" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="AQSDatabaseModel.UserLogin" Role="UserLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="UserLogin">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -701,6 +880,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="UserRole">
+          <End Type="AQSDatabaseModel.Rol" Role="Rol" Multiplicity="*" />
+          <End Type="AQSDatabaseModel.Account" Role="Account" Multiplicity="*" />
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -710,7 +893,20 @@
           <EntitySetMapping Name="Account">
             <EntityTypeMapping TypeName="AQSDatabaseModel.Account">
               <MappingFragment StoreEntitySet="Account">
-                <ScalarProperty Name="Telefoonnummer" ColumnName="Telefoonnummer" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="PasswordAnswer" ColumnName="PasswordAnswer" />
+                <ScalarProperty Name="PasswordQuestion" ColumnName="PasswordQuestion" />
+                <ScalarProperty Name="IsLocked" ColumnName="IsLocked" />
+                <ScalarProperty Name="LastLoginDate" ColumnName="LastLoginDate" />
+                <ScalarProperty Name="ApprovalDate" ColumnName="ApprovalDate" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
                 <ScalarProperty Name="Postcode" ColumnName="Postcode" />
                 <ScalarProperty Name="Huisnummer" ColumnName="Huisnummer" />
                 <ScalarProperty Name="Straatnaam" ColumnName="Straatnaam" />
@@ -718,8 +914,8 @@
                 <ScalarProperty Name="Achternaam" ColumnName="Achternaam" />
                 <ScalarProperty Name="Voornaam" ColumnName="Voornaam" />
                 <ScalarProperty Name="Wachtwoord" ColumnName="Wachtwoord" />
-                <ScalarProperty Name="RolID" ColumnName="RolID" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
                 <ScalarProperty Name="AccountID" ColumnName="AccountID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -820,6 +1016,34 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="UserClaim">
+            <EntityTypeMapping TypeName="AQSDatabaseModel.UserClaim">
+              <MappingFragment StoreEntitySet="UserClaim">
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+                <ScalarProperty Name="Claimtype" ColumnName="Claimtype" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserLogin">
+            <EntityTypeMapping TypeName="AQSDatabaseModel.UserLogin">
+              <MappingFragment StoreEntitySet="UserLogin">
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRegistrationToken">
+            <EntityTypeMapping TypeName="AQSDatabaseModel.UserRegistrationToken">
+              <MappingFragment StoreEntitySet="UserRegistrationToken">
+                <ScalarProperty Name="Token" ColumnName="Token" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="VraagInQuiz">
             <EntityTypeMapping TypeName="AQSDatabaseModel.VraagInQuiz">
               <MappingFragment StoreEntitySet="VraagInQuiz">
@@ -830,6 +1054,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <AssociationSetMapping Name="UserRole" TypeName="AQSDatabaseModel.UserRole" StoreEntitySet="UserRole">
+            <EndProperty Name="Account">
+              <ScalarProperty Name="AccountID" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="Rol">
+              <ScalarProperty Name="RolID" ColumnName="RoleId" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

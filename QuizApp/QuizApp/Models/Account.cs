@@ -19,11 +19,14 @@ namespace QuizApp.Models
         {
             this.Evenement = new HashSet<Evenement>();
             this.Team = new HashSet<Team>();
+            this.UserClaim = new HashSet<UserClaim>();
+            this.UserLogin = new HashSet<UserLogin>();
+            this.Rol = new Rol();
         }
     
-        public int AccountID { get; set; }
+        public long AccountID { get; set; }
+        public string Login { get; set; }
         public string Email { get; set; }
-        public int RolID { get; set; }
         public string Wachtwoord { get; set; }
         public string Voornaam { get; set; }
         public string Achternaam { get; set; }
@@ -31,12 +34,30 @@ namespace QuizApp.Models
         public string Straatnaam { get; set; }
         public string Huisnummer { get; set; }
         public string Postcode { get; set; }
-        public string Telefoonnummer { get; set; }
+        public Nullable<System.DateTime> CreationDate { get; set; }
+        public Nullable<System.DateTime> ApprovalDate { get; set; }
+        public Nullable<System.DateTime> LastLoginDate { get; set; }
+        public bool IsLocked { get; set; }
+        public string PasswordQuestion { get; set; }
+        public string PasswordAnswer { get; set; }
+        public bool EmailConfirmed { get; set; }
+        public string SecurityStamp { get; set; }
+        public string PhoneNumber { get; set; }
+        public bool PhoneNumberConfirmed { get; set; }
+        public bool TwoFactorEnabled { get; set; }
+        public Nullable<System.DateTime> LockoutEndDateUtc { get; set; }
+        public bool LockoutEnabled { get; set; }
+        public int AccessFailedCount { get; set; }
     
-        public virtual Rol Rol { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Evenement> Evenement { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Team> Team { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserClaim> UserClaim { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserLogin> UserLogin { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual Rol Rol { get; set; }
     }
 }

@@ -12,18 +12,13 @@ namespace QuizApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Rol
+    public partial class UserClaim
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Rol()
-        {
-            this.Account = new HashSet<Account>();
-        }
+        public long Id { get; set; }
+        public long UserId { get; set; }
+        public string Claimtype { get; set; }
+        public string ClaimValue { get; set; }
     
-        public long RolID { get; set; }
-        public string Rolnaam { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Account> Account { get; set; }
+        public virtual Account Account { get; set; }
     }
 }

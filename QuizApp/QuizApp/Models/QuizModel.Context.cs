@@ -35,6 +35,9 @@ namespace QuizApp.Models
         public virtual DbSet<Team> Team { get; set; }
         public virtual DbSet<TeamAntwoord> TeamAntwoord { get; set; }
         public virtual DbSet<Thema> Thema { get; set; }
+        public virtual DbSet<UserClaim> UserClaim { get; set; }
+        public virtual DbSet<UserLogin> UserLogin { get; set; }
+        public virtual DbSet<UserRegistrationToken> UserRegistrationToken { get; set; }
         public virtual DbSet<VraagInQuiz> VraagInQuiz { get; set; }
     }
 }

@@ -56,7 +56,7 @@ namespace QuizApp.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Rolnaam = new SelectList(db.Rol, "Rolnaam", "Rolnaam", account.RolID);
+            ViewBag.Rolnaam = new SelectList(db.Rol, "Rolnaam", "Rolnaam", account.Rol.RolID);
             return View(account);
         }
 
@@ -72,7 +72,7 @@ namespace QuizApp.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.Rollen = new SelectList(db.Rol, "RolID", "Rolnaam", account.RolID);
+            ViewBag.Rollen = new SelectList(db.Rol, "RolID", "Rolnaam", account.Rol.RolID);
             return View(account);
         }
 
@@ -89,7 +89,7 @@ namespace QuizApp.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Rolnaam = new SelectList(db.Rol, "RolID", "Rolnaam", account.RolID);
+            ViewBag.Rolnaam = new SelectList(db.Rol, "RolID", "Rolnaam", account.Rol.RolID);
             return View(account);
         }
 
