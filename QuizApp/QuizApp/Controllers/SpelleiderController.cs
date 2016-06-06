@@ -41,13 +41,14 @@ namespace QuizApp.Controllers
                                   join viq in db.VraagInQuiz on qr.QuizRondeID equals viq.QuizRondeID
                                   join qv in db.QuizVraag on viq.QuizVraagID equals qv.QuizVraagID
                                   where e.EvenementID == id
-                                  select new  {e.EvenementID,e.Evenement_Naam,qr.Rondenummer, qv.Thema.Thema_Naam, qv.QuizVraagID, qv.Vraag};
+                                  select new  {e.EvenementID,e.Evenement_Naam,qr.Rondenummer, qv.Thema.Thema_Naam, viq.VraagInQuizID ,qv.QuizVraagID, qv.Vraag};
             var model = evenementVragen.Select(x => new SpelleiderEvenementVraagModels
             {
                 EvenementID = x.EvenementID,
                 Evenement_Naam = x.Evenement_Naam,
                 Rondenummer = x.Rondenummer,
                 Thema_Naam = x.Thema_Naam,
+                VraagInQuizID = x.VraagInQuizID,
                 QuizVraagID = x.QuizVraagID,
                 Vraag = x.Vraag
             });
@@ -80,13 +81,10 @@ namespace QuizApp.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(vraagInQuiz).State = System.Data.Entity.EntityState.Modified;
+                var ids = db.QuizRonde.Find(vraagInQuiz.QuizRondeID).EvenementID;
+                db.procVraagActief(ids, Convert.ToInt32(vraagInQuiz.isActief));
                 db.SaveChanges();
-                var evenementID = from viq in db.VraagInQuiz
-                                  join qr in db.QuizRonde on viq.QuizRondeID equals qr.QuizRondeID
-                                  where viq.VraagInQuizID == vraagInQuiz.VraagInQuizID
-                                  select qr.EvenementID;
-
-
+       
                 return RedirectToAction("Details",new { id = db.QuizRonde.Find(vraagInQuiz.QuizRondeID).EvenementID });
             }
             return View(vraagInQuiz);

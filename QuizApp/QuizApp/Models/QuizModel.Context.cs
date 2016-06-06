@@ -12,6 +12,8 @@ namespace QuizApp.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class AQSDatabaseEntities : DbContext
     {
@@ -36,5 +38,18 @@ namespace QuizApp.Models
         public virtual DbSet<TeamAntwoord> TeamAntwoord { get; set; }
         public virtual DbSet<Thema> Thema { get; set; }
         public virtual DbSet<VraagInQuiz> VraagInQuiz { get; set; }
+    
+        public virtual int procVraagActief(Nullable<int> rondeID, Nullable<int> vraagID)
+        {
+            var rondeIDParameter = rondeID.HasValue ?
+                new ObjectParameter("rondeID", rondeID) :
+                new ObjectParameter("rondeID", typeof(int));
+    
+            var vraagIDParameter = vraagID.HasValue ?
+                new ObjectParameter("vraagID", vraagID) :
+                new ObjectParameter("vraagID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("procVraagActief", rondeIDParameter, vraagIDParameter);
+        }
     }
 }

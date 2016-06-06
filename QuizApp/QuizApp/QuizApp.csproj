@@ -219,18 +219,27 @@
       <DependentUpon>QuizModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\SpelleiderEvenementVraagModels.cs" />
     <Compile Include="Models\Evenement.cs">
       <DependentUpon>QuizModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Locatie.cs">
       <DependentUpon>QuizModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MeerkeuzeAntwoord.cs">
       <DependentUpon>QuizModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\QuizRonde.cs">
+      <DependentUpon>QuizModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QuizVraag.cs">
+      <DependentUpon>QuizModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Rol.cs">
+      <DependentUpon>QuizModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SpelleiderEvenementVraagModels.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\QuizModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -245,15 +254,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>QuizModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\QuizRonde.cs">
-      <DependentUpon>QuizModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\QuizVraag.cs">
-      <DependentUpon>QuizModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Rol.cs">
-      <DependentUpon>QuizModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Team.cs">
       <DependentUpon>QuizModel.tt</DependentUpon>
