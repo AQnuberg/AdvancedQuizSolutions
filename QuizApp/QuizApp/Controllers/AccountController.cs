@@ -10,6 +10,10 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using QuizApp.Models;
 using codingfreaks.samples.Identity.Models;
+using System.Net;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
+using System.Data.Entity;
 
 namespace QuizApp.Controllers
 {
@@ -79,6 +83,8 @@ namespace QuizApp.Controllers
         #endregion
 
         #region methods
+
+        private AQSDatabaseEntities db = new AQSDatabaseEntities();
 
         [AllowAnonymous]
         public async Task<ActionResult> ConfirmEmail(long? userId, string code)
@@ -354,10 +360,10 @@ namespace QuizApp.Controllers
         public ActionResult Manage(ManageMessageId? message)
         {
             ViewBag.StatusMessage = message == ManageMessageId.ChangePasswordSuccess
-                ? "Your password has been changed."
+                ? "Je wachtwoord is gewijzigd."
                 : message == ManageMessageId.SetPasswordSuccess
-                    ? "Your password has been set."
-                    : message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed." : message == ManageMessageId.Error ? "An error has occurred." : "";
+                    ? "Uw wachtwoord is ingesteld."
+                    : message == ManageMessageId.RemoveLoginSuccess ? "De externe login is verwijderd." : message == ManageMessageId.Error ? "Er is een fout opgetreden." : "";
             ViewBag.HasLocalPassword = HasPassword();
             ViewBag.ReturnUrl = Url.Action("Manage");
             return View();
@@ -420,6 +426,41 @@ namespace QuizApp.Controllers
             return View(model);
         }
 
+        // GET: Account/Edit/5
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Account account = db.Account.Find(id);
+            if (account == null)
+            {
+                return HttpNotFound();
+            }
+            
+           // ViewBag.Rollen = new SelectList(db.Rol, "RolID", "Rolnaam", account.Rol.);
+            return View(account);
+        }
+
+        // POST: Account/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "AccountID,Login,Email,Wachtwoord,Voornaam,Achternaam,Woonplaats,Straatnaam,Huisnummer,Postcode,Telefoonnummer,CreationDate, ApprovalDate, LastLoginDate, IsLocked, PasswordQuestion, PasswordAnswer, EmailConfirmed, SecurityStamp, PhoneNumber, PhoneNumberConfirmation, TwoFactorEnabled, LockoutEndDateUtc, LockoutEnabled, AccessFailedCount")] Account account)
+        {
+            if (ModelState.IsValid)
+            {               
+                db.Entry(account).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index", "Home");
+            }
+            // ViewBag.Rolnaam = new SelectList(db.Rol, "RolID", "Rolnaam", account.Rol.RolID);
+            return View(account);
+        }
+
+
         [AllowAnonymous]
         public ActionResult Register()
         {
@@ -431,7 +472,7 @@ namespace QuizApp.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register([Bind(Exclude = "Huisnummer")]RegisterViewModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -623,5 +664,7 @@ namespace QuizApp.Controllers
 
             #endregion
         }
+
     }
+    
 }

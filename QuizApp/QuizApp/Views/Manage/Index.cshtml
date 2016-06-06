@@ -23,6 +23,15 @@
             }
             ]
         </dd>
+        <dt>Wijzig:</dt>
+        <dd>
+            [
+            @if (Model.HasPassword)
+            {
+                @Html.ActionLink("Wijzig je gegevens", "Edit", new { controller = "Account", action = "Edit", id = Model.AccountId })
+            }
+            ]
+        </dd>
         <dt>External Logins:</dt>
         <dd>
             @Model.Logins.Count [

@@ -22,7 +22,7 @@
 
         public string Straatnaam { get; set; }
 
-        public int? Huisnummer { get; set; }
+        public string Huisnummer { get; set; }
 
         public string Postcode { get; set; }
 

@@ -40,7 +40,7 @@ namespace QuizApp.Controllers
         public ActionResult Create()
         {
             var accounts = from a in db.Account
-                           where a.Rol.Rolnaam != "Deelnemer"
+                           where a.RolZonderIcollections.Rolnaam != "Deelnemer"
                            select a;
 
             ViewBag.accounts = new SelectList(accounts, "AccountID", "Email");
@@ -90,7 +90,7 @@ namespace QuizApp.Controllers
             }
 
             var accounts = from a in db.Account
-                           where a.Rol.Rolnaam != "Deelnemer"
+                           where a.RolZonderIcollections.Rolnaam != "Deelnemer"
                            select a;
 
             ViewBag.Accounts = new SelectList(accounts, "AccountID", "Email", evenement.AccountID);

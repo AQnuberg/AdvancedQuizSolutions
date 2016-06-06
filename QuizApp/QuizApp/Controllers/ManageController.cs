@@ -71,7 +71,8 @@ namespace QuizApp.Controllers
                 PhoneNumber = await UserManager.GetPhoneNumberAsync(longUserId),
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(longUserId),
                 Logins = await UserManager.GetLoginsAsync(longUserId),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
+                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
+                AccountId = longUserId
             };
             return View(model);
         }
