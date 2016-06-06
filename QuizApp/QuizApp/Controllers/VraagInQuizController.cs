@@ -13,6 +13,7 @@ namespace QuizApp.Controllers
         // GET: VraagInQuiz
         public ActionResult Index(int? id)
         {
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
