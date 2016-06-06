@@ -406,6 +406,7 @@
     <Content Include="Views\Spelleider\Index.cshtml" />
     <Content Include="Views\Spelleider\Details.cshtml" />
     <Content Include="Views\Spelleider\Edit.cshtml" />
+    <Content Include="Views\VraagInQuiz\CreateMeerkeuze.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
