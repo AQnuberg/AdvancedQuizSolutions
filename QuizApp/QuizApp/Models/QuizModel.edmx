@@ -155,6 +155,7 @@
           </Key>
           <Property Name="UserId" Type="bigint" Nullable="false" />
           <Property Name="RoleId" Type="bigint" Nullable="false" />
+          <Property Name="Dummy" Type="nvarchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <EntityType Name="VraagInQuiz">
           <Key>
@@ -365,10 +366,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="procVraagActief" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="rondeID" Type="int" Mode="In" />
-          <Parameter Name="vraagID" Type="int" Mode="In" />
-        </Function>
         <EntityContainer Name="AQSDatabaseModelStoreContainer">
           <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Evenement" EntityType="Self.Evenement" Schema="dbo" store:Type="Tables" />
@@ -472,6 +469,7 @@
           <EntitySet Name="UserClaim" EntityType="AQSDatabaseModel.UserClaim" />
           <EntitySet Name="UserLogin" EntityType="AQSDatabaseModel.UserLogin" />
           <EntitySet Name="UserRegistrationToken" EntityType="AQSDatabaseModel.UserRegistrationToken" />
+          <EntitySet Name="UserRole" EntityType="AQSDatabaseModel.UserRole" />
           <EntitySet Name="VraagInQuiz" EntityType="AQSDatabaseModel.VraagInQuiz" />
           <AssociationSet Name="FK_Evenement_Account" Association="AQSDatabaseModel.FK_Evenement_Account">
             <End Role="Account" EntitySet="Account" />
@@ -488,6 +486,10 @@
           <AssociationSet Name="FK_UserLogin_User" Association="AQSDatabaseModel.FK_UserLogin_User">
             <End Role="Account" EntitySet="Account" />
             <End Role="UserLogin" EntitySet="UserLogin" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRole_User" Association="AQSDatabaseModel.FK_UserRole_User">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="UserRole" EntitySet="UserRole" />
           </AssociationSet>
           <AssociationSet Name="FK_Evenement_Locatie" Association="AQSDatabaseModel.FK_Evenement_Locatie">
             <End Role="Locatie" EntitySet="Locatie" />
@@ -525,13 +527,13 @@
             <End Role="QuizVraag" EntitySet="QuizVraag" />
             <End Role="VraagInQuiz" EntitySet="VraagInQuiz" />
           </AssociationSet>
+          <AssociationSet Name="FK_UserRole_Role" Association="AQSDatabaseModel.FK_UserRole_Role">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="UserRole" EntitySet="UserRole" />
+          </AssociationSet>
           <AssociationSet Name="FK_TeamAntwoord_Team" Association="AQSDatabaseModel.FK_TeamAntwoord_Team">
             <End Role="Team" EntitySet="Team" />
             <End Role="TeamAntwoord" EntitySet="TeamAntwoord" />
-          </AssociationSet>
-          <AssociationSet Name="UserRole" Association="AQSDatabaseModel.UserRole">
-            <End Role="Rol" EntitySet="Rol" />
-            <End Role="Account" EntitySet="Account" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Account">
@@ -566,7 +568,7 @@
           <NavigationProperty Name="Team" Relationship="AQSDatabaseModel.FK_Team_Account" FromRole="Account" ToRole="Team" />
           <NavigationProperty Name="UserClaim" Relationship="AQSDatabaseModel.FK_UserClaim_User" FromRole="Account" ToRole="UserClaim" />
           <NavigationProperty Name="UserLogin" Relationship="AQSDatabaseModel.FK_UserLogin_User" FromRole="Account" ToRole="UserLogin" />
-          <NavigationProperty Name="Rol" Relationship="AQSDatabaseModel.UserRole" FromRole="Account" ToRole="Rol" />
+          <NavigationProperty Name="UserRole" Relationship="AQSDatabaseModel.FK_UserRole_User" FromRole="Account" ToRole="UserRole" />
         </EntityType>
         <EntityType Name="Evenement">
           <Key>
@@ -641,7 +643,7 @@
           </Key>
           <Property Name="RolID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Rolnaam" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Account" Relationship="AQSDatabaseModel.UserRole" FromRole="Rol" ToRole="Account" />
+          <NavigationProperty Name="UserRole" Relationship="AQSDatabaseModel.FK_UserRole_Role" FromRole="Rol" ToRole="UserRole" />
         </EntityType>
         <EntityType Name="Team">
           <Key>
@@ -705,6 +707,17 @@
           <Property Name="UserId" Type="Int64" />
           <Property Name="Token" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
         </EntityType>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="Int64" Nullable="false" />
+          <Property Name="RoleId" Type="Int64" Nullable="false" />
+          <Property Name="Dummy" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Account" Relationship="AQSDatabaseModel.FK_UserRole_User" FromRole="UserRole" ToRole="Account" />
+          <NavigationProperty Name="Rol" Relationship="AQSDatabaseModel.FK_UserRole_Role" FromRole="UserRole" ToRole="Rol" />
+        </EntityType>
         <EntityType Name="VraagInQuiz">
           <Key>
             <PropertyRef Name="VraagInQuizID" />
@@ -764,6 +777,20 @@
               <PropertyRef Name="AccountID" />
             </Principal>
             <Dependent Role="UserLogin">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRole_User">
+          <End Type="AQSDatabaseModel.Account" Role="Account" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="AQSDatabaseModel.UserRole" Role="UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="UserRole">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
@@ -876,6 +903,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UserRole_Role">
+          <End Type="AQSDatabaseModel.Rol" Role="Rol" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="AQSDatabaseModel.UserRole" Role="UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="RolID" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TeamAntwoord_Team">
           <End Type="AQSDatabaseModel.Team" Role="Team" Multiplicity="1" />
           <End Type="AQSDatabaseModel.TeamAntwoord" Role="TeamAntwoord" Multiplicity="*" />
@@ -888,17 +929,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="UserRole">
-          <End Type="AQSDatabaseModel.Rol" Role="Rol" Multiplicity="*" />
-          <End Type="AQSDatabaseModel.Account" Role="Account" Multiplicity="*" />
-        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="AQSDatabaseModelStoreContainer" CdmEntityContainer="AQSDatabaseEntities">
-          <FunctionImportMapping FunctionImportName="procVraagActief" FunctionName="AQSDatabaseModel.Store.procVraagActief" />
           <EntitySetMapping Name="Account">
             <EntityTypeMapping TypeName="AQSDatabaseModel.Account">
               <MappingFragment StoreEntitySet="Account">
@@ -1053,6 +1089,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="UserRole">
+            <EntityTypeMapping TypeName="AQSDatabaseModel.UserRole">
+              <MappingFragment StoreEntitySet="UserRole">
+                <ScalarProperty Name="Dummy" ColumnName="Dummy" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="VraagInQuiz">
             <EntityTypeMapping TypeName="AQSDatabaseModel.VraagInQuiz">
               <MappingFragment StoreEntitySet="VraagInQuiz">
@@ -1062,24 +1107,8 @@
                 <ScalarProperty Name="VraagInQuizID" ColumnName="VraagInQuizID" />
               </MappingFragment>
             </EntityTypeMapping>
-            <EntityTypeMapping TypeName="AQSDatabaseModel.VraagInQuiz">
-              <ModificationFunctionMapping>
-                <UpdateFunction FunctionName="AQSDatabaseModel.Store.procVraagActief" >
-                  <ScalarProperty Name="QuizVraagID" ParameterName="vraagID" Version="Current" />
-                  <ScalarProperty Name="QuizRondeID" ParameterName="rondeID" Version="Current" />
-                </UpdateFunction>
-              </ModificationFunctionMapping>
-            </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="UserRole" TypeName="AQSDatabaseModel.UserRole" StoreEntitySet="UserRole">
-            <EndProperty Name="Account">
-              <ScalarProperty Name="AccountID" ColumnName="UserId" />
-            </EndProperty>
-            <EndProperty Name="Rol">
-              <ScalarProperty Name="RolID" ColumnName="RoleId" />
-            </EndProperty>
-          </AssociationSetMapping>
-          </EntityContainerMapping>
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

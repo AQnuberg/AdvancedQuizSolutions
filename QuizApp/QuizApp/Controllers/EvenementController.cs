@@ -39,9 +39,12 @@ namespace QuizApp.Controllers
         // GET: Evenement/Create
         public ActionResult Create()
         {
-            var accounts = from a in db.Account
-                           where a.RolZonderIcollections.Rolnaam != "Deelnemer"
-                           select a;
+            var accounts = from ur in db.UserRole
+                            join a in db.Account on ur.UserId equals a.AccountID
+                            join r in db.Rol on ur.RoleId equals r.RolID
+                            where r.Rolnaam != "Deelnemer"
+                            select a;
+
 
             ViewBag.accounts = new SelectList(accounts, "AccountID", "Email");
 
@@ -89,8 +92,10 @@ namespace QuizApp.Controllers
                 return HttpNotFound();
             }
 
-            var accounts = from a in db.Account
-                           where a.RolZonderIcollections.Rolnaam != "Deelnemer"
+            var accounts = from ur in db.UserRole
+                           join a in db.Account on ur.UserId equals a.AccountID
+                           join r in db.Rol on ur.RoleId equals r.RolID
+                           where r.Rolnaam != "Deelnemer"
                            select a;
 
             ViewBag.Accounts = new SelectList(accounts, "AccountID", "Email", evenement.AccountID);

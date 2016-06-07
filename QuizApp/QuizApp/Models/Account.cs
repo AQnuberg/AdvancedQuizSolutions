@@ -21,8 +21,7 @@ namespace QuizApp.Models
             this.Team = new HashSet<Team>();
             this.UserClaim = new HashSet<UserClaim>();
             this.UserLogin = new HashSet<UserLogin>();
-            this.Rol = new HashSet<Rol>();
-            this.RolZonderIcollections = new Rol();
+            this.UserRole = new HashSet<UserRole>();
         }
     
         public long AccountID { get; set; }
@@ -59,8 +58,6 @@ namespace QuizApp.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserLogin> UserLogin { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Rol> Rol { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual Rol RolZonderIcollections { get; set; }
+        public virtual ICollection<UserRole> UserRole { get; set; }
     }
 }

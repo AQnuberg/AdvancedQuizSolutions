@@ -15,12 +15,12 @@ namespace QuizApp.Controllers
         private AQSDatabaseEntities db = new AQSDatabaseEntities();
 
         // GET: AQSAccount
-        public ActionResult Index()
+       /* public ActionResult Index()
         {
-            var accounts = db.Account.Include(a => a.Rol);
+            var accounts = db.Account.Include(a => a.UserRole);
             return View(accounts.ToList());
         }
-
+        */
         // GET: AQSAccount/Details/5
         public ActionResult Details(int? id)
         {
