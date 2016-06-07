@@ -13,6 +13,7 @@ namespace QuizApp.Controllers
         // GET: VraagInQuiz
         public ActionResult Index(int? id)
         {
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -40,8 +41,47 @@ namespace QuizApp.Controllers
             return View(vraagInQuizs.ToList());
         }
 
+        public ActionResult CreateMeerkeuze(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var quizRonde = from r in db.QuizRonde
+                            where r.QuizRondeID == id
+                            select r;
+
+            var vragenBijThema = from qv in db.QuizVraag.Where(qv => !db.VraagInQuiz.Any(v => qv.QuizVraagID == v.QuizVraagID && v.QuizRondeID == id))
+                                 join qr in db.QuizRonde on qv.ThemaID equals qr.ThemaID
+                                 where qr.QuizRondeID == id
+                                 where qv.Vraagtype == "Meerkeuze"
+                                 orderby qv.QuizVraagID descending
+                                 select qv;
+
+            ViewBag.QuizRondeID = id;
+            ViewBag.VragenBijThema = vragenBijThema;
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateMeerkeuze([Bind(Include = "VraagInQuizID,QuizRondeID,QuizVraagID")] VraagInQuiz vraagInQuiz)
+        {
+            if (ModelState.IsValid)
+            {
+                db.VraagInQuiz.Add(vraagInQuiz);
+                db.SaveChanges();
+                return RedirectToAction("Index", new { id = vraagInQuiz.QuizRondeID });
+            }
+
+            ViewBag.QuizRondeID = new SelectList(db.QuizRonde, "QuizRondeID", "Thema_Naam", vraagInQuiz.QuizRondeID);
+            ViewBag.QuizVraagID = new SelectList(db.QuizVraag, "QuizVraagID", "Thema_Naam", vraagInQuiz.QuizVraagID);
+            return View(vraagInQuiz);
+        }
+
         // GET: VraagInQuiz/Create
-        public ActionResult Create(int? id)
+        public ActionResult CreateOpen(int? id)
         {
             if (id == null)
             {
@@ -58,9 +98,12 @@ namespace QuizApp.Controllers
                             where r.QuizRondeID == id
                             select r;
 
-            var vragenBijThema = from v in db.QuizVraag
-                where v.ThemaID == quizRonde.FirstOrDefault().ThemaID
-                select v;
+            var vragenBijThema = from qv in db.QuizVraag.Where(qv => !db.VraagInQuiz.Any(v => qv.QuizVraagID == v.QuizVraagID && v.QuizRondeID == id))
+                                 join qr in db.QuizRonde on qv.ThemaID equals qr.ThemaID
+                                 where qr.QuizRondeID == id
+                                 where qv.Vraagtype == "Open"
+                                 orderby qv.QuizVraagID descending
+                                 select qv;
 
             ViewBag.QuizRondeID = id;
             ViewBag.VragenBijThema = vragenBijThema;
@@ -72,7 +115,7 @@ namespace QuizApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "VraagInQuizID,QuizRondeID,QuizVraagID")] VraagInQuiz vraagInQuiz)
+        public ActionResult CreateOpen([Bind(Include = "VraagInQuizID,QuizRondeID,QuizVraagID")] VraagInQuiz vraagInQuiz)
         {
             if (ModelState.IsValid)
             {

@@ -365,6 +365,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="procVraagActief" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="rondeID" Type="int" Mode="In" />
+          <Parameter Name="vraagID" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="AQSDatabaseModelStoreContainer">
           <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Evenement" EntityType="Self.Evenement" Schema="dbo" store:Type="Tables" />
@@ -451,6 +455,10 @@
     <edmx:ConceptualModels>
       <Schema Namespace="AQSDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="AQSDatabaseEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="procVraagActief">
+            <Parameter Name="rondeID" Mode="In" Type="Int32" />
+            <Parameter Name="vraagID" Mode="In" Type="Int32" />
+          </FunctionImport>
           <EntitySet Name="Account" EntityType="AQSDatabaseModel.Account" />
           <EntitySet Name="Evenement" EntityType="AQSDatabaseModel.Evenement" />
           <EntitySet Name="Locatie" EntityType="AQSDatabaseModel.Locatie" />
@@ -525,7 +533,7 @@
             <End Role="Rol" EntitySet="Rol" />
             <End Role="Account" EntitySet="Account" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="Account">
           <Key>
             <PropertyRef Name="AccountID" />
@@ -890,6 +898,7 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="AQSDatabaseModelStoreContainer" CdmEntityContainer="AQSDatabaseEntities">
+          <FunctionImportMapping FunctionImportName="procVraagActief" FunctionName="AQSDatabaseModel.Store.procVraagActief" />
           <EntitySetMapping Name="Account">
             <EntityTypeMapping TypeName="AQSDatabaseModel.Account">
               <MappingFragment StoreEntitySet="Account">
@@ -1053,6 +1062,14 @@
                 <ScalarProperty Name="VraagInQuizID" ColumnName="VraagInQuizID" />
               </MappingFragment>
             </EntityTypeMapping>
+            <EntityTypeMapping TypeName="AQSDatabaseModel.VraagInQuiz">
+              <ModificationFunctionMapping>
+                <UpdateFunction FunctionName="AQSDatabaseModel.Store.procVraagActief" >
+                  <ScalarProperty Name="QuizVraagID" ParameterName="vraagID" Version="Current" />
+                  <ScalarProperty Name="QuizRondeID" ParameterName="rondeID" Version="Current" />
+                </UpdateFunction>
+              </ModificationFunctionMapping>
+            </EntityTypeMapping>
           </EntitySetMapping>
           <AssociationSetMapping Name="UserRole" TypeName="AQSDatabaseModel.UserRole" StoreEntitySet="UserRole">
             <EndProperty Name="Account">
@@ -1062,7 +1079,7 @@
               <ScalarProperty Name="RolID" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
-        </EntityContainerMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>
