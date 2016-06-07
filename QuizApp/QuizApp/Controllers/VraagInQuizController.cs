@@ -70,7 +70,7 @@ namespace QuizApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.VraagInQuiz.Add(vraagInQuiz);
+                db.SP_VraaginQuiz_Toevoegen(vraagInQuiz.QuizVraagID, vraagInQuiz.QuizRondeID);
                 db.SaveChanges();
                 return RedirectToAction("Index", new { id = vraagInQuiz.QuizRondeID });
             }
@@ -119,7 +119,7 @@ namespace QuizApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.VraagInQuiz.Add(vraagInQuiz);
+                db.SP_VraaginQuiz_Toevoegen(vraagInQuiz.QuizVraagID, vraagInQuiz.QuizRondeID);
                 db.SaveChanges();
                 return RedirectToAction("Index", new {id = vraagInQuiz.QuizRondeID});
             }

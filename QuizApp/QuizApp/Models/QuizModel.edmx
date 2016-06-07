@@ -366,6 +366,22 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="SP_Team_PuntenTotaal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="teamID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_Team_Toevoegen" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="evenementID" Type="int" Mode="In" />
+          <Parameter Name="teamnaam" Type="nvarchar" Mode="In" />
+          <Parameter Name="accountID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_VraagInQuiz_isActief" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="rondeID" Type="int" Mode="In" />
+          <Parameter Name="vraagID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_VraaginQuiz_Toevoegen" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="vraagID" Type="int" Mode="In" />
+          <Parameter Name="rondeID" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="AQSDatabaseModelStoreContainer">
           <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Evenement" EntityType="Self.Evenement" Schema="dbo" store:Type="Tables" />
@@ -535,6 +551,22 @@
             <End Role="Team" EntitySet="Team" />
             <End Role="TeamAntwoord" EntitySet="TeamAntwoord" />
           </AssociationSet>
+          <FunctionImport Name="SP_Team_PuntenTotaal">
+            <Parameter Name="teamID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Team_Toevoegen">
+            <Parameter Name="evenementID" Mode="In" Type="Int32" />
+            <Parameter Name="teamnaam" Mode="In" Type="String" />
+            <Parameter Name="accountID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_VraagInQuiz_isActief">
+            <Parameter Name="rondeID" Mode="In" Type="Int32" />
+            <Parameter Name="vraagID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_VraaginQuiz_Toevoegen">
+            <Parameter Name="vraagID" Mode="In" Type="Int32" />
+            <Parameter Name="rondeID" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <EntityType Name="Account">
           <Key>
@@ -1108,6 +1140,10 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_Team_PuntenTotaal" FunctionName="AQSDatabaseModel.Store.SP_Team_PuntenTotaal" />
+          <FunctionImportMapping FunctionImportName="SP_Team_Toevoegen" FunctionName="AQSDatabaseModel.Store.SP_Team_Toevoegen" />
+          <FunctionImportMapping FunctionImportName="SP_VraagInQuiz_isActief" FunctionName="AQSDatabaseModel.Store.SP_VraagInQuiz_isActief" />
+          <FunctionImportMapping FunctionImportName="SP_VraaginQuiz_Toevoegen" FunctionName="AQSDatabaseModel.Store.SP_VraaginQuiz_Toevoegen" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

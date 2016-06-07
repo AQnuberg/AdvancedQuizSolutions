@@ -53,7 +53,7 @@ namespace QuizApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Team.Add(team);
+                db.SP_Team_Toevoegen(team.EvenementID, team.Teamnaam, (int?)team.AccountID);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

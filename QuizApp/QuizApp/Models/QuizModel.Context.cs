@@ -43,7 +43,33 @@ namespace QuizApp.Models
         public virtual DbSet<UserRole> UserRole { get; set; }
         public virtual DbSet<VraagInQuiz> VraagInQuiz { get; set; }
     
-        public virtual int procVraagActief(Nullable<int> rondeID, Nullable<int> vraagID)
+        public virtual int SP_Team_PuntenTotaal(Nullable<int> teamID)
+        {
+            var teamIDParameter = teamID.HasValue ?
+                new ObjectParameter("teamID", teamID) :
+                new ObjectParameter("teamID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_Team_PuntenTotaal", teamIDParameter);
+        }
+    
+        public virtual int SP_Team_Toevoegen(Nullable<int> evenementID, string teamnaam, Nullable<int> accountID)
+        {
+            var evenementIDParameter = evenementID.HasValue ?
+                new ObjectParameter("evenementID", evenementID) :
+                new ObjectParameter("evenementID", typeof(int));
+    
+            var teamnaamParameter = teamnaam != null ?
+                new ObjectParameter("teamnaam", teamnaam) :
+                new ObjectParameter("teamnaam", typeof(string));
+    
+            var accountIDParameter = accountID.HasValue ?
+                new ObjectParameter("accountID", accountID) :
+                new ObjectParameter("accountID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_Team_Toevoegen", evenementIDParameter, teamnaamParameter, accountIDParameter);
+        }
+    
+        public virtual int SP_VraagInQuiz_isActief(Nullable<int> rondeID, Nullable<int> vraagID)
         {
             var rondeIDParameter = rondeID.HasValue ?
                 new ObjectParameter("rondeID", rondeID) :
@@ -53,7 +79,20 @@ namespace QuizApp.Models
                 new ObjectParameter("vraagID", vraagID) :
                 new ObjectParameter("vraagID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("procVraagActief", rondeIDParameter, vraagIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_VraagInQuiz_isActief", rondeIDParameter, vraagIDParameter);
+        }
+    
+        public virtual int SP_VraaginQuiz_Toevoegen(Nullable<int> vraagID, Nullable<int> rondeID)
+        {
+            var vraagIDParameter = vraagID.HasValue ?
+                new ObjectParameter("vraagID", vraagID) :
+                new ObjectParameter("vraagID", typeof(int));
+    
+            var rondeIDParameter = rondeID.HasValue ?
+                new ObjectParameter("rondeID", rondeID) :
+                new ObjectParameter("rondeID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_VraaginQuiz_Toevoegen", vraagIDParameter, rondeIDParameter);
         }
     }
 }

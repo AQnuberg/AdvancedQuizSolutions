@@ -11,12 +11,10 @@ namespace QuizApp.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     
     public partial class MeerkeuzeAntwoord
     {
         public int MeerkeuzeAntwoordID { get; set; }
-        [StringLength(100)]
         public string Meerkeuze_Antwoord { get; set; }
         public int QuizVraagID { get; set; }
         public bool Is_Juist { get; set; }

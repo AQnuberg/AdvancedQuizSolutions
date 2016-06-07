@@ -81,8 +81,7 @@ namespace QuizApp.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(vraagInQuiz).State = System.Data.Entity.EntityState.Modified;
-                var ids = db.QuizRonde.Find(vraagInQuiz.QuizRondeID).EvenementID;
-                db.procVraagActief(ids, Convert.ToInt32(vraagInQuiz.isActief));
+                db.SP_VraagInQuiz_isActief(vraagInQuiz.QuizRondeID, vraagInQuiz.QuizVraagID);
                 db.SaveChanges();
        
                 return RedirectToAction("Details",new { id = db.QuizRonde.Find(vraagInQuiz.QuizRondeID).EvenementID });

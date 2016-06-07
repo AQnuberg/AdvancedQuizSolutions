@@ -89,7 +89,7 @@ namespace QuizApp.Models
         public string Email { get; set; }
 
         
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 1)]
         [Display(Name = "Voornaam")]
         public string Voornaam { get; set; }
 
