@@ -14,7 +14,7 @@ namespace QuizApp.Controllers
     {
         private AQSDatabaseEntities db = new AQSDatabaseEntities();
 
-        // GET: Team
+        // GET: Team 
         public ActionResult Index()
         {
             var teams = db.Team.Include(t => t.Account).Include(t => t.Evenement);
