@@ -14,12 +14,14 @@ namespace QuizApp.Controllers
         private AQSDatabaseEntities db = new AQSDatabaseEntities();
 
         // GET: Locatie
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Index()
         {
             return View(db.Locatie.ToList());
         }
 
         // GET: Locatie/Details/5
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -35,6 +37,7 @@ namespace QuizApp.Controllers
         }
 
         // GET: Locatie/Create
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Create()
         {
             return View();
@@ -45,6 +48,7 @@ namespace QuizApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Create([Bind(Include = "LocatieID,Locatie_Naam,Plaatsnaam,Postcode,Huisnummer,Straatnaam,Email,Telefoonnummer,Website")] Locatie locatie)
         {
             if (ModelState.IsValid)
@@ -58,6 +62,7 @@ namespace QuizApp.Controllers
         }
 
         // GET: Locatie/Edit/5
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -77,6 +82,7 @@ namespace QuizApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Edit([Bind(Include = "LocatieID,Locatie_Naam,Plaatsnaam,Postcode,Huisnummer,Straatnaam,Email,Telefoonnummer,Website")] Locatie locatie)
         {
             if (ModelState.IsValid)
@@ -89,6 +95,7 @@ namespace QuizApp.Controllers
         }
 
         // GET: Locatie/Delete/5
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -106,6 +113,7 @@ namespace QuizApp.Controllers
         // POST: Locatie/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Beheerder")]
         public ActionResult DeleteConfirmed(int id)
         {
             Locatie locatie = db.Locatie.Find(id);

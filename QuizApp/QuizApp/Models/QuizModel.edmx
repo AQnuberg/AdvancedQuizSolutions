@@ -155,7 +155,7 @@
           </Key>
           <Property Name="UserId" Type="bigint" Nullable="false" />
           <Property Name="RoleId" Type="bigint" Nullable="false" />
-          <Property Name="Dummy" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Dummy" Type="nvarchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="VraagInQuiz">
           <Key>
@@ -746,7 +746,7 @@
           </Key>
           <Property Name="UserId" Type="Int64" Nullable="false" />
           <Property Name="RoleId" Type="Int64" Nullable="false" />
-          <Property Name="Dummy" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Dummy" Type="String" Nullable="true" MaxLength="10" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Account" Relationship="AQSDatabaseModel.FK_UserRole_User" FromRole="UserRole" ToRole="Account" />
           <NavigationProperty Name="Rol" Relationship="AQSDatabaseModel.FK_UserRole_Role" FromRole="UserRole" ToRole="Rol" />
         </EntityType>

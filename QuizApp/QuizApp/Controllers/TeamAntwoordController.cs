@@ -17,6 +17,7 @@ namespace QuizApp.Controllers
 
 
         // GET: TeamAntwoord/Index/5
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Index(int? id)
         {
             if (id == null)
@@ -37,6 +38,7 @@ namespace QuizApp.Controllers
         }
 
         // GET: TeamAntwoord/Details/5
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -52,6 +54,7 @@ namespace QuizApp.Controllers
         }
 
         // GET: TeamAntwoord/Create
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Create()
         {
             ViewBag.QuizVraagID = new SelectList(db.QuizVraag, "QuizVraagID", "Vraag");
@@ -79,6 +82,7 @@ namespace QuizApp.Controllers
         }
 
         // GET: TeamAntwoord/Edit/5
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -100,6 +104,7 @@ namespace QuizApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Edit([Bind(Include = "TeamAntwoordID,TeamID,QuizVraagID,Gegeven_Antwoord")] TeamAntwoord teamAntwoord)
         {
             if (ModelState.IsValid)
@@ -114,6 +119,7 @@ namespace QuizApp.Controllers
         }
 
         // GET: TeamAntwoord/Delete/5
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -131,6 +137,7 @@ namespace QuizApp.Controllers
         // POST: TeamAntwoord/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Beheerder")]
         public ActionResult DeleteConfirmed(int id)
         {
             TeamAntwoord teamAntwoord = db.TeamAntwoord.Find(id);

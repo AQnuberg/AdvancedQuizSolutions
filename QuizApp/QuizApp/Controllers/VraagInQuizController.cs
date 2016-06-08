@@ -11,6 +11,7 @@ namespace QuizApp.Controllers
         private AQSDatabaseEntities db = new AQSDatabaseEntities();
 
         // GET: VraagInQuiz
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Index(int? id)
         {
 
@@ -41,6 +42,7 @@ namespace QuizApp.Controllers
             return View(vraagInQuizs.ToList());
         }
 
+        [Authorize(Roles = "Beheerder")]
         public ActionResult CreateMeerkeuze(int? id)
         {
             if (id == null)
@@ -66,6 +68,7 @@ namespace QuizApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Beheerder")]
         public ActionResult CreateMeerkeuze([Bind(Include = "VraagInQuizID,QuizRondeID,QuizVraagID")] VraagInQuiz vraagInQuiz)
         {
             if (ModelState.IsValid)
@@ -81,6 +84,7 @@ namespace QuizApp.Controllers
         }
 
         // GET: VraagInQuiz/Create
+        [Authorize(Roles = "Beheerder")]
         public ActionResult CreateOpen(int? id)
         {
             if (id == null)
@@ -115,6 +119,7 @@ namespace QuizApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Beheerder")]
         public ActionResult CreateOpen([Bind(Include = "VraagInQuizID,QuizRondeID,QuizVraagID")] VraagInQuiz vraagInQuiz)
         {
             if (ModelState.IsValid)
@@ -130,6 +135,7 @@ namespace QuizApp.Controllers
         }
 
         // GET: VraagInQuiz/Edit/5
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -151,6 +157,7 @@ namespace QuizApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Edit([Bind(Include = "VraagInQuizID,QuizRondeID,QuizVraagID")] VraagInQuiz vraagInQuiz)
         {
             if (ModelState.IsValid)
@@ -165,6 +172,7 @@ namespace QuizApp.Controllers
         }
 
         // GET: VraagInQuiz/Delete/5
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -182,6 +190,7 @@ namespace QuizApp.Controllers
         // POST: VraagInQuiz/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Beheerder")]
         public ActionResult DeleteConfirmed(int id)
         {
             VraagInQuiz vraagInQuiz = db.VraagInQuiz.Find(id);
