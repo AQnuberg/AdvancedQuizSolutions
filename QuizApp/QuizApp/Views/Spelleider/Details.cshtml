@@ -17,6 +17,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Vraag)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.isActief)
+        </th>
         <th></th>
     </tr>
 
@@ -33,6 +36,9 @@
                 @Html.DisplayFor(modelItem => item.Vraag)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.isActief)
+            </td>
+            <td>
                 @Html.ActionLink("Speel", "Edit", new { id = item.VraagInQuizID })
             </td>
         </tr>
@@ -42,6 +48,10 @@
 }
 <div>
     @Html.ActionLink("Terug naar evenementlijst", "Index")
+</div>
+
+<div>
+    @Html.ActionLink("Puntentotaal teams updaten & bekijken", "Index", new {controller = "PuntenTotaal", action = "Index", id = ViewBag.evenementID})
 </div>
 
 @section Scripts {

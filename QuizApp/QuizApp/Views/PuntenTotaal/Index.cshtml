@@ -1,0 +1,36 @@
+﻿@model IEnumerable<QuizApp.Models.Team>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Teams bij evenement: @ViewBag.evenementNaam</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Teamnaam)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Puntentotaal)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Teamnaam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Puntentotaal)
+            </td>
+            <td>
+                @Html.ActionLink("Team antwoord beheren", "Index", new { controller = "TeamAntwoord", action = "Index", id = item.TeamID }) 
+
+            </td>
+        </tr>
+    }
+
+</table>
+

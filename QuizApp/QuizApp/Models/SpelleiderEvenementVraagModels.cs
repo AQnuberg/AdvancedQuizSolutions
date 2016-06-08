@@ -15,4 +15,5 @@ using QuizApp.Models;
         public int VraagInQuizID { get; set; }
         public int QuizVraagID { get; set; }
         public string Vraag { get; set; }
+        public bool isActief { get; set; }
     }
