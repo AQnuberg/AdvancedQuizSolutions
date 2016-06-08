@@ -41,7 +41,7 @@ namespace QuizApp.Controllers
                                   join viq in db.VraagInQuiz on qr.QuizRondeID equals viq.QuizRondeID
                                   join qv in db.QuizVraag on viq.QuizVraagID equals qv.QuizVraagID
                                   where e.EvenementID == id
-                                  select new  {e.EvenementID,e.Evenement_Naam,qr.Rondenummer, qv.Thema.Thema_Naam, viq.VraagInQuizID ,qv.QuizVraagID, qv.Vraag};
+                                  select new  {e.EvenementID,e.Evenement_Naam,qr.Rondenummer, qv.Thema.Thema_Naam, viq.VraagInQuizID , viq.isActief, qv.QuizVraagID, qv.Vraag};
             var model = evenementVragen.Select(x => new SpelleiderEvenementVraagModels
             {
                 EvenementID = x.EvenementID,
@@ -50,8 +50,10 @@ namespace QuizApp.Controllers
                 Thema_Naam = x.Thema_Naam,
                 VraagInQuizID = x.VraagInQuizID,
                 QuizVraagID = x.QuizVraagID,
-                Vraag = x.Vraag
+                Vraag = x.Vraag,
+                isActief = x.isActief
             });
+            ViewBag.evenementID = db.Evenement.Find(id).EvenementID;
             ViewBag.evenementNaam = db.Evenement.Find(id).Evenement_Naam;
             return View(model);
         }

@@ -203,6 +203,7 @@
     <Compile Include="Controllers\LocatieController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MeerkeuzeAntwoordController.cs" />
+    <Compile Include="Controllers\PuntenTotaalController.cs" />
     <Compile Include="Controllers\QuizRondeController.cs" />
     <Compile Include="Controllers\QuizVraagController.cs" />
     <Compile Include="Controllers\RolController.cs" />
@@ -419,6 +420,7 @@
     <Content Include="Views\Spelleider\Edit.cshtml" />
     <Content Include="Views\Account\Edit.cshtml" />
     <Content Include="Views\VraagInQuiz\CreateMeerkeuze.cshtml" />
+    <Content Include="Views\PuntenTotaal\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
