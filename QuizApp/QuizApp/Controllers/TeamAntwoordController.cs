@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using QuizApp.Models;
+using System.Data.Entity.Migrations;
 
 namespace QuizApp.Controllers
 {
@@ -149,6 +150,7 @@ namespace QuizApp.Controllers
                        select e;
 
             ViewBag.team = team.FirstOrDefault();
+            ViewBag.gegevenAntwoord = "Nog geen antwoord gegeven.";
 
             var vragen = from t in db.Team
                          join r in db.QuizRonde on t.EvenementID equals r.EvenementID
@@ -157,6 +159,30 @@ namespace QuizApp.Controllers
                          where vq.isActief == true
                          join v in db.QuizVraag on vq.QuizVraagID equals v.QuizVraagID
                          select v;
+
+            if(vragen.FirstOrDefault() == null)
+            {
+                ViewBag.message = "Deze quiz wordt nu niet gespeeld";
+                ViewBag.linkText = "Terug naar team";
+                ViewBag.actionName = "index";
+                ViewBag.routeValue = new { controller = "team" };
+                return View("Error");
+            }
+
+            var antwoord = from a in db.TeamAntwoord
+                           where a.TeamID == id
+                           where a.QuizVraagID == vragen.FirstOrDefault().QuizVraagID
+                           select a;
+
+            if(antwoord.FirstOrDefault() != null)
+            {
+                ViewBag.gegevenAntwoord = antwoord.FirstOrDefault().Gegeven_Antwoord;
+                ViewBag.gegevenantwoordID = antwoord.FirstOrDefault().TeamAntwoordID;
+            }
+            else
+            {
+                ViewBag.gegevenantwoordID = 0;
+            }
 
             if (vragen.FirstOrDefault().Vraagtype == "Meerkeuze")
             {
@@ -186,11 +212,38 @@ namespace QuizApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Play([Bind(Include = "TeamAntwoordID,TeamID,QuizVraagID,Gegeven_Antwoord")] TeamAntwoord teamAntwoord)
         {
+            if (teamAntwoord.Gegeven_Antwoord == null)
+                teamAntwoord.Gegeven_Antwoord = "";
+
+            var actieveVraag = from v in db.VraagInQuiz
+                               join qr in db.QuizRonde on v.QuizRondeID equals qr.QuizRondeID
+                               join t in db.Team on qr.EvenementID equals t.EvenementID
+                               where t.TeamID == teamAntwoord.TeamID
+                               where v.isActief == true
+                               select v;
+
+            if(actieveVraag.FirstOrDefault().QuizVraagID != teamAntwoord.QuizVraagID)
+                return RedirectToAction("Play", new { id = teamAntwoord.TeamID });
+
+            var antwoord = from t in db.TeamAntwoord
+                           where t.QuizVraagID == teamAntwoord.QuizVraagID
+                           where t.TeamID == teamAntwoord.TeamID
+                           select t;
+
+            if(ModelState.IsValid && antwoord.FirstOrDefault() != null)
+            {
+                db.Set<TeamAntwoord>().AddOrUpdate(teamAntwoord);
+//                db.Entry(teamAntwoord).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Play", new { id = teamAntwoord.TeamID });
+            }
+
+
             if (ModelState.IsValid)
             {
                 db.TeamAntwoord.Add(teamAntwoord);
                 db.SaveChanges();
-                return RedirectToAction("Play");
+                return RedirectToAction("Play", new { id = teamAntwoord.TeamID });
             }
 
             ViewBag.QuizVraagID = new SelectList(db.QuizVraag, "QuizVraagID", "Thema_Naam", teamAntwoord.QuizVraagID);
