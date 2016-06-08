@@ -15,6 +15,7 @@ namespace QuizApp.Controllers
         private AQSDatabaseEntities db = new AQSDatabaseEntities();
 
         // GET: Evenement
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Index()
         {
             var evenements = db.Evenement.Include(e => e.Account).Include(e => e.Locatie);
@@ -22,6 +23,7 @@ namespace QuizApp.Controllers
         }
 
         // GET: Evenement/Details/5
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -37,6 +39,7 @@ namespace QuizApp.Controllers
         }
 
         // GET: Evenement/Create
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Create()
         {
             var accounts = from ur in db.UserRole
@@ -68,6 +71,7 @@ namespace QuizApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Create([Bind(Include = "EvenementID,LocatieID,AccountID,Evenement_Naam,Begintijd,Eindtijd,Evenement_Type")] Evenement evenement)
         {
             if (ModelState.IsValid)
@@ -80,6 +84,7 @@ namespace QuizApp.Controllers
         }
 
         // GET: Evenement/Edit/5
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -108,6 +113,7 @@ namespace QuizApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Edit([Bind(Include = "EvenementID,LocatieID,AccountID,Evenement_Naam,Begintijd,Eindtijd,Evenement_Type")] Evenement evenement)
         {
             if (ModelState.IsValid)
@@ -122,6 +128,7 @@ namespace QuizApp.Controllers
         }
 
         // GET: Evenement/Delete/5
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -139,6 +146,7 @@ namespace QuizApp.Controllers
         // POST: Evenement/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Beheerder")]
         public ActionResult DeleteConfirmed(int id)
         {
             Evenement evenement = db.Evenement.Find(id);

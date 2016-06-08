@@ -43,6 +43,19 @@ namespace QuizApp.Models
         public virtual DbSet<UserRole> UserRole { get; set; }
         public virtual DbSet<VraagInQuiz> VraagInQuiz { get; set; }
     
+        public virtual int procVraagActief(Nullable<int> rondeID, Nullable<int> vraagID)
+        {
+            var rondeIDParameter = rondeID.HasValue ?
+                new ObjectParameter("rondeID", rondeID) :
+                new ObjectParameter("rondeID", typeof(int));
+    
+            var vraagIDParameter = vraagID.HasValue ?
+                new ObjectParameter("vraagID", vraagID) :
+                new ObjectParameter("vraagID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("procVraagActief", rondeIDParameter, vraagIDParameter);
+        }
+    
         public virtual int SP_Team_PuntenTotaal(Nullable<int> teamID)
         {
             var teamIDParameter = teamID.HasValue ?

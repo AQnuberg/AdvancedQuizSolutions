@@ -15,6 +15,7 @@ namespace QuizApp.Controllers
         private AQSDatabaseEntities db = new AQSDatabaseEntities();
 
         // GET: Team 
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Index()
         {
             var teams = db.Team.Include(t => t.Account).Include(t => t.Evenement);
@@ -22,6 +23,7 @@ namespace QuizApp.Controllers
         }
 
         // GET: Team/Details/5
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -37,6 +39,7 @@ namespace QuizApp.Controllers
         }
 
         // GET: Team/Create
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Create()
         {
             ViewBag.accounts = new SelectList(db.Account, "AccountID", "email");
@@ -49,6 +52,7 @@ namespace QuizApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Create([Bind(Include = "EvenementID,Teamnaam,AccountID,Puntentotaal")] Team team)
         {
             if (ModelState.IsValid)
@@ -64,6 +68,7 @@ namespace QuizApp.Controllers
         }
 
         // GET: Team/Edit/5
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -84,6 +89,7 @@ namespace QuizApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Edit([Bind(Include = "TeamID,EvenementID,Teamnaam,AccountID,Puntentotaal")] Team team)
         {
             if (ModelState.IsValid)
@@ -98,6 +104,7 @@ namespace QuizApp.Controllers
         }
 
         // GET: Team/Delete/5
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -115,6 +122,7 @@ namespace QuizApp.Controllers
         // POST: Team/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Beheerder")]
         public ActionResult DeleteConfirmed(int id)
         {
             Team team = db.Team.Find(id);

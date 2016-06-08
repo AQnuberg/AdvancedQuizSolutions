@@ -15,6 +15,7 @@ namespace QuizApp.Controllers
     {
         private AQSDatabaseEntities db = new AQSDatabaseEntities();
         // GET: Spelleider
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Index()
         {
             var evenement = from e in db.Evenement
@@ -25,6 +26,7 @@ namespace QuizApp.Controllers
         }
 
         // GET: Spelleider/Details/5
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -57,6 +59,7 @@ namespace QuizApp.Controllers
         }
 
         // GET: Spelleider/Edit/5
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -76,6 +79,7 @@ namespace QuizApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Edit([Bind(Include = "VraagInQuizID, QuizRondeID, QuizVraagID, isActief")] VraagInQuiz vraagInQuiz)
         {
             if (ModelState.IsValid)
