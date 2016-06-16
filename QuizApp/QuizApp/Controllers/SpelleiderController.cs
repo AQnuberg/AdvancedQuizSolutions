@@ -15,6 +15,7 @@ namespace QuizApp.Controllers
     {
         private AQSDatabaseEntities db = new AQSDatabaseEntities();
         // GET: Spelleider
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Index()
         {
             var evenement = from e in db.Evenement
@@ -25,6 +26,7 @@ namespace QuizApp.Controllers
         }
 
         // GET: Spelleider/Details/5
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -41,21 +43,25 @@ namespace QuizApp.Controllers
                                   join viq in db.VraagInQuiz on qr.QuizRondeID equals viq.QuizRondeID
                                   join qv in db.QuizVraag on viq.QuizVraagID equals qv.QuizVraagID
                                   where e.EvenementID == id
-                                  select new  {e.EvenementID,e.Evenement_Naam,qr.Rondenummer, qv.Thema.Thema_Naam, qv.QuizVraagID, qv.Vraag};
+                                  select new  {e.EvenementID,e.Evenement_Naam,qr.Rondenummer, qv.Thema.Thema_Naam, viq.VraagInQuizID , viq.isActief, qv.QuizVraagID, qv.Vraag};
             var model = evenementVragen.Select(x => new SpelleiderEvenementVraagModels
             {
                 EvenementID = x.EvenementID,
                 Evenement_Naam = x.Evenement_Naam,
                 Rondenummer = x.Rondenummer,
                 Thema_Naam = x.Thema_Naam,
+                VraagInQuizID = x.VraagInQuizID,
                 QuizVraagID = x.QuizVraagID,
-                Vraag = x.Vraag
+                Vraag = x.Vraag,
+                isActief = x.isActief
             });
+            ViewBag.evenementID = db.Evenement.Find(id).EvenementID;
             ViewBag.evenementNaam = db.Evenement.Find(id).Evenement_Naam;
             return View(model);
         }
 
         // GET: Spelleider/Edit/5
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -75,18 +81,15 @@ namespace QuizApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Edit([Bind(Include = "VraagInQuizID, QuizRondeID, QuizVraagID, isActief")] VraagInQuiz vraagInQuiz)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(vraagInQuiz).State = System.Data.Entity.EntityState.Modified;
+                db.SP_VraagInQuiz_isActief(vraagInQuiz.QuizRondeID, vraagInQuiz.QuizVraagID);
                 db.SaveChanges();
-                var evenementID = from viq in db.VraagInQuiz
-                                  join qr in db.QuizRonde on viq.QuizRondeID equals qr.QuizRondeID
-                                  where viq.VraagInQuizID == vraagInQuiz.VraagInQuizID
-                                  select qr.EvenementID;
-
-
+       
                 return RedirectToAction("Details",new { id = db.QuizRonde.Find(vraagInQuiz.QuizRondeID).EvenementID });
             }
             return View(vraagInQuiz);

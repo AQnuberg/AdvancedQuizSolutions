@@ -15,12 +15,14 @@ namespace QuizApp.Controllers
         private AQSDatabaseEntities db = new AQSDatabaseEntities();
 
         // GET: Rol
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Index()
         {
             return View(db.Rol.ToList());
         }
 
         // GET: Rol/Details/5
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,6 +38,7 @@ namespace QuizApp.Controllers
         }
 
         // GET: Rol/Create
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Create()
         {
             return View();
@@ -46,6 +49,7 @@ namespace QuizApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Create([Bind(Include = "Rolnaam")] Rol rol)
         {
             if (ModelState.IsValid)
@@ -59,6 +63,7 @@ namespace QuizApp.Controllers
         }
 
         // GET: Rol/Edit/5
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -78,6 +83,7 @@ namespace QuizApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Edit([Bind(Include = "RolID,Rolnaam")] Rol rol)
         {
             if (ModelState.IsValid)
@@ -90,6 +96,7 @@ namespace QuizApp.Controllers
         }
 
         // GET: Rol/Delete/5
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -107,6 +114,7 @@ namespace QuizApp.Controllers
         // POST: Rol/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Beheerder")]
         public ActionResult DeleteConfirmed(int id)
         {
             Rol rol = db.Rol.Find(id);

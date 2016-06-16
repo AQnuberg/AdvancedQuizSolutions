@@ -17,13 +17,13 @@ namespace QuizApp.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Rol()
         {
-            this.Account = new HashSet<Account>();
+            this.UserRole = new HashSet<UserRole>();
         }
     
-        public int RolID { get; set; }
+        public long RolID { get; set; }
         public string Rolnaam { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Account> Account { get; set; }
+        public virtual ICollection<UserRole> UserRole { get; set; }
     }
 }

@@ -12,13 +12,13 @@ namespace QuizApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class MeerkeuzeAntwoord
+    public partial class UserClaim
     {
-        public int MeerkeuzeAntwoordID { get; set; }
-        public string Meerkeuze_Antwoord { get; set; }
-        public int QuizVraagID { get; set; }
-        public bool Is_Juist { get; set; }
+        public long Id { get; set; }
+        public long UserId { get; set; }
+        public string Claimtype { get; set; }
+        public string ClaimValue { get; set; }
     
-        public virtual QuizVraag QuizVraag { get; set; }
+        public virtual Account Account { get; set; }
     }
 }

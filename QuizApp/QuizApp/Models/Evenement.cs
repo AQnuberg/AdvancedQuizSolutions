@@ -23,7 +23,7 @@ namespace QuizApp.Models
     
         public int EvenementID { get; set; }
         public int LocatieID { get; set; }
-        public int AccountID { get; set; }
+        public long AccountID { get; set; }
         public string Evenement_Naam { get; set; }
         public System.DateTime Begintijd { get; set; }
         public System.DateTime Eindtijd { get; set; }

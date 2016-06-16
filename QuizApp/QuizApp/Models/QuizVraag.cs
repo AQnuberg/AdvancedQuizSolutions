@@ -11,8 +11,7 @@ namespace QuizApp.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class QuizVraag
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -25,10 +24,8 @@ namespace QuizApp.Models
     
         public int QuizVraagID { get; set; }
         public int ThemaID { get; set; }
-        [StringLength(200)]
         public string Vraag { get; set; }
         public string Vraagtype { get; set; }
-        [StringLength(100)]
         public string Open_Vraag_Antwoord { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

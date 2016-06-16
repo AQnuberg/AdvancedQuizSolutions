@@ -12,6 +12,8 @@ using QuizApp.Models;
         public string Evenement_Naam { get; set; }
         public int Rondenummer { get; set; }
         public string Thema_Naam { get; set; }
+        public int VraagInQuizID { get; set; }
         public int QuizVraagID { get; set; }
         public string Vraag { get; set; }
+        public bool isActief { get; set; }
     }

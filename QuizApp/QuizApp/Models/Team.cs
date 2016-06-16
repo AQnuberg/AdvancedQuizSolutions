@@ -23,7 +23,7 @@ namespace QuizApp.Models
         public int TeamID { get; set; }
         public int EvenementID { get; set; }
         public string Teamnaam { get; set; }
-        public int AccountID { get; set; }
+        public long AccountID { get; set; }
         public int Puntentotaal { get; set; }
     
         public virtual Account Account { get; set; }

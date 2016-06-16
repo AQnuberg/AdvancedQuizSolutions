@@ -15,12 +15,14 @@ namespace QuizApp.Controllers
         private AQSDatabaseEntities db = new AQSDatabaseEntities();
 
         // GET: Thema
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Index()
         {
             return View(db.Thema.ToList());
         }
 
         // GET: Thema/Details/5
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,6 +38,7 @@ namespace QuizApp.Controllers
         }
 
         // GET: Thema/Create
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Create()
         {
             return View();
@@ -46,6 +49,7 @@ namespace QuizApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Create([Bind(Include = "Thema_Naam")] Thema thema)
         {
             var themanamen = from t in db.Thema
@@ -76,6 +80,7 @@ namespace QuizApp.Controllers
         }
 
         // GET: Thema/Edit/5
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -95,6 +100,7 @@ namespace QuizApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Edit([Bind(Include = "ThemaID,Thema_Naam")] Thema thema)
         {
             if (ModelState.IsValid)
@@ -107,6 +113,7 @@ namespace QuizApp.Controllers
         }
 
         // GET: Thema/Delete/5
+        [Authorize(Roles = "Beheerder")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -124,6 +131,7 @@ namespace QuizApp.Controllers
         // POST: Thema/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Beheerder")]
         public ActionResult DeleteConfirmed(int id)
         {
             Thema thema = db.Thema.Find(id);

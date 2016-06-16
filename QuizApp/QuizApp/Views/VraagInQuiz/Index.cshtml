@@ -10,7 +10,8 @@
 <h5>Thema naam: @Html.Raw(ViewBag.themaNaam)</h5>
 
 <p>
-    @Html.ActionLink("Vraag toevoegen", "Create", new {id = ViewBag.quizRondeID}) |
+    @Html.ActionLink("Open vraag toevoegen", "CreateOpen", new {id = ViewBag.quizRondeID}) |
+    @Html.ActionLink("Meerkeuzevraag toevoegen", "CreateMeerkeuze", new { id = ViewBag.quizRondeID }) |
     @Html.ActionLink("Vragen beheren", "Index", new { controller = "QuizVraag", action= "Index", id = ViewBag.quizRondeID })
 </p>
 <table class="table">

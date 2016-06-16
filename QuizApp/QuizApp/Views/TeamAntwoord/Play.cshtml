@@ -12,6 +12,8 @@
 {
     @Html.AntiForgeryToken()
     <p>@Html.Raw(ViewBag.vraag.Vraag)</p>
+    <p>Gegeven antwoord: @Html.Raw(ViewBag.gegevenAntwoord)</p>
+    @Html.HiddenFor(model => model.TeamAntwoordID, new {@Value = ViewBag.gegevenantwoordID})
 
     if (ViewBag.vraag.Vraagtype == "Meerkeuze")
     {
@@ -54,7 +56,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Gegeven_Antwoord, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Gegeven_Antwoord, new { @class = "form-control" })
+                    @Html.EditorFor(model => model.Gegeven_Antwoord, new { htmlAttributes = new { @class = "form-control", @Value = ViewBag.gegevenAntwoord } })
                     @Html.ValidationMessageFor(model => model.Gegeven_Antwoord, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -73,7 +75,7 @@
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Volgende" class="btn btn-default" />
+                    <input type="submit" value="Antwoord opslaan" class="btn btn-default" />
                 </div>
             </div>
         </div>

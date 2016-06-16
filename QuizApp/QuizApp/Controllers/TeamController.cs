@@ -14,7 +14,7 @@ namespace QuizApp.Controllers
     {
         private AQSDatabaseEntities db = new AQSDatabaseEntities();
 
-        // GET: Team
+        // GET: Team 
         public ActionResult Index()
         {
             var teams = db.Team.Include(t => t.Account).Include(t => t.Evenement);
@@ -53,7 +53,7 @@ namespace QuizApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Team.Add(team);
+                db.SP_Team_Toevoegen(team.EvenementID, team.Teamnaam, (int?)team.AccountID);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -115,6 +115,7 @@ namespace QuizApp.Controllers
         // POST: Team/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Beheerder")]
         public ActionResult DeleteConfirmed(int id)
         {
             Team team = db.Team.Find(id);
